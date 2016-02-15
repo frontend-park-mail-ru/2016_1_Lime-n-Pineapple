@@ -12,11 +12,8 @@
     "errorhandler": "^1.4.3",
     "express": "^4.13.4",
     "grunt-cli": "^0.1.13",
-<<<<<<< Updated upstream
     "grunt-fest": "^0.1.6",
-=======
     "grunt-shell": "^1.1.2",
->>>>>>> Stashed changes
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
     "node-compass": "0.2.3",
