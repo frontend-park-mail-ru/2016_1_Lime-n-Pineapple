@@ -1,5 +1,7 @@
+//noinspection JSUnresolvedVariable
 module.exports = function (grunt) {
 
+    //noinspection JSUnresolvedFunction
     grunt.initConfig({
         shell: { // для запуска 8080 своими командами
             dev: {
@@ -8,23 +10,21 @@ module.exports = function (grunt) {
             options: {
                 stdout: true,
                 stderr: true
-            },
-            //server: {
-              //  command: 'bin/www'
-            //}
+            }
         },
         fest: {
             templates: {
                 files: [{
                     expand: true,
-                    cwd: 'templates',
-                    src: '*.xml',
-                    dest: 'public_html/js/tmpl'
+                    cwd: 'templates', // исходная директория
+                    src: '*.xml', // имена шаблонов
+                    dest: 'public_html/js/tmpl' // результирующая директория
                 }],
                 options: {
-                    template: function (data) {
+                    template: function (data) { /* задаем формат функции-шаблона */
+
                         return grunt.template.process(
-                            'var <%= name %>Tmpl = <%= contents %> ;',
+                            'var <%= name %>Tmpl = <%= contents %> ;', /* присваиваем функцию-шаблон переменной */
                             {data: data}
                         );
                     }
@@ -47,6 +47,7 @@ module.exports = function (grunt) {
                     'public_html/css/**/*.css'
                 ],
                 options: {
+                    interrupt: true,
                     livereload: true
                 }
             }
@@ -59,11 +60,11 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-concurrent');
-    grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-fest');
-
+    //grunt.loadNpmTasks('grunt-shell');
+    //grunt.loadNpmTasks('grunt-fest');
+    //grunt.loadNpmTasks('grunt-contrib-watch');
+    //grunt.loadNpmTasks('grunt-concurrent');
+    require('load-grunt-tasks')(grunt);
     grunt.registerTask('default', ['concurrent']);
 
 };
