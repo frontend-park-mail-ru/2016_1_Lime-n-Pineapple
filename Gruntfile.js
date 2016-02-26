@@ -48,7 +48,7 @@ module.exports = function (grunt) {
                 ],
                 options: {
                     interrupt: true,
-                    livereload: true
+                    livereload: true //подгрузка изменений в реальном времени
                 }
             }
         },
@@ -60,10 +60,6 @@ module.exports = function (grunt) {
         }
     });
 
-    //grunt.loadNpmTasks('grunt-shell');
-    //grunt.loadNpmTasks('grunt-fest');
-    //grunt.loadNpmTasks('grunt-contrib-watch');
-    //grunt.loadNpmTasks('grunt-concurrent');
     require('load-grunt-tasks')(grunt);
     grunt.registerTask('default', ['concurrent']);
 
