@@ -28,8 +28,8 @@
     "grunt-contrib-watch": "^0.6.1",
     "load-grunt-tasks": "^3.4.0"
   },
-  "scripts": {
-    "start": "node ./bin/www"
-  },
+  //"scripts": {
+  //  "start": "node ./bin/www"
+  //},
   "repository": "https:://github.com/fakeemperor/2016_1_Lime-n-Pineapple/"
 }
