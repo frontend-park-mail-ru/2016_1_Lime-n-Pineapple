@@ -45,7 +45,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 /*app.use(require('node-compass')({mode: 'expanded'})); */
 app.use('/', express.static(PUBLIC_DIR));
-app.use(errorHandler());
+
 
 
 // catch 404 and forward to error handler
