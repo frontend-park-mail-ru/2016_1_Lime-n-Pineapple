@@ -24,7 +24,8 @@ module.exports = function (grunt) {
                     template: function (data) { /* задаем формат функции-шаблона */
 
                         return grunt.template.process(
-                            'var <%= name %>Tmpl = <%= contents %> ;', /* присваиваем функцию-шаблон переменной */
+                            //'var <%= name %>Tmpl = <%= contents %> ;', /* присваиваем функцию-шаблон переменной */
+                            'define( function() { return <%= contents %> ; } );',
                             {data: data}
                         );
                     }
@@ -33,14 +34,16 @@ module.exports = function (grunt) {
         },
         watch: {//наблюдает за измененинями
             fest: {
-                files: ['templates/*.xml'],
+                files: ['templates/**/*.xml'],
                 tasks: ['fest'],
                 options: {
                     interrupt: true,
                     atBegin: true,
                     spawn: false,
                 },
+
             },
+
             server: {
                 files: [
                     'public_html/js/**/*.js',
