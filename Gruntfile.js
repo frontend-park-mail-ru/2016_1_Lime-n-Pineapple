@@ -24,7 +24,7 @@ module.exports = function (grunt) {
                     template: function (data) { /* задаем формат функции-шаблона */
 
                         return grunt.template.process(
-                            'var <%= name %>Tmpl = <%= contents %> ;', /* присваиваем функцию-шаблон переменной */
+                            'define(function () { return <%= contents %> ; });', /* присваиваем функцию-шаблон переменной */
                             {data: data}
                         );
                     }

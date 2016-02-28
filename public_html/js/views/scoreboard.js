@@ -1,9 +1,11 @@
 define([
     'backbone',
-    'tmpl/scoreboard'
+    'tmpl/scoreboard',
+    'scores'
 ], function(
     Backbone,
-    tmpl
+    tmpl,
+    Scores
 ){
 
     var View = Backbone.View.extend({
