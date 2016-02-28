@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="b">
+    <a class="btn btn-info" href="{b.href}"><h5><fest:value>b.title</fest:value></h5></a>
+</fest:template>

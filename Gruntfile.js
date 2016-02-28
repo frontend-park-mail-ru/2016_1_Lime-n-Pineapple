@@ -33,14 +33,16 @@ module.exports = function (grunt) {
         },
         watch: {//наблюдает за измененинями
             fest: {
-                files: ['templates/*.xml'],
+                files: ['templates/**/*.xml'],
                 tasks: ['fest'],
                 options: {
                     interrupt: true,
                     atBegin: true,
                     spawn: false,
                 },
+
             },
+
             server: {
                 files: [
                     'public_html/js/**/*.js',
