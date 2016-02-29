@@ -1,62 +1,57 @@
 define([
     'underscore',
-    'backbone'
-], /*function(
-    Backbone
-){
-
-    var Router = Backbone.Router.extend({
-        routes: {
-            'scoreboard': 'scoreboardAction',
-            'game': 'gameAction',
-            'login': 'loginAction',
-            '*default': 'defaultActions'
-        },
-        defaultActions: function () {
-            // TODO
-        },
-        scoreboardAction: function () {
-            // TODO
-        },
-        gameAction: function () {
-            // TODO
-        },
-        loginAction: function () {
-            // TODO
-        }
-    });
-
-    return new Router();
-} */
-    function(_,Backbone) {
-        var Controller = Backbone.Router.extend({
+    'backbone',
+    'views/main',
+    'views/scoreboard'
+], function(_,Backbone,Main,Scoreboard) {
+        var Router = Backbone.Router.extend({
             routes: {
-                "": "start", // Пустой hash-тэг
-                "!/": "start", // Начальная страница
-                "!/success": "success", // Блок удачи
-                "!/error": "error", // Блок ошибки
-                "!/project/:slug": "project",
+                "init": "initAction",
+                "game": "gameAction",
+                "scoreboard": "scoreboardAction",
+                "login": "loginAction",
+                "project/:slug": "project",
+                "*default": "defaultAction"
             },
 
-            start: function () {
-                $(".block").hide(); // Прячем все блоки
-                $("#start").show(); // Показываем нужный
+            initialize: function(){
+                this.defaultAction();
             },
 
-            success: function () {
-                $(".block").hide();
-                $("#success").show();
+            initAction: function(){
+                Main.render();
+                console.log();
             },
 
-            error: function () {
-                $(".block").hide();
-                $("#error").show();
+            defaultAction: function(){
+                //this.view = new Main();
+                //$(".view__main").html(this.view.render().el);
+                Main.render();
+                console.log("lalaka");
+
             },
+
+            scoreboardAction: function () {
+                //this.view = new Scoreboard();
+                //$(".view__scoreboard").html(this.view.render().el);
+                Scoreboard.render();
+            },
+
+            gameAction: function () {
+            //    TODO
+            },
+
+            loginAction: function () {
+                // TODO
+            },
+
             project: function(slug) {
                 alert("LALKA \r\n" + slug);
             },
+
+
         });
-        return new Controller();
+        return new Router();
     }
 
 );
