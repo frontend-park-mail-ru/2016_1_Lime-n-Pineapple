@@ -1,72 +1,58 @@
-"use strict";
-
 define([
     'underscore',
-    'jquery',
     'backbone',
     'views/main',
-    'views/game',
-    'views/scoreboard',
-    'views/login'
-], /*function(
-    Backbone
-){
-
-    var Router = Backbone.Router.extend({
-        routes: {
-            'scoreboard': 'scoreboardAction',
-            'game': 'gameAction',
-            'login': 'loginAction',
-            '*default': 'defaultActions'
-        },
-        defaultActions: function () {
-            // TODO
-        },
-        scoreboardAction: function () {
-            // TODO
-        },
-        gameAction: function () {
-            // TODO
-        },
-        loginAction: function () {
-            // TODO
-        }
-    });
-
-    return new Router();
-} */
-    function (_, $, Backbone, mv, gv, sv, lv) {
-        var Controller = Backbone.Router.extend({
+    'views/scoreboard'
+], function(_,Backbone,Main,Scoreboard) {
+        var Router = Backbone.Router.extend({
             routes: {
-                "lolka": 'startAction',
-                //"scoreboard": 'scoreboardAction',
-                //"login": "loginAction",
-                //"game": 'gameAction',
-                //"*default": 'generalAction',
-                "project/:slug": 'project'
-            },
-            startAction: function () {
-                mv.render();
-            },
-            start: function () {
-                $(".block").hide(); // Прячем все блоки
-                $("#start").show(); // Показываем нужный
+                "init": "initAction",
+                "game": "gameAction",
+                "scoreboard": "scoreboardAction",
+                "login": "loginAction",
+                "project/:slug": "project",
+                "*default": "defaultAction"
             },
 
-            success: function () {
-                $(".block").hide();
-                $("#success").show();
+            initialize: function(){
+                this.defaultAction();
             },
 
-            error: function () {
-                $(".block").hide();
-                $("#error").show();
+            initAction: function(){
+                Main.render();
+                console.log("Triggered action");
             },
-            project: function (slug) {
+
+            defaultAction: function(){
+                //this.view = new Main();
+                //$(".view__main").html(this.view.render().el);
+                Main.render();
+                console.log("lalaka");
+
+            },
+
+            scoreboardAction: function () {
+                //this.view = new Scoreboard();
+                //$(".view__scoreboard").html(this.view.render().el);
+                Scoreboard.trigger("initView");
+                console.log("Changed to scoreboard");
+            },
+
+            gameAction: function () {
+            //    TODO
+            },
+
+            loginAction: function () {
+                // TODO
+            },
+
+            project: function(slug) {
                 alert("LALKA \r\n" + slug);
-            }
+            },
+
+
         });
-        return new Controller();
+        return new Router();
     }
 
-    );
+);

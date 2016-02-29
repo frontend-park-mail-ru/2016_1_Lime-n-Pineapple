@@ -1,11 +1,19 @@
 define([
-    'backbone'
+    'underscore',
+    'backbone',
+    //'../models/score'
 ], function(
+    _,
     Backbone
+    //Score
 ){
 
-    var Collection = Backbone.Collection.extend({
+    var PlayersCollection = Backbone.Collection.extend({
+        //model : Score,
+        //comparator: function() {
+        //    return this.get("score");
+        //}
     });
 
-    return new Collection();
+    return new PlayersCollection();
 });
