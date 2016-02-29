@@ -1,96 +1,62 @@
-//define([
-//    'backbone',
-//    'tmpl/main'
-//], function(
-//    Backbone,
-//    tmpl
-//){
-//
-//    var View = Backbone.View.extend({
-//
-//        template: tmpl,
-//        initialize: function () {
-//            // TODO
-//        },
-//        render: function () {
-//            // TODO
-//        },
-//        show: function () {
-//            // TODO
-//        },
-//        hide: function () {
-//            // TODO
-//        }
-//
-//    });
-//
-//    return new View();
-//});
-/**
- * Created by Raaw on 27-Feb-16.
- */
 /*global define*/
 define([
-    'jquery',
     'underscore',
     'backbone',
+    '../routers/router',
     //'common',
-    'fest'
-], function ($, _, Backbone, todosTemplate, fest) {
-    'use strict';
+    'tmpl/main_page'
+], function (
+    _,
+    Backbone,
+    router,
+    tmpl
+) {
+    "use strict";
+    /**
+     * Created by Raaw on 28-Feb-16.
+     */
+    var className = "view__main",
+        MainView = Backbone.View.extend({
+            className: "view__main",
+            template: tmpl,
+            events: {
+                "click input:button": "check", // Обработчик клика на кнопке "Проверить"
+                "keypress": "_checkOnEnterKey"
+            },
+            initialize: function () {
 
-    var MainMenuView = Backbone.View.extend({
+            },
+            _checkOnEnterKey: function (e, keycode) {
+                if (keycode === 13) {
+                    this.check();
+                }
+            },
+            check: function () {
+                if (this.$el.find("input:text").val() === "test") {
+                    router.navigate("!/success", {trigger: true}); // переход на страницу success
+                } else {
+                    router.navigate("!/error", {trigger: true}); // переход на страницу error
+                }
+            },
+            render: function () {
+                this.$el.html("FUCK YOU!!!!!!!");
+                console.log(this.$el);
+                return this;
+            },
 
-        tagName:  'div',
-        className: 'menubutton_item',
+            show: function () {
+                this.$el.show();
+            },
 
-        template: fest['components/button_main'],
-
-        // The DOM events specific to an item.
-        events: {
-            'click .toggle':	'toggleCompleted',
-            'dblclick label':	'edit',
-            'click .destroy':	'clear',
-            'keypress .edit':	'updateOnEnter',
-            'keydown .edit':	'revertOnEscape',
-            'blur .edit':		'close'
-        },
-
-        // The TodoView listens for changes to its model, re-rendering. Since there's
-        // a one-to-one correspondence between a **Todo** and a **TodoView** in this
-        // app, we set a direct reference on the model for convenience.
-        initialize: function () {
-            this.listenTo(this.model, 'change', this.render);
-            this.listenTo(this.model, 'destroy', this.remove);
-            this.listenTo(this.model, 'visible', this.toggleVisible);
-        },
-
-        // Re-render the titles of the todo item.
-        render: function () {
-            this.$el.html(this.template(this.model.attributes));
-            return this;
-        },
-
-
-
-        // If you hit `enter`, we're through editing the item.
-        updateOnEnter: function (e) {
-            if (e.keyCode === Common.ENTER_KEY) {
-                this.close();
+            hide: function () {
+                this.$el.hide();
+            },
+            destroy: function () {
+                this.$el.html(null);
             }
-        },
 
-
-        // Remove the item, destroy the model from *localStorage* and delete its view.
-        clear: function () {
-            this.model.destroy();
-        },
-        destroy: function () {
-
-        }
-    });
-
-    return MainMenuView;
+        });
+    return new MainView();
 });
 
 

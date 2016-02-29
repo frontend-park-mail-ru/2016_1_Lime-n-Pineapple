@@ -4,14 +4,14 @@
 
 
 /*global define*/
-define([
-     	'jquery',
-     	'backbone',
-     	'collections/maincontrols',
-     	//'common'
-     ],
+define(
+    [
+        'jquery',
+        'backbone',
+        'collections/maincontrols'
+    ],
     function ($, Backbone,  Common) {
-     	'use strict';
+        'use strict';
 
         var MainControlsRouter = Backbone.Router.extend({
             routes: {
@@ -24,5 +24,6 @@ define([
                 // of the Todo view items21
             }
         });
-    return MainControlsRouter;
-});
+        return new MainControlsRouter();
+    }
+);

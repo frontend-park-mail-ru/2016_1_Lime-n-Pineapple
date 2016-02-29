@@ -1,6 +1,13 @@
+"use strict";
+
 define([
     'underscore',
-    'backbone'
+    'jquery',
+    'backbone',
+    'views/main',
+    'views/game',
+    'views/scoreboard',
+    'views/login'
 ], /*function(
     Backbone
 ){
@@ -28,16 +35,19 @@ define([
 
     return new Router();
 } */
-    function(_,Backbone) {
+    function (_, $, Backbone, mv, gv, sv, lv) {
         var Controller = Backbone.Router.extend({
             routes: {
-                "": "start", // Пустой hash-тэг
-                "!/": "start", // Начальная страница
-                "!/success": "success", // Блок удачи
-                "!/error": "error", // Блок ошибки
-                "!/project/:slug": "project",
+                "lolka": 'startAction',
+                //"scoreboard": 'scoreboardAction',
+                //"login": "loginAction",
+                //"game": 'gameAction',
+                //"*default": 'generalAction',
+                "project/:slug": 'project'
             },
-
+            startAction: function () {
+                mv.render();
+            },
             start: function () {
                 $(".block").hide(); // Прячем все блоки
                 $("#start").show(); // Показываем нужный
@@ -52,11 +62,11 @@ define([
                 $(".block").hide();
                 $("#error").show();
             },
-            project: function(slug) {
+            project: function (slug) {
                 alert("LALKA \r\n" + slug);
-            },
+            }
         });
         return new Controller();
     }
 
-);
+    );
