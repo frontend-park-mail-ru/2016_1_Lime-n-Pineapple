@@ -20,7 +20,7 @@ define([
 
             initAction: function(){
                 Main.render();
-                console.log();
+                console.log("Triggered action");
             },
 
             defaultAction: function(){
@@ -34,7 +34,8 @@ define([
             scoreboardAction: function () {
                 //this.view = new Scoreboard();
                 //$(".view__scoreboard").html(this.view.render().el);
-                Scoreboard.render();
+                Scoreboard.trigger("initView");
+                console.log("Changed to scoreboard");
             },
 
             gameAction: function () {

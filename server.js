@@ -35,7 +35,18 @@ app.use(function (req) {
     console.log("LOG:"+ current_date.toDateString() +" [ app.use: (addr: " + ip + ")" + ":" + req.url + "]: " + value );
     req.next();
 });
+app.use(function (req,res,next) {
+    console.log("index.html modifier - ", req.URL);
+    if(req.method === 'get') {
+        //1. fetch view by url hash
+        console.log(req);
+        //2. render on page
 
+        //3. return ready-to-show html
+
+    }
+    next();
+});
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -44,6 +55,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 /*app.use(require('node-compass')({mode: 'expanded'})); */
+
 app.use('/', express.static(PUBLIC_DIR));
 
 
