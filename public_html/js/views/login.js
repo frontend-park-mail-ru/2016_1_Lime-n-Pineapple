@@ -1,6 +1,6 @@
 define([
     'backbone',
-    'tmpl/login'
+    'tmpl/login',
 ], function(
     Backbone,
     tmpl

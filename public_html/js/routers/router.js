@@ -1,12 +1,12 @@
 define([
-    'underscore',
-    'backbone',
-    'views/main',
-    'views/scoreboard',
-    'views/game',
-    'views/login',
-    'views/block/btn_back'
-], function(_,Backbone,Main,Scoreboard, GameAction, Login, Btn_Back) {
+        'underscore',
+        'backbone',
+        'views/main',
+        'views/scoreboard',
+        'views/game',
+        'views/login',
+        'views/block/btn_back'
+    ], function(_,Backbone,Main,Scoreboard, GameAction, Login, Btn_Back) {
         var Router = Backbone.Router.extend({
             routes: {
                 "game": "gameAction",
