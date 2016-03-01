@@ -27,6 +27,5 @@ define([
     router
 ){
     Backbone.history.start();  // Запускаем HTML5 History push
-
 });
 

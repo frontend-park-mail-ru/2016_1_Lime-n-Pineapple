@@ -1,4 +1,5 @@
 define([
+    'jquery',
     'underscore',
     'backbone',
     'views/main',
@@ -6,7 +7,7 @@ define([
     'views/game',
     'views/login',
     'views/block/btn_back'
-], function(_,Backbone,Main,Scoreboard, GameAction, Login, Btn_Back) {
+], function($, underscore,Backbone,Main,Scoreboard, GameAction, Login, BtnBack) {
         var Router = Backbone.Router.extend({
             routes: {
                 "game": "gameAction",
@@ -15,43 +16,72 @@ define([
                 "*default": "defaultAction"
             },
 
+            _createView: function (ViewClass, viewName){
+                var view = this[viewName];
+                if(this[viewName] === undefined) {
+                    view = this[viewName] = new ViewClass();
+                    view.render();
+                }
+                return view;
+            },
+
+            _allHide: function() {
+                if(this.scoreboard) {
+                    this.scoreboard.hide();
+                }
+                if (this.main) {
+                    this.main.hide();
+                }
+                if (this.btnBack) {
+                    this.btnBack.hide();
+                }
+                if (this.login) {
+                    this.login.hide();
+                }
+                if (this.game){
+                    this.game.hide();
+                }
+            },
+
+
             initialize: function(){
-                console.log("render back button");
-                this.btn_back = new Btn_Back();
-                this.btn_back.render();
-                this.btn_back.$el.appendTo($("#view__btn_back"));
-                this.btn_back.on("back", function(){
-                    console.log("btn_back on");
-                    Backbone.history.history.back();
-                }, this);
+                console.log("initialize in router");
+                this._createView(BtnBack,"btnBack");
+                // this["btn_back"] ==== this.btn_back !=== this."btn_back"
                 this.defaultAction();
             },
 
-            defaultAction: function(){
-                this.main = new Main();
+            defaultAction: function () {
+                this._createView(Main, "main");
+                this._allHide();
                 this.main.show();
-                this.btn_back.hide();
-                console.log(this.main.$el + "defaultAction, changed to main");
+                console.log(this.main.$el, "defaultAction, changed to main");
+
             },
 
             scoreboardAction: function () {
-                this.scoreboard = new Scoreboard();
+                this._allHide();
+                this._createView(Scoreboard, "scoreboard");
                 this.scoreboard.show();
-                this.btn_back.show();
+                this.btnBack.show();
                 console.log("scoreboardAction, Changed to scoreboard");
             },
 
             gameAction: function () {
-                this.game = new GameAction();
+                this._allHide();
+                this._createView(GameAction, "game");
                 this.game.show();
-                console.log(this.game.$el + "gameAction, changed to game");
+                this.btnBack.show();
+                console.log(this.game.$el, "gameAction, changed to game");
             },
 
             loginAction: function () {
-                this.login = new Login();
+                this._allHide();
+                this._createView(Login, "login");
                 this.login.show();
-                console.log(this.login.$el + "loginAction, changed to login")
-            },
+                this.btnBack.show();
+                console.log(this.login.$el + "loginAction, changed to login");
+            }
 
         });
         return new Router();

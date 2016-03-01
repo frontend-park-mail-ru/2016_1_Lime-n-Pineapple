@@ -1,41 +1,47 @@
 define([
+    'jquery',
     'backbone',
     'tmpl/scoreboard',
-    '../collections/scores'
+    'collections/scores'
 ], function(
+    $,
     Backbone,
     tmpl,
     Scores
 ){
 
-    var View = Backbone.View.extend({
+    return Backbone.View.extend({
         template: tmpl,
-        el: ".view__scoreboard",
+
         events: {
             "initView": 'render',
-            "show": 'show',
+            "show": 'show'
         },
 
         initialize: function () {
-            this.bind("initView", function(){this.render();}, this);
+            var collection = new Scores([
+                {name: "Тим", age: 5},
+                {name: "Ида", age: 26},
+                {name: "Роб", age: 55}
+            ]);
         },
 
         show: function () {
-            this.render();
-
+            this.$el.show();
         },
         hide: function () {
             this.$el.hide();
         },
 
         render: function () {
-
+            this.$el.appendTo($("#view__holder"));
             console.log("[views::scoreboard::render()]: called");
             console.log(this.$el);
-            this.$el.html(this.template({}));
+            this.$el.html(this.template());
+
             return this;
         }
 
     });
-    return View;
+    //return View;
 });

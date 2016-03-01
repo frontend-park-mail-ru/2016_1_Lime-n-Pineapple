@@ -2,38 +2,56 @@
  * Created by leegheid on 01.03.16.
  */
 define([
+    'jquery',
     'backbone',
-    'tmpl/btn_back',
+    'tmpl/btn_back'
 ], function(
+    $,
     Backbone,
     tmpl
 ){
 
-    var View = Backbone.View.extend({
+    return Backbone.View.extend({
         template: tmpl,
-        className: "view__btn_back",
+        className: "js-btn_back",
         events: {
-            "click": 'clickBtn',
+            "click": 'clickBtn'
         },
 
         initialize: function () {
-            //this.render();
+
         },
 
         clickBtn: function() {
+            console.log("click on back");
             this.trigger("back");
         },
 
         show: function () {
-            console.log("i am here, in btn.show()")
+            console.log("i am here, in btn.show()");
             this.$el.show();
-
+            this.startBack();
         },
+
+        startBack: function () {
+            this.stopBack();
+                this.on("back", function () {
+                    console.log("[Btn_Back]: back() called");
+                    Backbone.history.history.back();
+                }, this);
+        },
+
+        stopBack: function () {
+            this.off("back");
+        },
+
         hide: function () {
             this.$el.hide();
+            this.stopBack();
         },
 
         render: function () {
+            this.$el.appendTo($("#view__btn_back"));
             console.log("btn_back.render in scoreboard was called");
             console.log(this.$el);
             this.$el.html(this.template({}));
@@ -41,5 +59,5 @@ define([
         }
 
     });
-    return View;
+    //return View;
 });
