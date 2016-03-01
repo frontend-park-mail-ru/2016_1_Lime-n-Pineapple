@@ -26,7 +26,7 @@ define([
     Backbone,
     router
 ){
-    Backbone.history.start({});  // Запускаем HTML5 History push
-    router.navigate("init", {trigger: true});
+    Backbone.history.start();  // Запускаем HTML5 History push
+
 });
 

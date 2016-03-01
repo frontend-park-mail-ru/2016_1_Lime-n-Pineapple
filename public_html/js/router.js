@@ -2,54 +2,56 @@ define([
     'underscore',
     'backbone',
     'views/main',
-    'views/scoreboard'
-], function(_,Backbone,Main,Scoreboard) {
+    'views/scoreboard',
+    'views/game',
+    'views/login',
+    'views/block/btn_back'
+], function(_,Backbone,Main,Scoreboard, GameAction, Login, Btn_Back) {
         var Router = Backbone.Router.extend({
             routes: {
-                "init": "initAction",
                 "game": "gameAction",
                 "scoreboard": "scoreboardAction",
                 "login": "loginAction",
-                "project/:slug": "project",
                 "*default": "defaultAction"
             },
 
             initialize: function(){
+                console.log("render back button");
+                this.btn_back = new Btn_Back();
+                this.btn_back.render();
+                this.btn_back.$el.appendTo($("#view__btn_back"));
+                this.btn_back.on("back", function(){
+                    console.log("btn_back on");
+                    Backbone.history.history.back();
+                }, this);
                 this.defaultAction();
             },
 
-            initAction: function(){
-                Main.render();
-                console.log("Triggered action");
-            },
-
             defaultAction: function(){
-                //this.view = new Main();
-                //$(".view__main").html(this.view.render().el);
-                Main.render();
-                console.log("lalaka");
-
+                this.main = new Main();
+                this.main.show();
+                this.btn_back.hide();
+                console.log(this.main.$el + "defaultAction, changed to main");
             },
 
             scoreboardAction: function () {
-                //this.view = new Scoreboard();
-                //$(".view__scoreboard").html(this.view.render().el);
-                Scoreboard.trigger("initView");
-                console.log("Changed to scoreboard");
+                this.scoreboard = new Scoreboard();
+                this.scoreboard.show();
+                this.btn_back.show();
+                console.log("scoreboardAction, Changed to scoreboard");
             },
 
             gameAction: function () {
-            //    TODO
+                this.game = new GameAction();
+                this.game.show();
+                console.log(this.game.$el + "gameAction, changed to game");
             },
 
             loginAction: function () {
-                // TODO
+                this.login = new Login();
+                this.login.show();
+                console.log(this.login.$el + "loginAction, changed to login")
             },
-
-            project: function(slug) {
-                alert("LALKA \r\n" + slug);
-            },
-
 
         });
         return new Router();

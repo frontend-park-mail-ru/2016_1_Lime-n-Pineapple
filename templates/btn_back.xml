@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <button type="submit" class="btn btn-default center-block">Back</button>
+</fest:template>

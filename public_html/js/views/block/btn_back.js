@@ -1,27 +1,32 @@
+/**
+ * Created by leegheid on 01.03.16.
+ */
 define([
     'backbone',
-    'tmpl/scoreboard',
-    '../collections/scores'
+    'tmpl/btn_back',
 ], function(
     Backbone,
-    tmpl,
-    Scores
+    tmpl
 ){
 
     var View = Backbone.View.extend({
         template: tmpl,
-        el: ".view__scoreboard",
+        className: "view__btn_back",
         events: {
-            "initView": 'render',
-            "show": 'show',
+            "click": 'clickBtn',
         },
 
         initialize: function () {
-            this.bind("initView", function(){this.render();}, this);
+            //this.render();
+        },
+
+        clickBtn: function() {
+            this.trigger("back");
         },
 
         show: function () {
-            this.render();
+            console.log("i am here, in btn.show()")
+            this.$el.show();
 
         },
         hide: function () {
@@ -29,8 +34,7 @@ define([
         },
 
         render: function () {
-
-            console.log("[views::scoreboard::render()]: called");
+            console.log("btn_back.render in scoreboard was called");
             console.log(this.$el);
             this.$el.html(this.template({}));
             return this;

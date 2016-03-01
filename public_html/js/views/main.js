@@ -38,23 +38,34 @@ define([
     /**
      * Created by Raaw on 28-Feb-16.
      */
-    var MainView = Backbone.View.extend({
+    var View = Backbone.View.extend({
         className: "view__main",
         template: tmpl,
         el: $(".view__main"), // DOM элемент widget'а
 
-
         initialize: function() {
         },
 
+        show: function() {
+            console.log("main.show()")
+            this.render();
+        },
+
+        remove: function() {
+            this.$el.empty().off(); /* off to unbind the events */
+            this.stopListening();
+            return this;
+        },
+
+        hide: function() {
+            this.remove();
+        },
 
         render: function () {
+            console.log("main.show.render()")
             $(this.el).html(this.template({}));
             return this;
         }
     });
-
-    //var mainView = new MainView(); // Singletone?
-    //mainView.render();
-    return new MainView();
+    return View;
 });
