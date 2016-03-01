@@ -1,6 +1,6 @@
 define([
-        'lib/underscore',
-        'lib/backbone',
+        'underscore',
+        'backbone',
         'views/main',
         'views/scoreboard',
         'views/game',
