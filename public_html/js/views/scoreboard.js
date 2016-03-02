@@ -19,11 +19,14 @@ define([
         },
 
         initialize: function () {
-            var collection = new Scores([
-                {name: "Тим", age: 5},
-                {name: "Ида", age: 26},
-                {name: "Роб", age: 55}
-            ]);
+            this.collection = new Scores();
+            var i;
+            for (i = 0; i < 3; i++) {
+                this.collection.add({name: "Тим", score: 55});
+                this.collection.add({name: "Ида", score: 6});
+                this.collection.add({name: "Роб", score: 545});
+            }
+            this.collection.sort();
         },
 
         show: function () {
@@ -37,7 +40,8 @@ define([
             this.$el.appendTo($("#view__holder"));
             console.log("[views::scoreboard::render()]: called");
             console.log(this.$el);
-            this.$el.html(this.template());
+            console.log(this.collection);
+            this.$el.html(this.template({person: this.collection.toJSON()}));
 
             return this;
         }

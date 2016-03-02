@@ -1,4 +1,16 @@
 <?xml version="1.0"?>
-<fest:template xmlns:fest="http://fest.mail.ru">
-    <div class="text-center"><h3>List of players!</h3></div>
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+    <fest:div class="text-center"><h3>List of players!</h3>
+        <div style="text-align: left">
+            <!--<ul style="margin-left:37%">-->
+            <ul class="col-lg-12 col-lg-offset-5 col-md-12 col-md-offset-5 col-sm-12 col-sm-offset-5 col-xs-12 col-xs-offset-4">
+                <fest:for iterate="json.person" index="i">
+                    <fest:space/><fest:element name="li"><fest:value>json.person[json.person.length - i - 1].name</fest:value><fest:space/><fest:value>json.person[json.person.length - i - 1].score</fest:value></fest:element>
+                </fest:for>
+            </ul>
+        </div>
+
+
+
+    </fest:div>
 </fest:template>

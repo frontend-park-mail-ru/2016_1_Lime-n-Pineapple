@@ -10,8 +10,8 @@ define([
 
     return Backbone.Collection.extend({
         model : Score,
-        comparator: function() {
-            return this.get("score");
+        comparator: function(val) {
+            return val.get("score");
         }
     });
 

@@ -5,7 +5,7 @@ define(['backbone'], function(Backbone){
             return{
                 "name": "",
                 "score": "0"
-            }
+            };
         }
     });
 
