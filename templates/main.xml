@@ -1,3 +1,4 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
-    <div id="main"></div>
+<?xml version="1.0"?>
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+    <h2>Hello, muthafacka!</h2>
 </fest:template>
