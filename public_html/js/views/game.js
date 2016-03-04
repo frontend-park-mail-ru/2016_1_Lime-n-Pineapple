@@ -6,7 +6,7 @@ define([
     tmpl
 ){
 
-    var View = Backbone.View.extend({
+    return Backbone.View.extend({
 
         template: tmpl,
         initialize: function () {
@@ -23,6 +23,4 @@ define([
         }
 
     });
-
-    return View;
 });

@@ -1,7 +1,7 @@
 define([
     'jquery',
     'backbone',
-    'tmpl/login',
+    'tmpl/login'
 ], function(
     $,
     Backbone,
@@ -24,7 +24,6 @@ define([
         },
 
         render: function () {
-            this.$el.appendTo($("#view__holder"));
             console.log("[views::scoreboard::render()]: called");
             console.log(this.$el);
             this.$el.html(this.template());

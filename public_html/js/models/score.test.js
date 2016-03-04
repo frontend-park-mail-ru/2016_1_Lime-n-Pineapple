@@ -1,4 +1,4 @@
-define(function (require) {
+define(['backbone', 'require'], function(Backbone, require) {
     QUnit.module("models/score");
 
     QUnit.test("ScoreModel - экземпляр Backbone.Model", function () {

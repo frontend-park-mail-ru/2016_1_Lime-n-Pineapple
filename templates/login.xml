@@ -3,49 +3,43 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
         <div id="loginbox" class="mainbox center-block text-center">
             <div class="panel panel-info" >
+
                 <div class="panel-heading">
                     <div class="panel-title">Sign In</div>
                 </div>
 
                 <div class="panel-body" >
-
                     <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                        <form id="loginform" class="form-horizontal form-group" role="form">
 
-                    <form id="loginform" class="form-horizontal form-group" role="form">
-
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input id="login-username" type="email"  class="form-control" name="username" value="" placeholder="email" required="required" />
-                        </div>
-
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input id="login-password" type="password" pattern="\w\w\w\w\w\w\w?\w?\w?\w?\w?\w?\w?\w?\w?\w?" oninvalid="setCustomValidity('Please enter valid zip')" value="" class="form-control" name="password" placeholder="password" required="" ></input>
-                        </div>
-
-                        <div class="form-group">
-
-                            <div class="col-sm-12 controls">
-                                <button id="btn-login" type="submit" class="btn btn-success" style="text-decoration: none">Login  </button>
-                                <!--<a id="btn-fblogin" href="#" class="btn btn-primary" style="text-decoration: none">Login with Facebook</a>-->
-
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input id="login-username" type="email"  class="form-control" name="username" value="" placeholder="email" required="required" />
                             </div>
-                        </div>
 
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input id="login-password" type="password" pattern="\w\w\w\w\w\w\w?\w?\w?\w?\w?\w?\w?\w?\w?\w?" oninvalid="setCustomValidity('Please enter valid zip')" value="" class="form-control" name="password" placeholder="password" required="" ></input>
+                            </div>
 
-                        <div class="form-group">
-                            <div class="col-md-12 control">
-                                <div class="sign-up-here" >
-                                    Don't have an account!
-                                    <fest:space></fest:space>
-                                    <a>
-                                        Sign Up Here
-                                    </a>
+                            <div class="form-group">
+                                <div class="col-sm-12 controls">
+                                    <button id="btn-login" type="submit" class="btn btn-success" style="text-decoration: none">Login  </button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
 
+                            <div class="form-group">
+                                <div class="col-md-12 control">
+                                    <div class="sign-up-here" >
+                                        Don't have an account!
+                                        <fest:space></fest:space>
+                                        <a>
+                                            Sign Up Here
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                 </div>
             </div>
         </div>
