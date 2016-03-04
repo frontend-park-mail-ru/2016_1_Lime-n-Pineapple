@@ -11,8 +11,9 @@ define([
     return Backbone.Collection.extend({
         model : Score,
         comparator: function(val) {
-            return val.get("score");
-        }
+            return -val.get("score");
+        },
+
     });
 
 });

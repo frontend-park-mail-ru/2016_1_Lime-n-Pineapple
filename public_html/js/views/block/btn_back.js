@@ -24,35 +24,23 @@ define([
 
         clickBtn: function() {
             console.log("click on back");
-            this.trigger("back");
+            Backbone.history.history.back();
         },
 
         show: function () {
             console.log("i am here, in btn.show()");
+            console.log(this);
+            console.log(this.$el);
             this.$el.show();
-            this.startBack();
         },
 
-        startBack: function () {
-            this.stopBack();
-                this.on("back", function () {
-                    console.log("[Btn_Back]: back() called");
-                    Backbone.history.history.back();
-                }, this);
-        },
-
-        stopBack: function () {
-            this.off("back");
-        },
 
         hide: function () {
             this.$el.hide();
-            this.stopBack();
         },
 
         render: function () {
-            this.$el.appendTo($("#view__btn_back"));
-            console.log("btn_back.render in scoreboard was called");
+            console.log("btn_back.render was called");
             console.log(this.$el);
             this.$el.html(this.template({}));
             return this;

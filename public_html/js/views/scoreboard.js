@@ -37,7 +37,6 @@ define([
         },
 
         render: function () {
-            this.$el.appendTo($("#view__holder"));
             console.log("[views::scoreboard::render()]: called");
             console.log(this.$el);
             console.log(this.collection);

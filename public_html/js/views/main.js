@@ -35,7 +35,7 @@ define([
         },
 
         render: function () {
-            this.$el.appendTo($("#view__holder"));
+            //this.$el.appendTo($("#view__holder"));
             console.log("main.show.render()");
             this.$el.html(this.template({}));
 
