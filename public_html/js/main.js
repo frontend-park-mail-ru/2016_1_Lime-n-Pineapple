@@ -4,7 +4,8 @@ require.config({
     paths: {
         jquery: "lib/jquery",
         underscore: "lib/underscore",
-        backbone: "lib/backbone"
+        backbone: "lib/backbone",
+        settings: "settings"
     },
     shim: {
         'backbone': {
@@ -18,14 +19,10 @@ require.config({
 });
 
 
-define([
-    'backbone',
-    'router',
-], function(
-    Backbone,
-    router
-){
-    Backbone.history.start();  // Запускаем HTML5 History push
-});
+define([ 'backbone', 'router'],
+    function (Backbone, router) {
+        Backbone.history.start();  // Запускаем HTML5 History push
+    }
+    );
 
 

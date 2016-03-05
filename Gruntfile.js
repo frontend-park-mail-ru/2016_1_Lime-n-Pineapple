@@ -27,22 +27,45 @@ module.exports = function (grunt) {
                             'define(function () { return <%= contents %> ; });', /* присваиваем функцию-шаблон переменной */
                             {data: data}
                         );
-                    }
+                    },
+                    livereload: true
                 }
             }
         },
-        watch: {//наблюдает за измененинями
+        compass: {
+            files: {
+                expand: true,
+                cwd: 'public_html/css',
+                src: '*.css',
+                dest: 'public_html/js/css'
+            },
+            options: {
+                sassDir: 'public_html/css',
+                cssDir: 'public_html/css'
+            }
+        },
+        watch: {//наблюдает за изменениями: true
             fest: {
                 files: ['templates/**/*.xml'],
                 tasks: ['fest'],
                 options: {
-                    interrupt: true,
+                    interrupt: false,
                     atBegin: true,
                     spawn: false,
-                },
+                    livereload: true
+                }
 
             },
-
+            compass: {
+                files: ['public_html/css/**/*.scss'],
+                tasks: ['compass', 'fest'],
+                options: {
+                    interrupt: true,
+                    atBegin: false,
+                    spawn: false,
+                    livereload: true
+                }
+            },
             server: {
                 files: [
                     'public_html/js/**/*.js',
@@ -55,7 +78,7 @@ module.exports = function (grunt) {
             }
         },
         concurrent: { // запускает shell and watch
-            target: ['watch', 'shell'],
+            target: ['watch', 'compass', 'shell'],
             options: {
                 logConcurrentOutput: true
             }

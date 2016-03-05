@@ -20,24 +20,23 @@ app.use(function (req) {
     // Здесь нужно написать журналирование в формате
     // (журналирование - вывод в консоль)
     // [время] [номер запроса по счету]
-    var ip = toString(req.remoteAddress);
+    var ip = req.remoteAddress.toString();
     var current_date = new Date();
     var value = 1;
-    if ( ip_map.has(ip) ) {
+    if (ip_map.has(ip)) {
 
         value = ip_map.get(ip);
-        value+=1;
+        value += 1;
         ip_map.set(ip, value);
-    }
-    else {
+    } else {
         ip_map.set(ip, 1);
     }
-    console.log("LOG:"+ current_date.toDateString() +" [ app.use: (addr: " + ip + ")" + ":" + req.url + "]: " + value );
+    console.log("LOG:", current_date.toDateString(), " [ app.use: (addr: ", ip, "):", req.url, "]: ", value );
     req.next();
 });
-app.use(function (req,res,next) {
+app.use(function (req, res, next) {
     console.log("index.html modifier - ", req.URL);
-    if(req.method === 'get') {
+    if (req.method === 'get') {
         //1. fetch view by url hash
         console.log(req);
         //2. render on page

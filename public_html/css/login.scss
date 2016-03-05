@@ -1,0 +1,23 @@
+
+
+.js-form__login {
+  margin-top: 5px;
+  .panel {
+    .panel-body {
+      & > .form-group {
+        margin-top:10px;
+
+        & > .input-group {
+          padding-bottom: 20px;
+        }
+      }
+      & > .sign_up_here {
+        border-top: 1px solid #baaaaa;
+        padding-top:10px;
+        font-size: 85%;
+      }
+    }
+
+  };
+
+}
