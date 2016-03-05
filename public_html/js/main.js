@@ -23,6 +23,5 @@ define([ 'backbone', 'router'],
     function (Backbone, router) {
         Backbone.history.start();  // Запускаем HTML5 History push
     }
-    );
-
+);
 

@@ -12,7 +12,7 @@ define([
         model : Score,
         comparator: function(val) {
             return -val.get("score");
-        },
+        }
 
     });
 

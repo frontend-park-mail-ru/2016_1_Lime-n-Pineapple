@@ -4,7 +4,6 @@ define([
     'tmpl/login',
     'settings'
 ], function ($, Backbone, tmpl, Settings) {
-
     return Backbone.View.extend({
         template: tmpl,
         initialize: function () {

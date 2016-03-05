@@ -11,7 +11,6 @@ define(
             score.trigger("increment", 10);
             score.trigger("increment", -20);
             QUnit.ok(score.get('score') === -10);
-
         });
     }
 );
