@@ -12,6 +12,14 @@ define([
                 "*default": "defaultAction"
             },
 
+            initialize: function(){
+                this.views = {};
+                console.log("initialize in router");
+                this._createView(Views.btnBack,"btnBack");
+                // this["btn_back"] ==== this.btn_back !=== this."btn_back"
+                this.defaultAction();
+            },
+
             _createView: function (ViewClass, viewName){
                 var view = this.views[viewName];
                 if(this.views[viewName] === undefined) {
@@ -34,22 +42,15 @@ define([
                 }
             },
 
-            initialize: function(){
-                this.views = {};
-                console.log("initialize in router");
-                this._createView(Views.btnBack,"btnBack");
-                // this["btn_back"] ==== this.btn_back !=== this."btn_back"
-                this.defaultAction();
+            _appendElAndShow: function(view, wantTagName){
+                this._setTagNameViewsEl(view, wantTagName);
+                this.views[view].show();
             },
 
             defaultAction: function () {
                 this._createView(Views.main, "main");
                 this._allHide();
-
-                this._setTagNameViewsEl("main", "#view__holder");
-                console.log(this.views.main + "fsfsd");
-
-                this.views.main.show();
+                this._appendElAndShow("main", "#view__holder");
 
                 console.log(this.views.main.$el, "defaultAction, changed to main");
             },
