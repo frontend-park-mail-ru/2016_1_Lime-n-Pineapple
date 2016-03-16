@@ -44,6 +44,7 @@ define([
                 .done(
                     function (e) {
                         console.log("Accepted");
+                        Backbone.history.history.back();
                     }
                 )
                 .fail(function (req, err, e) {
@@ -51,7 +52,10 @@ define([
                     console.log(req);
                     console.log(err);
                     console.log(e);
+                    Backbone.history.history.back();
                 });
+            $("#login").text("Logout");
+            $("#login").attr('href', "#logout");
         },
 
         render: function () {
