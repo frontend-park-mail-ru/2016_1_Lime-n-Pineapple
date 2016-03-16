@@ -9,7 +9,7 @@ define([
     Backbone,
     tmpl
 ){
-    return Backbone.View.extend({
+    var Main = Backbone.View.extend({
         className: "view__main",
         template: tmpl,
         //el: $(".view__main"), // DOM элемент widget'а
@@ -19,6 +19,7 @@ define([
 
         show: function () {
             console.log("main.show()");
+            this.trigger("showView");
             this.$el.show();
             console.log(this.$el);
         },
@@ -43,4 +44,5 @@ define([
             return this;
         }
     });
+    return new Main();
 });

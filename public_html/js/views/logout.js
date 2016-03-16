@@ -6,13 +6,14 @@ define([
     'backbone',
     'settings'
 ], function ($, Backbone, Settings) {
-    return Backbone.View.extend({
+    var LogOut = Backbone.View.extend({
 
         initialize: function () {
 
         },
         show: function () {
             console.log("i am in login.show()");
+            this.trigger("showView");
             this.$el.show();
         },
         hide: function () {
@@ -35,6 +36,8 @@ define([
                 .done(
                 function (e) {
                     console.log("Accepted");
+                    $("#login").text("Login");
+                    $("#login").attr('href', "#login");
                     Backbone.history.history.back();
                 }
             )
@@ -47,8 +50,6 @@ define([
                 });
 
             console.log("logout change");
-            $("#login").text("Login");
-            $("#login").attr('href', "#login");
         },
 
         render: function () {
@@ -57,6 +58,6 @@ define([
             return this;
         }
     });
+    return new LogOut();
 
-    //return View;
 });

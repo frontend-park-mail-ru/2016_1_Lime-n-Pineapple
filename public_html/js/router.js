@@ -1,10 +1,20 @@
 define([
-    'jquery',
-    'underscore',
-    'backbone',
-    'views/all_views'
+        'jquery',
+        'underscore',
+        'backbone',
+        'views/all_views',
+        'views/view_manager'
 ],
-    function ($, underscore, Backbone, Views) {
+    function ($, underscore, Backbone, Views, VM) {
+        VM.addArray([
+            Views.main,
+            Views.scoreboard,
+            Views.game,
+            Views.login,
+            Views.logout,
+            Views.btnBack
+        ]);
+
         var Router = Backbone.Router.extend({
                 routes: {
                     "game": "gameAction",
@@ -14,92 +24,44 @@ define([
                     "*default": "defaultAction"
                 },
 
-                _createView: function (ViewClass, viewName) {
-                    var view = this.views[viewName];
-                    if (this.views[viewName] === undefined) {
-                        view = this.views[viewName] = new ViewClass();
-                        view.render();
-                    }
-                    return view;
-                },
-
-                _allHide: function () {
-                    var key;
-                    for (key in this.views) {
-                        if (this.views.hasOwnProperty(key)) {
-                            this.views[key].hide();
-                        }
-                    }
-                },
-
                 _setTagNameViewsEl: function (view, wantTagName) {
-                    if (this.views[view] !== undefined && (this.views[view].$el.tagName === undefined || (wantTagName && wantTagName.isString()))) {
-                        this.views[view].$el.appendTo($(wantTagName));
+                    if (view !== undefined && (view.$el.tagName === undefined || (wantTagName && wantTagName.isString()))) {
+                            view.$el.appendTo($(wantTagName));
+                            view.render();
                     }
                 },
 
                 initialize: function () {
-                    this.views = {};
-                    console.log("initialize in router");
-                    this._createView(Views.btnBack, "btnBack");
+                    this._setTagNameViewsEl(Views.btnBack, "#view__btn_back");
+                    this._setTagNameViewsEl(Views.game, "#view__holder");
+                    this._setTagNameViewsEl(Views.main, "#view__holder");
+                    this._setTagNameViewsEl(Views.scoreboard, "#view__holder");
+                    this._setTagNameViewsEl(Views.login, "#view__holder");
                     // this["btn_back"] ==== this.btn_back !=== this."btn_back"
                     this.defaultAction();
                 },
 
                 defaultAction: function () {
-                    this._createView(Views.main, "main");
-                    this._allHide();
-
-                    this._setTagNameViewsEl("main", "#view__holder");
-                    console.log(this.views.main + "fsfsd");
-
-                    this.views.main.show();
-
-                    console.log(this.views.main.$el, "defaultAction, changed to main");
+                    Views.main.show();
                 },
 
                 scoreboardAction: function () {
-                    this._allHide();
-                    this._createView(Views.scoreboard, "scoreboard");
-
-                    this._setTagNameViewsEl("scoreboard", "#view__holder");
-                    this._setTagNameViewsEl("btnBack", "#view__btn_back");
-
-                    this.views.scoreboard.show();
-                    this.views.btnBack.show();
-
-                    console.log("scoreboardAction, Changed to scoreboard");
+                    Views.scoreboard.show();
+                    Views.btnBack.show();
                 },
 
                 gameAction: function () {
-                    this._allHide();
-                    this._createView(Views.gameAction, "game");
-
-                    this._setTagNameViewsEl("game", "#view__holder");
-                    this._setTagNameViewsEl("btnBack", "#view__btn_back");
-
-                    this.views.game.show();
-                    this.views.btnBack.show();
-
-                    console.log(this.views.game.$el, "gameAction, changed to game");
+                    Views.game.show();
+                    Views.btnBack.show();
                 },
 
                 loginAction: function () {
-                    this._allHide();
-                    this._createView(Views.login, "login");
-
-                    this._setTagNameViewsEl("login", "#view__holder");
-                    this._setTagNameViewsEl("btnBack", "#view__btn_back");
-
-                    this.views.login.show();
-                    this.views.btnBack.show();
-
-                    console.log(this.views.login.$el, "loginAction, changed to login");
+                    Views.login.show();
+                    Views.btnBack.show();
                 },
 
                 logoutAction: function() {
-                    this._createView(Views.logout, "logout");
-                    this.views.logout.onSubmitEvent();
+                    Views.logout.onSubmitEvent();
                 }
             });
 
