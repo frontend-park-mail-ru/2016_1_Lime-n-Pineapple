@@ -1,5 +1,18 @@
-#loginbox {margin-top:3.7vh}
-.panel-body {padding-top:30px}
-.input-group {margin-bottom:25px}
-.form-group {margin-top:10px}
-.sign-up-here {border-top: 1px solid#888; padding-top:10px; font-size:85%}
+/* line 3, login.scss */
+.js-form__login {
+  margin-top: 5px;
+}
+/* line 7, login.scss */
+.js-form__login .panel .panel-body > .form-group {
+  margin-top: 10px;
+}
+/* line 10, login.scss */
+.js-form__login .panel .panel-body > .form-group > .input-group {
+  padding-bottom: 20px;
+}
+/* line 14, login.scss */
+.js-form__login .panel .panel-body > .sign_up_here {
+  border-top: 1px solid #baaaaa;
+  padding-top: 10px;
+  font-size: 85%;
+}
