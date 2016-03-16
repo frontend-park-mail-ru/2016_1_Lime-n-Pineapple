@@ -6,22 +6,7 @@
                 <!--<a class="list-group-item list-group-item-success" href="#main/success">Success</a>-->
                 <!--<a class="list-group-item list-group-item-danger" href="#main/error">Error</a>-->
                 <a class="list-group-item list-group-item-success" href="#scoreboard">Scoreboard</a>
-                <a class="list-group-item list-group-item-warning" href="#login">Login</a>
+                <a class="list-group-item list-group-item-warning" id="login" href="#login">Login</a>
             </ul>
         </div>
-        <!--<div id="start" class="block">-->
-            <!--<div class="userplace">-->
-                <!--<label for="username">Имя пользователя: </label>-->
-                <!--<input type="text" id="username" />-->
-            <!--</div>-->
-            <!--<div class="buttonplace">-->
-                <!--<input type="button" class="btn z" value="Проверить" />-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div id="error" class="block">-->
-            <!--Ошибка такой пользователь не найден.-->
-        <!--</div>-->
-        <!--<div id="success" class="block">-->
-            <!--Пользователь найден.-->
-        <!--</div>-->
 </fest:template>

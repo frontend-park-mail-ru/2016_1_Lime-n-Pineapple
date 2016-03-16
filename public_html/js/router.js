@@ -10,6 +10,7 @@ define([
                     "game": "gameAction",
                     "scoreboard": "scoreboardAction",
                     "login": "loginAction",
+                    "logout": "logoutAction",
                     "*default": "defaultAction"
                 },
 
@@ -94,6 +95,11 @@ define([
                     this.views.btnBack.show();
 
                     console.log(this.views.login.$el, "loginAction, changed to login");
+                },
+
+                logoutAction: function() {
+                    this._createView(Views.logout, "logout");
+                    this.views.logout.onSubmitEvent();
                 }
 
             });
