@@ -10,7 +10,7 @@ define([
     Scores
 ){
 
-    return Backbone.View.extend({
+    var Scoreboard = Backbone.View.extend({
         template: tmpl,
 
         events: {
@@ -30,6 +30,7 @@ define([
         },
 
         show: function () {
+            this.trigger("showView");
             this.$el.show();
         },
         hide: function () {
@@ -46,5 +47,5 @@ define([
         }
 
     });
-    //return View;
+    return new Scoreboard();
 });

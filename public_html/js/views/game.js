@@ -6,7 +6,7 @@ define([
     tmpl
 ){
 
-    return Backbone.View.extend({
+    var Game = Backbone.View.extend({
 
         template: tmpl,
         initialize: function () {
@@ -16,6 +16,7 @@ define([
             // TODO
         },
         show: function () {
+            this.trigger("showView");
             // TODO
         },
         hide: function () {
@@ -23,4 +24,5 @@ define([
         }
 
     });
+    return new Game();
 });

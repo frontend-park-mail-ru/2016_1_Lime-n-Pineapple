@@ -4,13 +4,14 @@ define([
     'tmpl/login',
     'settings'
 ], function ($, Backbone, tmpl, Settings) {
-    return Backbone.View.extend({
+    var Login = Backbone.View.extend({
         template: tmpl,
         initialize: function () {
 
         },
         show: function () {
             console.log("i am in login.show()");
+            this.trigger("showView");
             this.$el.show();
         },
         hide: function () {
@@ -44,6 +45,8 @@ define([
                 .done(
                     function (e) {
                         console.log("Accepted");
+                        $("#login").text("Logout");
+                        $("#login").attr('href', "#logout");
                         Backbone.history.history.back();
                     }
                 )
@@ -54,8 +57,6 @@ define([
                     console.log(e);
                     Backbone.history.history.back();
                 });
-            $("#login").text("Logout");
-            $("#login").attr('href', "#logout");
         },
 
         render: function () {
@@ -66,6 +67,5 @@ define([
             return this;
         }
     });
-
-    //return View;
+    return new Login();
 });

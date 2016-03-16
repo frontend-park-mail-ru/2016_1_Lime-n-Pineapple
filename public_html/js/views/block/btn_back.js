@@ -11,7 +11,7 @@ define([
     tmpl
 ){
 
-    return Backbone.View.extend({
+    var BtnBack = Backbone.View.extend({
         template: tmpl,
         className: "js-btn_back",
         events: {
@@ -25,6 +25,8 @@ define([
         clickBtn: function() {
             console.log("click on back");
             Backbone.history.history.back();
+            //this.trigger("back");
+            //console.log(Backbone.history);
         },
 
         show: function () {
@@ -47,5 +49,5 @@ define([
         }
 
     });
-    //return View;
+    return new BtnBack();
 });

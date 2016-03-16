@@ -9,7 +9,7 @@ define([
         return {
             main: Main,
             scoreboard: Scoreboard,
-            gameAction: GameAction,
+            game: GameAction,
             login: Login,
             logout: Logout,
             btnBack: BtnBack
