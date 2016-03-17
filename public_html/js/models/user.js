@@ -1,7 +1,12 @@
 define(['backbone'], function (Backbone) {
     var ScoreModel = Backbone.Model.extend(
         {
-            defaults: { id: 0, name: "", score: 0},
+            defaults: {
+                id: 0,
+                name: "",
+                score: 0,
+                email:""
+            },
             initialize: function () {
                 console.log("[ScoreModel::initialize]", "initalizing...");
                 this.on("increment", function (value) {

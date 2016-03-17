@@ -4,8 +4,8 @@
 define([
     'jquery',
     'backbone',
-    'settings'
-], function ($, Backbone, Settings) {
+    '../models/session'
+], function ($, Backbone, Session) {
     var LogOut = Backbone.View.extend({
 
         initialize: function () {
@@ -23,33 +23,8 @@ define([
         onSubmitEvent: function () {
             //e.preventDefault();
             console.log("[views::logout::_onSubmitEvent()]: called");
-            var url = Settings.getActiveServerUrl() + '/api/v1/session';
-            console.log("Sending request to: " + url + " ...");
-            $.ajax(
-                {
-                    url: url,
-                    type: "delete",
-                    contentType: "application/json",
-                    dataType: "json"
-                }
-            )
-                .done(
-                function (e) {
-                    console.log("Accepted");
-                    $("#login").text("Login");
-                    $("#login").attr('href', "#login");
-                    Backbone.history.history.back();
-                }
-            )
-                .fail(function (req, err, e) {
-                    console.log("Failed to fetch request");
-                    console.log(req);
-                    console.log(err);
-                    console.log(e);
-                    Backbone.history.history.back();
-                });
-
-            console.log("logout change");
+            //console.log("Sending request to: " + url + " ...");
+            Session.logout({});
         },
 
         render: function () {
