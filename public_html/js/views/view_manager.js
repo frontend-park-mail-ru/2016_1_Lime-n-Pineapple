@@ -6,9 +6,8 @@ define([
 ], function(Backbone){
 
     var ViewManager = Backbone.View.extend({
-        views : [],
         initialize : function(){
-            //this.views = [];
+            this.views = [];
         },
 
         add: function(view){
@@ -30,7 +29,6 @@ define([
                 view.hide();
             });
         }
-
 
     });
     return new ViewManager();

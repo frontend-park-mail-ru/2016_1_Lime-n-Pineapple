@@ -2,8 +2,8 @@ define([
     'jquery',
     'backbone',
     'tmpl/login',
-    'settings'
-], function ($, Backbone, tmpl, Settings) {
+    '../models/session'
+], function ($, Backbone, tmpl, Session) {
     var Login = Backbone.View.extend({
         template: tmpl,
         initialize: function () {
@@ -24,39 +24,16 @@ define([
             var $form = $(this),
                 login = $form.find("input[name='username']").val(),
                 password = $form.find("input[name='password']").val();
-            // Send the data using post
-            var url = Settings.getActiveServerUrl() + '/api/v1/session';
-            console.log("Sending request to: " + url + " ...");
+
+            //console.log("Sending request to: " + url + " ...");
             var reqObj = {
                 "login": login,
                 "password": password
             };
             console.log("Login: ", login, "Password: ", password, "Request object: ", reqObj);
             console.log("Request parsed as JSON: ", JSON.stringify(reqObj));
-            $.ajax(
-                {
-                    url: url,
-                    type: "put",
-                    contentType: "application/json",
-                    data: JSON.stringify(reqObj),
-                    dataType: "json"
-                }
-            )
-                .done(
-                    function (e) {
-                        console.log("Accepted");
-                        $("#login").text("Logout");
-                        $("#login").attr('href', "#logout");
-                        Backbone.history.history.back();
-                    }
-                )
-                .fail(function (req, err, e) {
-                    console.log("Failed to fetch request");
-                    console.log(req);
-                    console.log(err);
-                    console.log(e);
-                    Backbone.history.history.back();
-                });
+
+            Session.login(reqObj);
         },
 
         render: function () {

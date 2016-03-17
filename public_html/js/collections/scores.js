@@ -1,7 +1,7 @@
 define([
     'underscore',
     'backbone',
-    '../models/score'
+    '../models/user'
 ], function(
     _,
     Backbone,
