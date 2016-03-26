@@ -20,7 +20,9 @@ require.config({
 });
 
 var tests = [
-    'models/score.test'
+    'models/score.test',
+    'models/score.test',
+    'models/session.test'
 ], deps = [
     'qunit'
 ];
