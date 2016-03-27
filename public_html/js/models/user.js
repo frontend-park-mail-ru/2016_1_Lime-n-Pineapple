@@ -1,11 +1,13 @@
 define(['backbone'], function (Backbone) {
-    var ScoreModel = Backbone.Model.extend(
+    var User = Backbone.Model.extend(
         {
             defaults: {
                 id: 0,
                 name: "",
+                login: "",
                 score: 0,
-                email:""
+                email:"",
+                logged_in: false
             },
             initialize: function () {
                 console.log("[ScoreModel::initialize]", "initalizing...");
@@ -15,5 +17,5 @@ define(['backbone'], function (Backbone) {
             }
         }
     );
-    return ScoreModel;
+    return User;
 });

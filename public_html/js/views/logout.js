@@ -24,7 +24,10 @@ define([
             //e.preventDefault();
             console.log("[views::logout::_onSubmitEvent()]: called");
             //console.log("Sending request to: " + url + " ...");
-            Session.logout({});
+            var reqObj = {
+                "login": Session.getUser().login
+            };
+            Session.logout(reqObj);
         },
 
         render: function () {

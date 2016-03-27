@@ -3,9 +3,10 @@ define([
         'underscore',
         'backbone',
         'views/all_views',
-        'views/view_manager'
+        'views/view_manager',
+        'models/session'
 ],
-    function ($, underscore, Backbone, Views, VM) {
+    function ($, underscore, Backbone, Views, VM, Session) {
         VM.addArray([
             Views.main,
             Views.scoreboard,
@@ -32,6 +33,7 @@ define([
                 },
 
                 initialize: function () {
+
                     this._setTagNameViewsEl(Views.btnBack, "#view__btn_back");
                     this._setTagNameViewsEl(Views.game, "#view__holder");
                     this._setTagNameViewsEl(Views.main, "#view__holder");
