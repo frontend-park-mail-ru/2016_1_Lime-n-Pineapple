@@ -2,13 +2,14 @@ define([
     'jquery',
     'backbone',
     'tmpl/login',
-    '../models/session'
-], function ($, Backbone, tmpl, Session) {
+    '../models/session',
+    'views/users_manager'
+], function ($, Backbone, tmpl, Session, UsersManager) {
     var Login = Backbone.View.extend({
         template: tmpl,
         initialize: function () {
-
         },
+
         show: function () {
             console.log("i am in login.show()");
             this.trigger("showView");
@@ -32,7 +33,6 @@ define([
             };
             console.log("Login: ", login, "Password: ", password, "Request object: ", reqObj);
             console.log("Request parsed as JSON: ", JSON.stringify(reqObj));
-
             Session.login(reqObj);
         },
 
