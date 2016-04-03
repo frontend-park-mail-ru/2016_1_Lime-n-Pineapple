@@ -1,18 +1,97 @@
 /* TODO */
 
+@font-face {
+    font-family: cookiesmilk; /* Гарнитура шрифта */
+    src: url(../fonts/cookiesmilk-Regular.ttf); /* Путь к файлу со шрифтом */
+}
 
-#view__top
-{
-    background: url("../static/top.gif") no-repeat center;
-    position: relative;
-    margin: 0 auto;
-    width: 860px;
-    height: 200px;
+@font-face {
+    font-family: orangettf; /* Гарнитура шрифта */
+    src: url(../fonts/orange%20juice%202.0.ttf); /* Путь к файлу со шрифтом */
 }
 
 
+body {
+    background-image: url(../static/clearmain.png) ;
+    -moz-background-size: 100%; /* Firefox 3.6+ */
+    -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+    -o-background-size: 100%; /* Opera 9.6+ */
+    background-size: 100%; /* Современные браузеры */
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    /*background-attachment: fixed;*/
 
-.list-group-item, #btn-back
+}
+
+
+#view__top
+{
+    position: relative;
+    margin: 0 auto;
+    font-family: orangettf;
+    font-size: 10vh;
+    color: #63323E;
+    /*align-content: center;*/
+}
+
+#menu {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.round-button
+{
+    width: 20%;
+}
+
+.menu__row {
+    display:block;
+
+}
+
+.btn-circle.btn-xl {
+    width: 19vh;
+    height: 19vh;
+    text-align:center;
+    display:inline-block;
+    padding: 17% 0;
+    margin-left:15px;
+    box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
+    font-family: cookiesmilk;
+    font-size: 3em;
+    line-height: 1.1em;
+    color: #ffffff;
+    background-color: #63323E;
+    border-radius: 50%;
+    position: relative;
+    -webkit-border-radius: 28gd;
+    -moz-border-radius: 28gd;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+    -moz-opacity: 0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.85;
+
+}
+.btn-circle.btn-xl:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+
+#btn-back
 {
     background: #f0e222;
     background-image: -webkit-linear-gradient(top, #f0e222, #2a86bf);

@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru">
-        <div id="menu" class="center-block" style="width: 60%"> <!-- Блок меню -->
+        <div id="menu" class="conteiner center-block" > <!-- Блок меню -->
+            <div class="row menu__row">
             <ul class="list-group text-center">
-                <a class="list-group-item" href="#game">Start</a>
-                <a class="list-group-item" href="#scoreboard">Scoreboard</a>
-                <a class="list-group-item" id="login" href="#login">Login</a>
+                <a class=" btn-circle btn-xl" href="#game">Start</a>
+                <a class=" btn-circle btn-xl" href="#scoreboard">Scores</a>
+                <!--<a class="list-group-item" id="login" href="#login">Login</a>-->
             </ul>
+            </div>
         </div>
 </fest:template>

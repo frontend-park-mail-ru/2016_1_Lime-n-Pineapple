@@ -54,7 +54,7 @@ define([
 
                 gameAction: function () {
                     Views.game.show();
-                    Views.btnBack.show();
+                    //Views.btnBack.show();
                 },
 
                 loginAction: function () {
