@@ -5,6 +5,7 @@ require.config({
         jquery: "lib/jquery",
         underscore: "lib/underscore",
         backbone: "lib/backbone",
+        pixi: "lib/pixi",
         settings: "settings"
     },
     shim: {
