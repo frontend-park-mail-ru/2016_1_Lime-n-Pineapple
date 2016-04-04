@@ -10,6 +10,9 @@ module.exports = function (grunt) {
             options: {
                 stdout: true,
                 stderr: true
+            //},
+            //server: {
+            //    command: 'node server.js'
             }
         },
         fest: {
