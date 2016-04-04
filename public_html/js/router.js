@@ -53,8 +53,9 @@ define([
                 },
 
                 gameAction: function () {
+                    //this.trigger("clickStart");
+                    //Views.game._onSubmitEvent();
                     Views.game.show();
-                    //Views.btnBack.show();
                 },
 
                 loginAction: function () {

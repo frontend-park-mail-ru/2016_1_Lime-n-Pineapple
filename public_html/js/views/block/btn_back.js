@@ -13,7 +13,6 @@ define([
 
     var BtnBack = Backbone.View.extend({
         template: tmpl,
-        className: "js-btn_back",
         events: {
             "click": 'clickBtn'
         },
@@ -44,7 +43,7 @@ define([
         render: function () {
             console.log("btn_back.render was called");
             console.log(this.$el);
-            this.$el.html(this.template({}));
+            this.$el.html(this.template());
             return this;
         }
 

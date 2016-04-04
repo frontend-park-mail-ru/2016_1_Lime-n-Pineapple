@@ -3,9 +3,10 @@
         <div id="menu" class="conteiner center-block" > <!-- Блок меню -->
             <div class="row menu__row">
             <ul class="list-group text-center">
-                <a class=" btn-circle btn-xl" href="#game">Start</a>
+                <a id="start" class=" controls btn-circle btn-xl" type="submit" href="#game">Start</a>
+                <!--<button id="start" type="submit" class="btn" style="text-decoration: none">Start</button>-->
                 <a class=" btn-circle btn-xl" href="#scoreboard">Scores</a>
-                <!--<a class="list-group-item" id="login" href="#login">Login</a>-->
+                <a class=" btn-circle btn-xl" id="login" href="#login">Login</a>
             </ul>
             </div>
         </div>

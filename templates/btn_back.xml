@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru">
-    <button id="btn-back" type="submit" class="btn btn-default center-block">Back</button>
+    <button id="btn-back"  class="btn-circle btn-lg ">Back</button>
 </fest:template>

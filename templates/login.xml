@@ -3,56 +3,22 @@
     <style type="text/css">
         <fest:insert src="../public_html/css/login.css"/>
     </style>
-    <div class="js-form__login center-block text-center">
-        <div class="panel panel-info" >
-            <div class="panel-heading">
-                <div class="panel-title">Sign In</div>
-            </div>
+    <form class="center-block text-center">
+        <p><lable><input id="login-username" type="login"  class="form-control input-field center-block" name="username" value="" placeholder="email" required="required"></input></lable></p>
+        <p><lable><input id="login-password" type="password" value="" class="form-control input-field center-block" name="password" placeholder="Your magical password" required="required" >
+            <fest:attributes>
+                <fest:attribute name="pattern">
+                .{3,}
+                </fest:attribute>
+            </fest:attributes></input></lable></p>
 
-            <div class="panel-body" >
+        <div class="form-group">
 
-                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12" />
-
-                <form id="loginform" class="form-horizontal form-group" role="form">
-
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"/></span>
-                        <input id="login-username" type="login"  class="form-control" name="username" value="" placeholder="email" required="required" />
-                    </div>
-
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"/></span>
-
-                        <input id="login-password" type="password" value="" class="form-control" name="password" placeholder="Your magical password" required="required" >
-                            <fest:attributes>
-                                <fest:attribute name="pattern">
-                                    .{3,}
-                                </fest:attribute>
-                            </fest:attributes>
-                        </input>
-                    </div>
-
-                    <div class="form-group">
-
-                        <div class="col-sm-12 controls">
-                            <button id="btn-login" type="submit" class="btn btn-success" style="text-decoration: none">Login</button>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-12 control">
-                            <div class="sign_up_here" >
-                                Don't have an account?
-                                <fest:space/>
-                                <a class="link control" href="#">
-                                    Sign up here!
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
+            <div class="col-sm-12 controls">
+                <button id="btn-login" type="submit" class="btn btn-success" style="text-decoration: none">Login</button>
             </div>
         </div>
-    </div>
+
+
+    </form>
 </fest:template>

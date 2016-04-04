@@ -29,20 +29,26 @@ define([
             },
 
             checkAuth: function() {
+                console.log("[Session::checkAuth()]: before start");
                 var self = this;
-                this.fetch({
-                    success: function(mod, res){
-                        if(!res.error && res.user){
-                            self.updateSessionUser(res.user);
-                            self.set({ logged_in : true });
-                        } else {
-                            self.set({ logged_in : false });
-                        }
-                    }, error:function(mod, res){
-                        self.set({ logged_in : false });
-                    }
-                }).complete( function(){
-                });
+                //this.fetch({
+                //    success: function(mod, res){
+                //        if(!res.error && res.user){
+                //            self.updateSessionUser(res.user);
+                //            self.set({ logged_in : true });
+                //        } else {
+                //            self.set({ logged_in : false });
+                //            this.trigger("loginAction");
+                //        }
+                //    }, error:function(mod, res){
+                //        self.set({ logged_in : false });
+                //    }
+                //}).complete( function(){
+                //});
+                if (!self.user.logged_in) {
+                    console.log("[Session::checkAuth()]: before start");
+                    this.trigger("#loginAction");
+                }
             },
 
 
