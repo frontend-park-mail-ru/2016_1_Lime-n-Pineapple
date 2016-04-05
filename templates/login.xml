@@ -1,11 +1,8 @@
 <?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru">
-    <style type="text/css">
-        <fest:insert src="../public_html/css/login.css"/>
-    </style>
     <form class="center-block text-center">
-        <p><lable><input id="login-username" type="login"  class="form-control input-field center-block" name="username" value="" placeholder="email" required="required"></input></lable></p>
-        <p><lable><input id="login-password" type="password" value="" class="form-control input-field center-block" name="password" placeholder="Your magical password" required="required" >
+        <p><lable><input id="login-username" type="login" class="form-control login-form__input-field center-block" name="username" value="sasay@mail.ru" placeholder="email" required="required"></input></lable></p>
+        <p><lable><input id="login-password" type="password" value="" class="form-control login-form__input-field center-block" name="password" placeholder="Your magical password" required="required" >
             <fest:attributes>
                 <fest:attribute name="pattern">
                 .{3,}
@@ -13,12 +10,9 @@
             </fest:attributes></input></lable></p>
 
         <div class="form-group">
-
             <div class="col-sm-12 controls">
-                <button id="btn-login" type="submit" class="btn btn-success" style="text-decoration: none">OK</button>
+                <button id="login-form__btn-success" type="submit" class="btn btn-success" style="text-decoration: none">OK</button>
             </div>
         </div>
-
-
     </form>
 </fest:template>

@@ -12,14 +12,17 @@ define([
     var Main = Backbone.View.extend({
         template: tmpl,
 
+        events:{
+          'click #start': '_onSubmitEvent'
+        },
+
         initialize: function () {
-            $('#start').bind('clickStart', this._onSubmitEvent);
-            this.on('clickStart', this._onSubmitEvent);
         },
 
         show: function () {
             console.log("[!] Main.show() is called");
             this.trigger("showView", this);
+            }
         },
 
         _onSubmitEvent: function () {

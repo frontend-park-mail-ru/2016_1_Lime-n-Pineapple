@@ -32,6 +32,8 @@ define([
 
         show: function () {
             this.trigger("showView", this);
+                this.render();
+            }
         },
         hide: function () {
             this.$el.hide();
