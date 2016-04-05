@@ -17,10 +17,9 @@ define([
             },
 
             initialize: function () {
-                UsersManager.attachEvent(this);
-                //_.bindAll(this);
+                //UsersManager.attachEvent(this);
                 this.user = new UserModel();
-                this.trigger("createUser", [this.user]);
+                this.trigger("createUser", this.user);
                 console.log("[Session::initialize()]: begin to create" );
             },
 
@@ -55,12 +54,11 @@ define([
 
             login: function(opts){
                 console.log("session login func" + this.user.url());
+                var self = this;
                 this.user.save({login: opts.login, password: opts.password, logged_in: true}, {
                     success: function(model, res){
                         console.log("SUCCESS");
-                        this.user.set({logged_in: true, login: opts.login});
-                        //$("#login").text("Logout");
-                        //$("#login").attr('href', "#logout");
+                        self.user.set({logged_in: true, login: opts.login});
                         Backbone.history.history.back();
                         return true;
                     },
@@ -73,11 +71,10 @@ define([
             },
 
             logout: function(){
+                var self = this;
                 this.user.save({login: this.user.login}, {
                     success: function(model, res){
-                        this.user.set({logged_in: false, login: ""});
-                        //$("#login").text("Login");
-                        //$("#login").attr('href', "#login");
+                        self.user.set({logged_in: false, login: ""});
                         Backbone.history.history.back();
                         return true;
                     },

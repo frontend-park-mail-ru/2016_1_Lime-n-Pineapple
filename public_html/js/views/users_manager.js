@@ -11,6 +11,7 @@ define([
         initialize: function(){
             console.log("in UsersManager initialize");
             this.usersCollection = new CollectionUsers();
+            this.on("createUser", this.add);
         },
 
         attachEvent: function(model){

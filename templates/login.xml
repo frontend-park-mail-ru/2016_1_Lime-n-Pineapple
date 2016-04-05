@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru">
-    <style type="text/css">
-        <fest:insert src="../public_html/css/login.css"/>
-    </style>
     <form class="center-block text-center">
         <p><lable><input id="login-username" type="login" class="form-control login-form__input-field center-block" name="username" value="sasay@mail.ru" placeholder="email" required="required"></input></lable></p>
         <p><lable><input id="login-password" type="password" value="" class="form-control login-form__input-field center-block" name="password" placeholder="Your magical password" required="required" >

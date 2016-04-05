@@ -16,6 +16,9 @@ define([
         },
 
         show: function () {
+            if (!this.$el.html()){
+                this.render();
+            }
             console.log("i am in login.show()");
             this.trigger("showView");
             this.$el.show();

@@ -30,6 +30,9 @@ define([
         },
 
         show: function () {
+            if (!this.$el.html()){
+                this.render();
+            }
             this.trigger("showView");
             this.$el.show();
         },

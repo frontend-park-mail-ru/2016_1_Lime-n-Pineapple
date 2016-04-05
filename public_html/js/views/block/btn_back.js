@@ -29,6 +29,9 @@ define([
         },
 
         show: function () {
+            if (!this.$el.html()){
+                this.render();
+            }
             console.log("i am here, in btn.show()");
             console.log(this);
             console.log(this.$el);

@@ -12,7 +12,6 @@ define([
             Views.scoreboard,
             Views.game,
             Views.login,
-            Views.logout,
             Views.btnBack
         ]);
 
@@ -28,7 +27,6 @@ define([
                 _setTagNameViewsEl: function (view, wantTagName) {
                     if (view !== undefined && (view.$el.tagName === undefined || (wantTagName && wantTagName.isString()))) {
                             view.$el.appendTo($(wantTagName));
-                            view.render();
                     }
                 },
 
@@ -39,7 +37,6 @@ define([
                     this._setTagNameViewsEl(Views.main, "#page__view-holder");
                     this._setTagNameViewsEl(Views.scoreboard, "#page__view-holder");
                     this._setTagNameViewsEl(Views.login, "#page__view-holder");
-                    // this["btn_back"] ==== this.btn_back !=== this."btn_back"
                     this.defaultAction();
                 },
 
@@ -53,8 +50,6 @@ define([
                 },
 
                 gameAction: function () {
-                    //this.trigger("clickStart");
-                    //Views.game._onSubmitEvent();
                     Views.game.show();
                 },
 
@@ -64,7 +59,7 @@ define([
                 },
 
                 logoutAction: function() {
-                    Views.logout.onSubmitEvent();
+                    Session.logout();
                 }
             });
 
