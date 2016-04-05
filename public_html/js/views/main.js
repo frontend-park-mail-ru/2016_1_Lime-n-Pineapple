@@ -2,13 +2,11 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    '../models/session',
     'tmpl/main_page'
 ], function(
     $,
     _,
     Backbone,
-    Session,
     tmpl
 ){
     var Main = Backbone.View.extend({
@@ -20,15 +18,14 @@ define([
         },
 
         show: function () {
-            this.trigger("showView");
-            this.$el.show();
-            console.log(this.$el);
+            console.log("[!] Main.show() is called");
+            this.trigger("showView", this);
         },
 
         _onSubmitEvent: function () {
             //e.preventDefault();
             console.log("[views::main::_onSubmitEvent()]: called");
-            Session.checkAuth();
+            //Session.checkAuth();
         },
 
 

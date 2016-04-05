@@ -8,7 +8,7 @@ define([
                 img: ""
             },
             initialize: function (model) {
-                console.log("Card initialize");
+                console.log("Card initialized");
                 this.img = model.img;
                 this.name = model.name;
             }

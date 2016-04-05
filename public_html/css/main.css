@@ -1,18 +1,24 @@
-@import "_layout";
+@charset "UTF-8";
+@font-face {
+  font-family: "cookiesMilk";
+  src: url("/fonts/cookiesMilk-Regular.ttf"); }
+@font-face {
+  font-family: "orangeJuice";
+  src: url("/fonts/orangeJuice-20.ttf");
+  /* ╨Я╤Г╤В╤М ╨║ ╤Д╨░╨╣╨╗╤Г ╤Б╨╛ ╤И╤А╨╕╤Д╤В╨╛╨╝ */ }
+body {
+  margin: 0;
+  background-image: url("/static/clearmain.png");
+  background-size: 100%;
+  background-attachment: fixed; }
 
-
-
-
-
-#view__top
-{
+#view__top {
   position: relative;
   margin: 0 auto;
-  font-family: $titleFontFamily;
+  font-family: "orangeJuice", "Century Gothic", sans-serif;
   font-size: 10vh;
   color: #63223E;
-  /*align-content: center;*/
-}
+  /*align-content: center;*/ }
 
 #menu {
   width: 100%;
@@ -23,28 +29,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: auto;
-}
+  overflow: auto; }
 
-.round-button
-{
-  width: 20%;
-}
+.round-button {
+  width: 20%; }
 
 .menu__row {
-  display:block;
-
-}
+  display: block; }
 
 .btn-circle.btn-lg {
   width: 14vh;
   height: 14vh;
-  text-align:center;
+  text-align: center;
   /*display:inline-block;*/
   padding: 5% 0;
-  margin-left:15px;
-  box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
-  font-family: $captionFontFamily;
+  margin-left: 15px;
+  box-shadow: 2px 4px 0 2px rgba(0, 0, 0, 0.1);
+  font-family: "cookiesMilk", "Century Gothic", sans-serif;
   font-size: 3em;
   line-height: 1.1em;
   color: #ffffff;
@@ -53,23 +54,19 @@
   position: relative;
   -webkit-border-radius: 28gd;
   -moz-border-radius: 28gd;
-  opacity: 0.85;
-
-}
+  opacity: 0.85; }
 
 .btn-circle.btn-lg:hover {
-  background: #802929;
-
-}
+  background: #802929; }
 
 .btn-circle.btn-xl {
   width: 19vh;
   height: 19vh;
-  text-align:center;
-  display:inline-block;
+  text-align: center;
+  display: inline-block;
   padding: 10% 0;
-  margin-left:15px;
-  box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
+  margin-left: 15px;
+  box-shadow: 2px 4px 0 2px rgba(0, 0, 0, 0.1);
   font-family: cookiesmilk, "Century Gothic", sans-serif;
   font-size: 3em;
   line-height: 1.1em;
@@ -77,8 +74,7 @@
   background-color: #63323E;
   border-radius: 50%;
   position: relative;
-  opacity: 0.85;
-}
+  opacity: 0.85; }
 
 /*
 .btn-circle.btn-xl:hover {
@@ -101,3 +97,5 @@
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
 } */
+
+/*# sourceMappingURL=main.css.map */

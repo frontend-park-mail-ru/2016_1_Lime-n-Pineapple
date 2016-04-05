@@ -1,19 +1,18 @@
+'use strict';
 define([
     'jquery',
     'backbone',
     'tmpl/login',
-    '../models/session',
-    'views/users_manager'
-], function ($, Backbone, tmpl, Session, UsersManager) {
+    'settings'
+], function ($, Backbone, tmpl, Settings) {
     var Login = Backbone.View.extend({
         template: tmpl,
         initialize: function () {
         },
 
         show: function () {
-            console.log("i am in login.show()");
-            this.trigger("showView");
-            this.$el.show();
+            console.log("[Login::show()] show triggered event");
+            this.trigger(Settings.VIEWMANAGER_SHOW_EVENT, this);
         },
         hide: function () {
             this.$el.hide();
@@ -33,7 +32,8 @@ define([
             };
             console.log("Login: ", login, "Password: ", password, "Request object: ", reqObj);
             console.log("Request parsed as JSON: ", JSON.stringify(reqObj));
-            Session.login(reqObj);
+            // HUITA
+            //Session.login(reqObj);
         },
 
         render: function () {

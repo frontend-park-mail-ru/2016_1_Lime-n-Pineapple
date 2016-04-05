@@ -1,6 +1,4 @@
-/**
- * Created by leegheid on 16.03.16.
- */
+'use strict';
 define([
     'jquery',
     'backbone',
@@ -13,8 +11,7 @@ define([
         },
         show: function () {
             console.log("i am in login.show()");
-            this.trigger("showView");
-            this.$el.show();
+            this.trigger("showView", this);
         },
         hide: function () {
             this.$el.hide();

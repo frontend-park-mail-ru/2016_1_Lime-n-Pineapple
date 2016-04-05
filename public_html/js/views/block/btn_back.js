@@ -1,6 +1,4 @@
-/**
- * Created by leegheid on 01.03.16.
- */
+'use strict';
 define([
     'jquery',
     'backbone',
@@ -29,10 +27,7 @@ define([
         },
 
         show: function () {
-            console.log("i am here, in btn.show()");
-            console.log(this);
-            console.log(this.$el);
-            this.$el.show();
+            this.trigger("showView", this);
         },
 
 

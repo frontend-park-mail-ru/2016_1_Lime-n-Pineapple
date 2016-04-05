@@ -16,8 +16,7 @@ define([
         },
 
         show: function () {
-            this.trigger("showView");
-            this.$el.show();
+            this.trigger("showView", this);
         },
 
         hide: function () {

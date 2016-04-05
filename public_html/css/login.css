@@ -1,39 +1,12 @@
-.input-field {
-  width: 40vh;
-  /*height: 19vh;*/
-  text-align:center;
-  border:4px solid #63223E;
-   border-radius: 40%;
-  /*position: relative;*/
-  -webkit-border-radius: 28gd;
-  -moz-border-radius: 28gd;
-  filter:progid:DXImageTransform.Microsoft.Alpha(opacity=50);
-  -moz-opacity: 0.5;
-  -khtml-opacity: 0.5;
-  opacity: 0.65;
+.js-form__login {
+  margin-top: 5px; }
+  .js-form__login .panel .panel-body > .form-group {
+    margin-top: 10px; }
+    .js-form__login .panel .panel-body > .form-group > .input-group {
+      padding-bottom: 20px; }
+  .js-form__login .panel .panel-body > .sign_up_here {
+    border-top: 1px solid #baaaaa;
+    padding-top: 10px;
+    font-size: 85%; }
 
-}
-
-#btn-login
-{
-  width: 12vh;
-  height: 12vh;
-  text-align:center;
-  /*display:inline-block;*/
-  padding: 5% 0;
-  margin-left:15px;
-  box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
-  font-family: cookiesmilk;
-  font-size: 3em;
-  line-height: 1.1em;
-  color: #ffffff;
-  background-color: #63323E;
-  border-radius: 50%;
-  position: relative;
-  -webkit-border-radius: 28gd;
-  -moz-border-radius: 28gd;
-  filter:progid:DXImageTransform.Microsoft.Alpha(opacity=50);
-  -moz-opacity: 0.5;
-  -khtml-opacity: 0.5;
-  opacity: 0.75;
-}
+/*# sourceMappingURL=login.css.map */

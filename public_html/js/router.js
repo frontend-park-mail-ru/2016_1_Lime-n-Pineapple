@@ -1,10 +1,12 @@
+'use strict';
 define([
         'jquery',
         'underscore',
         'backbone',
-        'views/all_views',
-        'views/view_manager',
-        'models/session'
+        'views/allViews',
+        'controllers/viewManager-es5',
+        'models/session',
+        'controllers/eventBus-es5'
 ],
     function ($, underscore, Backbone, Views, VM, Session) {
         VM.addArray([
@@ -33,13 +35,11 @@ define([
                 },
 
                 initialize: function () {
-
                     this._setTagNameViewsEl(Views.btnBack, "#view__btn_back");
                     this._setTagNameViewsEl(Views.game, "#view__holder");
                     this._setTagNameViewsEl(Views.main, "#view__holder");
                     this._setTagNameViewsEl(Views.scoreboard, "#view__holder");
                     this._setTagNameViewsEl(Views.login, "#view__holder");
-                    // this["btn_back"] ==== this.btn_back !=== this."btn_back"
                     this.defaultAction();
                 },
 
@@ -53,8 +53,6 @@ define([
                 },
 
                 gameAction: function () {
-                    //this.trigger("clickStart");
-                    //Views.game._onSubmitEvent();
                     Views.game.show();
                 },
 

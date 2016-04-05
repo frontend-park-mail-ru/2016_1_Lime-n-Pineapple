@@ -1,3 +1,4 @@
+'use strict';
 define([
     'jquery',
     'backbone',
@@ -21,7 +22,7 @@ define([
         initialize: function () {
             this.collection = new Scores();
             var i;
-            for (i = 0; i < 3; i++) {
+            for (i = 0; i < 3; i+=1) {
                 this.collection.add({name: "Тим", score: 55});
                 this.collection.add({name: "Ида", score: 6});
                 this.collection.add({name: "Роб", score: 545});
@@ -30,8 +31,7 @@ define([
         },
 
         show: function () {
-            this.trigger("showView");
-            this.$el.show();
+            this.trigger("showView", this);
         },
         hide: function () {
             this.$el.hide();

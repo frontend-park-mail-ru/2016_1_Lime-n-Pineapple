@@ -1,0 +1,14 @@
+@import "_fonts";
+@import "_colors";
+
+$bgImageUrl: "/static/clearmain.png";
+
+
+
+
+body {
+  margin: 0;
+  background-image: url($bgImageUrl);
+  background-size: 100%;
+  background-attachment: fixed;
+}

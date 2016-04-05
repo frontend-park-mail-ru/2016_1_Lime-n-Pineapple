@@ -1,9 +1,10 @@
-/**
- * Created by leegheid on 16.03.16.
- */
+'use strict';
+
 define([
-    'backbone'
-], function(Backbone){
+    'underscore',
+    'backbone',
+    'settings'
+], function(_, Backbone, Settings){
 
     var ViewManager = Backbone.View.extend({
         initialize : function(){
@@ -12,21 +13,25 @@ define([
 
         add: function(view){
             this.views.push(view);
-            this.listenTo(view, "showView", this.hide);
+            this.listenTo(view, Settings.VIEWMANAGER_SHOW_EVENT, ( view ) => {
+                console.log("[ViewManager::add::listenTo] Triggered!");
+                this.hide(view);
+                this.$el.show();
+            } );
         },
 
         addArray : function(array){
             var self = this;
-            console.log(self.views);
             _.each(array,function(view){
-                self.views.push(view);
-                self.listenTo(view, "showView", self.hide);
-            });
+                this.add(view);
+            }, this);
         },
 
-        hide: function () {
+        hide: function (exceptThisView) {
             _.each(this.views, function(view){
-                view.hide();
+                if (view !== exceptThisView) {
+                    view.hide();
+                }
             });
         }
 
