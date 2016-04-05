@@ -35,10 +35,10 @@ define([
                 initialize: function () {
 
                     this._setTagNameViewsEl(Views.btnBack, "#view__btn_back");
-                    this._setTagNameViewsEl(Views.game, "#view__holder");
-                    this._setTagNameViewsEl(Views.main, "#view__holder");
-                    this._setTagNameViewsEl(Views.scoreboard, "#view__holder");
-                    this._setTagNameViewsEl(Views.login, "#view__holder");
+                    this._setTagNameViewsEl(Views.game, "#page__view-holder");
+                    this._setTagNameViewsEl(Views.main, "#page__view-holder");
+                    this._setTagNameViewsEl(Views.scoreboard, "#page__view-holder");
+                    this._setTagNameViewsEl(Views.login, "#page__view-holder");
                     // this["btn_back"] ==== this.btn_back !=== this."btn_back"
                     this.defaultAction();
                 },

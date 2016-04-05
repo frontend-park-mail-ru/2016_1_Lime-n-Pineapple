@@ -21,19 +21,8 @@ define([
         },
 
         onSubmitEvent: function () {
-            //e.preventDefault();
             console.log("[views::logout::_onSubmitEvent()]: called");
-            //console.log("Sending request to: " + url + " ...");
-            var reqObj = {
-                "login": Session.getUser().login
-            };
-            Session.logout(reqObj);
-        },
-
-        render: function () {
-            console.log("[views::logout::render()]: called");
-            console.log(this.$el);
-            return this;
+            Session.logout();
         }
     });
     return new LogOut();

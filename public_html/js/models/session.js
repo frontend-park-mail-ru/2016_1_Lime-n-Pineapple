@@ -47,7 +47,8 @@ define([
                 //});
                 if (!self.user.logged_in) {
                     console.log("[Session::checkAuth()]: before start");
-                    this.trigger("#loginAction");
+                    //this.trigger("#loginAction");
+                    Backbone.history.navigate("login", true);
                 }
             },
 
@@ -58,24 +59,27 @@ define([
                     success: function(model, res){
                         console.log("SUCCESS");
                         this.user.set({logged_in: true, login: opts.login});
-                        $("#login").text("Logout");
-                        $("#login").attr('href', "#logout");
+                        //$("#login").text("Logout");
+                        //$("#login").attr('href', "#logout");
                         Backbone.history.history.back();
+                        return true;
                     },
                     error: function(model, res){
                         console.log("NOTSUCCESS");
                         Backbone.history.history.back();
+                        return true; // must be false, when front will be use backend
                     }
                 });
             },
 
-            logout: function(opts){
-                this.user.save({login: opts.login}, {
+            logout: function(){
+                this.user.save({login: this.user.login}, {
                     success: function(model, res){
                         this.user.set({logged_in: false, login: ""});
-                        $("#login").text("Login");
-                        $("#login").attr('href', "#login");
+                        //$("#login").text("Login");
+                        //$("#login").attr('href', "#login");
                         Backbone.history.history.back();
+                        return true;
                     },
                     error: function(model, res){
                         Backbone.history.history.back();
