@@ -15,7 +15,6 @@ define([
                 Backbone.history.navigate("/", true);
             },
                 'submit' : '_onSubmitEvent'
-
             },
 
             // don't work// must to ask

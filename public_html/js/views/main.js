@@ -26,7 +26,6 @@ define([
                 $("#login").attr('href', "#logout");
             });
         },
-
         navigate: function (e) {
             Backbone.history.navigate($(e.target).attr("href"), true);
         }

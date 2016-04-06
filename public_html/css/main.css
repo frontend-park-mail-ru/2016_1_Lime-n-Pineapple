@@ -64,7 +64,7 @@ body {
   border: none;
   color: white;
   background-color: #63323E;
-<<<<<<< HEAD
+
   opacity: 0.85; }
   .btn-circle.btn-xl {
     width: 20vh;
@@ -90,7 +90,7 @@ body {
     cursor: pointer; }
 
 /*# sourceMappingURL=main.css.map */
-=======
+
   opacity: 0.85;
 }
 /* line 69, ../scss/main.scss */
@@ -229,4 +229,3 @@ body {
   -webkit-transform: rotate(35deg);
   transform: rotate(35deg);
 }
->>>>>>> 442d6c3609840ec3c471248069f9fa6908121b85
