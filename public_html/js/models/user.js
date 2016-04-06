@@ -13,7 +13,7 @@ define([
                     logged_in: false
                 },
                 initialize: function () {
-                    console.log("[ScoreModel::initialize]", "initalizing...");
+                    console.log("[User::initialize] initalizing...");
                 }
             }
         );

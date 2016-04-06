@@ -1,5 +1,5 @@
 define(
-    ['underscore', 'jquery', 'require', 'backbone', 'qunit', 'models/user'],
+    ['underscore', 'jquery', 'require', 'backbone', 'qunit', 'models/userScore'],
     function (_, $, require, Backbone, QUnit, ScoreModel) {
         QUnit.module("models/score");
         QUnit.test("ScoreModel - экземпляр Backbone.Model", function () {
