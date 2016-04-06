@@ -9,7 +9,7 @@ define([
             main: Main,
             scoreboard: Scoreboard,
             game: GameAction,
-            login: Login,
+            login: Login
         };
     }
 );

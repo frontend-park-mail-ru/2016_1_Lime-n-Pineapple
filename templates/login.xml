@@ -19,7 +19,7 @@
                 </input>
             </fieldset>
             <div class="form-group inline-group">
-                <button id="login-form__btn-success"
+                <button id="login-form__tn-success"
                      type="submit" role="button" class="btn-circle btn-lg" style="text-decoration: none">OK</button>
                 <fest:include src="./btn_back.xml"/>
             </div>
