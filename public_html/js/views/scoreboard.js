@@ -21,7 +21,7 @@ define([
         events: {
             "initView": 'render',
             "show": 'show',
-            "click .btn-back": function () {
+            "click .btn-lg-back": function () {
                 Backbone.history.history.back();
             }
         },

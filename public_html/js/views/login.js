@@ -10,7 +10,7 @@ define([
         var Login = BaseView.extend({
             template: tmpl,
             events: {
-                'click .btn-back' : function(e) {
+                'click .btn-lg-back' : function(e) {
                     Backbone.history.history.back();
                 }
             },
@@ -43,7 +43,6 @@ define([
                     Backbone.trigger("loginSuccess");
                 }
             }
-
         });
         return new Login();
     }

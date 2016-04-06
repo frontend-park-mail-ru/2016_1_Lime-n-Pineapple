@@ -45,13 +45,22 @@ $pageSiteCaptionFullFontSize: 6vh;
     padding: $oneLineHeight/8 0;
     font-size: $pageSiteCaptionFullFontSize/2;
     border-radius: 50%;
-  }
+    margin: 1vh;
 
-  &.btn-lg-success {
-    &:hover {
-      background: #00ff80;
+    &.btn-lg-success {
+      &:hover {
+        background: #00ff80;
+      }
+    }
+
+    &.btn-lg-back {
+      &:hover {
+        background: #ff0000;
+      }
     }
   }
+
+
 
   &:hover {
     background: #3cb0fd;

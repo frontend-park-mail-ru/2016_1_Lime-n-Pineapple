@@ -7,6 +7,7 @@ define([
 ], function($,  _, Backbone, Settings ){
     var BaseView = Backbone.View.extend({
 
+
         constructor: function () {
             console.log("In constructor");
             Backbone.View.prototype.constructor.apply(this, arguments);

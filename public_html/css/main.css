@@ -45,9 +45,12 @@ body {
     height: 10vh;
     padding: 2.5vh 0;
     font-size: 3vh;
-    border-radius: 50%; }
-  .btn-circle.btn-lg-success:hover {
-    background: #00ff80; }
+    border-radius: 50%;
+    margin: 1vh; }
+    .btn-circle.btn-lg.btn-lg-success:hover {
+      background: #00ff80; }
+    .btn-circle.btn-lg.btn-lg-back:hover {
+      background: #ff0000; }
   .btn-circle:hover {
     background: #3cb0fd;
     background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
