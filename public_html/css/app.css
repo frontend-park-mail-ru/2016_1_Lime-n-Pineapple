@@ -1,0 +1,56 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "cookiesMilk";
+  src: url("/fonts/cookiesMilk-Regular.ttf");
+}
+@font-face {
+  font-family: "orangeJuice";
+  src: url("/fonts/orangeJuice-20.ttf");
+  /* ╨Я╤Г╤В╤М ╨║ ╤Д╨░╨╣╨╗╤Г ╤Б╨╛ ╤И╤А╨╕╤Д╤В╨╛╨╝ */
+}
+/* line 6, ../scss/login.scss */
+.js-form__login input.login-form__input-field {
+  color: #63323E;
+  border-radius: 20px;
+  line-height: 0;
+  font-size: 2em;
+  width: 33vw;
+  height: 5vh;
+  display: inline-block;
+  min-width: 563px;
+  margin: 1.5vh 0 0 0;
+  border: 5px solid #63323E;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+/* line 18, ../scss/login.scss */
+.js-form__login input.login-form__input-field:hover {
+  border: 5px solid #63223E;
+}
+/* line 21, ../scss/login.scss */
+.js-form__login input.login-form__input-field:focus {
+  box-shadow: none;
+}
+/* line 24, ../scss/login.scss */
+.js-form__login input.login-form__input-field:invalid:not(empty) {
+  outline: none;
+  border-color: #77223e;
+}
+@media (max-width: 943px) {
+  /* line 6, ../scss/login.scss */
+  .js-form__login input.login-form__input-field {
+    width: 60vw;
+  }
+}
+@media (max-width: 767px) {
+  /* line 6, ../scss/login.scss */
+  .js-form__login input.login-form__input-field {
+    width: 563px;
+  }
+}
+@media (max-width: 563px) {
+  /* line 6, ../scss/login.scss */
+  .js-form__login input.login-form__input-field {
+    width: 100vw;
+    min-width: 0;
+  }
+}

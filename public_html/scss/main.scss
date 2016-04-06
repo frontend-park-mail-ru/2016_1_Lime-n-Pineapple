@@ -1,0 +1,116 @@
+@import "_layout";
+@import "compass/css3/transform";
+
+
+
+body {
+  margin: 0;
+  background: url($bgImageUrl) no-repeat fixed left;
+  background-size: 100vw 100%;
+}
+
+
+
+#page__site-header {
+  font-family: $font-family-H;
+  color: $color_purple_dark;
+  font-size: $font-size__H-Full;
+  margin: $oneLineHeight 0 0 0;
+  min-height: $oneLineHeight;
+  line-height: $oneLineHeight;
+  overflow: hidden;
+  white-space: nowrap;
+  /* When title needs to be at the top*/
+  &.topped {
+    margin-top: 0;
+    font-size: $font-size__H-Full * 0.75;
+  }
+  span {
+      transform-origin: center bottom;
+      position: relative;
+      @media (max-width: $layout-width-sm) {
+        font-size: $font-size__h-sm;
+      }
+      @media (max-width: $layout-width-xs) {
+        font-size: $font-size__h-sm;
+      }
+      
+  }
+
+}
+
+
+
+.menu__row {
+  display:block;
+
+}
+
+
+
+.btn-circle {
+  @mixin setBtnSize($size, $fontSize) {
+    width: $size;
+    height: $size;
+    line-height: $size;
+    font-size: $fontSize;
+    border-radius: 50%;
+  }
+
+  display: inline-block;
+  margin: 0 1vw;
+  box-shadow: 5px 10px 10px rgba(0,0,0,0.3);
+  font-family: $font-family-Caption;
+  border: none;
+  color: white;
+  background-color: $color_purple_light;
+
+  opacity: 0.85;
+  &.btn-xl {
+    @include setBtnSize($oneLineHeight, $font-size__Caption-Full);
+  }
+  &.btn-lg {
+    @include setBtnSize($oneLineHeight * 0.7, $font-size__Caption-Full * 0.75)
+  }
+
+  &:hover {
+    background: #3cb0fd;
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+}
+
+
+.font-ink {
+  font-family: $font-family-H;
+}
+
+
+@mixin rotated-text($begin-letter: 1, $num-letters: 100, $angle-span: 180deg, $angle-offset: 0deg) {
+  $angle-per-char: $angle-span / ($num-letters - $begin-letter + 1);
+  @for $i from $begin-letter through $num-letters {
+    .char#{$i} {
+      z-index: -#{$i};
+      @include transform(rotate($angle-offset + $angle-per-char * ($i - $begin-letter)));
+    }
+
+  }
+}
+
+@mixin sinal-text($begin-letter, $num-letters) {
+  @for $i from $begin-letter through $num-letters {
+    .char#{$i} {
+      @include transform(translateY( sin(($i - $begin-letter)/($num-letters - $begin-letter)*2*pi()) * -25px) );
+    }
+  }
+}
+
+
+
+@include rotated-text(22, 33, 60deg , -20deg );
+
+
+

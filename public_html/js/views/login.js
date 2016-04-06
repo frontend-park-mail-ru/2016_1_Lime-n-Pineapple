@@ -11,8 +11,9 @@ define([
         template: tmpl,
         events: {
             'click .btn-back' : function(e) {
-                Backbone.history.history.back();
-            }
+                Backbone.history.navigate("/", true);
+            },
+            'submit' : '_onSubmitEvent'
         },
 
 
@@ -40,7 +41,6 @@ define([
         render: function () {
             console.log("[views::login::render()]: called");
             this.$el.html(this.template());
-            this.$el.on("submit", this._onSubmitEvent);
             return this;
         }
     });
