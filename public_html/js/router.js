@@ -4,19 +4,10 @@ define([
         'underscore',
         'backbone',
         'views/allViews',
-        'controllers/viewManager-es5',
-        'models/session',
-        'controllers/eventBus-es5'
+        'controllers/viewManager',
+        'models/session'
 ],
-    function ($, underscore, Backbone, Views, VM, Session) {
-        VM.addArray([
-            Views.main,
-            Views.scoreboard,
-            Views.game,
-            Views.login,
-            Views.btnBack
-        ]);
-
+    function ($, underscore, Backbone, Views, ViewManager, Session) {
         var Router = Backbone.Router.extend({
                 routes: {
                     "game": "gameAction",
@@ -33,12 +24,17 @@ define([
                 },
 
                 initialize: function () {
-                    this._setTagNameViewsEl(Views.btnBack, "#view__btn_back");
+                    this.VM = new ViewManager(
+                        Views.game,
+                        Views.main,
+                        Views.scoreboard,
+                        Views.login
+                    );
                     this._setTagNameViewsEl(Views.game, "#page__view-holder");
                     this._setTagNameViewsEl(Views.main, "#page__view-holder");
                     this._setTagNameViewsEl(Views.scoreboard, "#page__view-holder");
                     this._setTagNameViewsEl(Views.login, "#page__view-holder");
-                    this.defaultAction();
+                    // this.defaultAction(); - Works without it
                 },
 
                 defaultAction: function () {
@@ -46,8 +42,8 @@ define([
                 },
 
                 scoreboardAction: function () {
+                    console.log("Scoreboard action showing...");
                     Views.scoreboard.show();
-                    Views.btnBack.show();
                 },
 
                 gameAction: function () {
@@ -56,7 +52,6 @@ define([
 
                 loginAction: function () {
                     Views.login.show();
-                    Views.btnBack.show();
                 },
 
                 logoutAction: function() {

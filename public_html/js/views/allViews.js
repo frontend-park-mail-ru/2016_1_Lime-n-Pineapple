@@ -3,16 +3,13 @@ define([
     './main',
     './scoreboard',
     './game',
-    './login',
-    './logout',
-    './block/btn_back'
-], function(Main, Scoreboard, GameAction, Login, BtnBack) {
+    './login'
+], function(Main, Scoreboard, GameAction, Login) {
         return {
             main: Main,
             scoreboard: Scoreboard,
             game: GameAction,
             login: Login,
-            btnBack: BtnBack
         };
     }
 );

@@ -2,21 +2,19 @@
 define([
     'jquery',
     'backbone',
-    'tmpl/login',
-    'settings'
-], function ($, Backbone, tmpl, Settings) {
-    var Login = Backbone.View.extend({
+    'settings',
+    'models/session',
+    './baseView',
+    'tmpl/login'
+], function ($, Backbone,  Settings, Session, BaseView, tmpl) {
+    var Login = BaseView.extend({
         template: tmpl,
-        initialize: function () {
+        events: {
+            'click .btn-back' : function(e) {
+                Backbone.history.history.back();
+            }
         },
 
-        show: function () {
-            console.log("[Login::show()] show triggered event");
-            this.trigger(Settings.VIEWMANAGER_SHOW_EVENT, this);
-        },
-        hide: function () {
-            this.$el.hide();
-        },
 
         _onSubmitEvent: function (e) {
             e.preventDefault();
@@ -32,13 +30,15 @@ define([
             };
             console.log("Login: ", login, "Password: ", password, "Request object: ", reqObj);
             console.log("Request parsed as JSON: ", JSON.stringify(reqObj));
-            // HUITA
-            //Session.login(reqObj);
+            console.log("Login: ", login, "Password: ", password, "Request object: ", reqObj);
+            console.log("Request parsed as JSON: ", JSON.stringify(reqObj));
+            if (Session.login(reqObj)) {
+                Backbone.trigger("loginSuccess");
+            }
         },
 
         render: function () {
             console.log("[views::login::render()]: called");
-            console.log(this.$el);
             this.$el.html(this.template());
             this.$el.on("submit", this._onSubmitEvent);
             return this;

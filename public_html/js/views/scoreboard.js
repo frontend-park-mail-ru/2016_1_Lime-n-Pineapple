@@ -2,21 +2,28 @@
 define([
     'jquery',
     'backbone',
-    'tmpl/scoreboard',
-    'collections/scores'
+    'settings',
+    'collections/scores',
+    './baseView',
+    'tmpl/scoreboard'
 ], function(
     $,
     Backbone,
-    tmpl,
-    Scores
+    Settings,
+    Scores,
+    BaseView,
+    tmpl
 ){
 
-    var Scoreboard = Backbone.View.extend({
+    var Scoreboard = BaseView.extend({
         template: tmpl,
 
         events: {
             "initView": 'render',
-            "show": 'show'
+            "show": 'show',
+            "click .btn-back": function () {
+                Backbone.history.history.back();
+            }
         },
 
         initialize: function () {
@@ -28,15 +35,6 @@ define([
                 this.collection.add({name: "Роб", score: 545});
             }
             this.collection.sort();
-        },
-
-        show: function () {
-            this.trigger("showView", this);
-                this.render();
-            }
-        },
-        hide: function () {
-            this.$el.hide();
         },
 
         render: function () {

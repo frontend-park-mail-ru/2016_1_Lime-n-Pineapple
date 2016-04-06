@@ -2,13 +2,12 @@
 @import "_colors";
 
 $bgImageUrl: "/static/clearmain.png";
-
-
-
+$oneLineHeight: 20vh;
+$numLines: 100 / $oneLineHeight;
 
 body {
   margin: 0;
   background-image: url($bgImageUrl);
-  background-size: 100%;
   background-attachment: fixed;
+  background-size: cover;
 }

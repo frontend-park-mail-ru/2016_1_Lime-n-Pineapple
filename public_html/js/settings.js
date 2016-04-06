@@ -2,7 +2,7 @@
 define(['jquery'],
     function ($) {
         var SETTINGS = {
-            VIEWMANAGER_SHOW_EVENT: 'viewShow',
+            EVENT_VIEWMANAGER_SHOW: 'viewShow',
 
             USE_PRODUCTION: true,
 

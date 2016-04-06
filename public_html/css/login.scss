@@ -1,9 +1,14 @@
+@import "_colors";
+@import "_fonts";
+
 .js-form__login {
+  font-family: $titleFontFamily;
   margin-top: 5px;
   .panel {
     .panel-body {
       & > .form-group {
         margin-top:10px;
+        font-family: $titleFontFamily;
 
         & > .input-group {
           padding-bottom: 20px;
