@@ -78,7 +78,6 @@ body {
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     opacity: 0.85;
-
 }
 
 .btn-circle.btn-lg:hover {
@@ -119,6 +118,18 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+
+.btn-circle.btn-lg:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+    cursor: pointer;
+}
+
 
 
 .list-group-item:hover {

@@ -19,6 +19,10 @@ define([
         },
 
         initialize: function () {
+            Backbone.on("changeLoginToLogout", function () {
+                $("#login").text("Logout");
+                $("#login").attr('href', "#logout");
+            });
         },
 
         show: function () {

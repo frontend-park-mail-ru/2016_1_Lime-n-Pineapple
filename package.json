@@ -25,6 +25,7 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "compass": "^0.1.1",
     "grunt": "~0.4.5",
     "grunt-concurrent": "^2.2.1",
     "grunt-contrib-compass": "^1.1.1",

@@ -17,7 +17,7 @@ define([
             },
 
             initialize: function () {
-                //UsersManager.attachEvent(this);
+                UsersManager.attachEvent(this);
                 this.user = new UserModel();
                 this.trigger("createUser", this.user);
                 console.log("[Session::initialize()]: begin to create" );
