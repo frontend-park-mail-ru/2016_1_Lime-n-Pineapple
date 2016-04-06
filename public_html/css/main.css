@@ -1,38 +1,70 @@
 @charset "UTF-8";
 @font-face {
   font-family: "cookiesMilk";
-  src: url("/fonts/cookiesMilk-Regular.ttf"); }
+  src: url("/fonts/cookiesMilk-Regular.ttf");
+}
 @font-face {
   font-family: "orangeJuice";
   src: url("/fonts/orangeJuice-20.ttf");
-  /* Путь к файлу со шрифтом */ }
+  /* ╨Я╤Г╤В╤М ╨║ ╤Д╨░╨╣╨╗╤Г ╤Б╨╛ ╤И╤А╨╕╤Д╤В╨╛╨╝ */
+}
+/* line 6, ../scss/main.scss */
 body {
   margin: 0;
-  background-image: url("/static/clearmain.png");
-  background-size: cover; }
+  background: url("/static/clearmain.png") no-repeat fixed left;
+  background-size: 100vw 100%;
+}
 
+/* line 14, ../scss/main.scss */
 #page__site-header {
   font-family: "orangeJuice", "Century Gothic", sans-serif;
   color: #63223E;
-  font-size: 13vh;
-  margin-top: 20vh;
-  min-height: 20vh;
-  /* When title needs to be at the top*/ }
-  #page__site-header.topped {
-    margin-top: 0;
-    font-size: 9.75vh; }
+  font-size: 13vmin;
+  margin: 16.66666667vh 0 0 0;
+  min-height: 16.66666667vh;
+  line-height: 16.66666667vh;
+  overflow: hidden;
+  white-space: nowrap;
+  /* When title needs to be at the top*/
+}
+/* line 24, ../scss/main.scss */
+#page__site-header.topped {
+  margin-top: 0;
+  font-size: 9.75vmin;
+}
+/* line 28, ../scss/main.scss */
+#page__site-header span {
+  transform-origin: center bottom;
+  position: relative;
+}
+@media (max-width: 767px) {
+  /* line 28, ../scss/main.scss */
+  #page__site-header span {
+    font-size: 1.15em;
+  }
+}
+@media (max-width: 563px) {
+  /* line 28, ../scss/main.scss */
+  #page__site-header span {
+    font-size: 1.15em;
+  }
+}
 
+/* line 44, ../scss/main.scss */
 .menu__row {
-  display: block; }
+  display: block;
+}
 
+/* line 51, ../scss/main.scss */
 .btn-circle {
-  text-align: center;
   display: inline-block;
   margin: 0 1vw;
-  box-shadow: 2px 4px 0 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.3);
   font-family: "cookiesMilk", "Century Gothic", sans-serif;
-  color: #ffffff;
+  border: none;
+  color: white;
   background-color: #63323E;
+<<<<<<< HEAD
   opacity: 0.85; }
   .btn-circle.btn-xl {
     width: 20vh;
@@ -58,3 +90,143 @@ body {
     cursor: pointer; }
 
 /*# sourceMappingURL=main.css.map */
+=======
+  opacity: 0.85;
+}
+/* line 69, ../scss/main.scss */
+.btn-circle.btn-xl {
+  width: 16.66666667vh;
+  height: 16.66666667vh;
+  line-height: 16.66666667vh;
+  font-size: 6.5vh;
+  border-radius: 50%;
+}
+/* line 72, ../scss/main.scss */
+.btn-circle.btn-lg {
+  width: 11.66666667vh;
+  height: 11.66666667vh;
+  line-height: 11.66666667vh;
+  font-size: 4.875vh;
+  border-radius: 50%;
+}
+/* line 76, ../scss/main.scss */
+.btn-circle:hover {
+  background: #3cb0fd;
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* line 87, ../scss/main.scss */
+.font-ink {
+  font-family: "orangeJuice", "Century Gothic", sans-serif;
+}
+
+/* line 95, ../scss/main.scss */
+.char22 {
+  z-index: -22;
+  -moz-transform: rotate(-20deg);
+  -ms-transform: rotate(-20deg);
+  -webkit-transform: rotate(-20deg);
+  transform: rotate(-20deg);
+}
+
+/* line 95, ../scss/main.scss */
+.char23 {
+  z-index: -23;
+  -moz-transform: rotate(-15deg);
+  -ms-transform: rotate(-15deg);
+  -webkit-transform: rotate(-15deg);
+  transform: rotate(-15deg);
+}
+
+/* line 95, ../scss/main.scss */
+.char24 {
+  z-index: -24;
+  -moz-transform: rotate(-10deg);
+  -ms-transform: rotate(-10deg);
+  -webkit-transform: rotate(-10deg);
+  transform: rotate(-10deg);
+}
+
+/* line 95, ../scss/main.scss */
+.char25 {
+  z-index: -25;
+  -moz-transform: rotate(-5deg);
+  -ms-transform: rotate(-5deg);
+  -webkit-transform: rotate(-5deg);
+  transform: rotate(-5deg);
+}
+
+/* line 95, ../scss/main.scss */
+.char26 {
+  z-index: -26;
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+
+/* line 95, ../scss/main.scss */
+.char27 {
+  z-index: -27;
+  -moz-transform: rotate(5deg);
+  -ms-transform: rotate(5deg);
+  -webkit-transform: rotate(5deg);
+  transform: rotate(5deg);
+}
+
+/* line 95, ../scss/main.scss */
+.char28 {
+  z-index: -28;
+  -moz-transform: rotate(10deg);
+  -ms-transform: rotate(10deg);
+  -webkit-transform: rotate(10deg);
+  transform: rotate(10deg);
+}
+
+/* line 95, ../scss/main.scss */
+.char29 {
+  z-index: -29;
+  -moz-transform: rotate(15deg);
+  -ms-transform: rotate(15deg);
+  -webkit-transform: rotate(15deg);
+  transform: rotate(15deg);
+}
+
+/* line 95, ../scss/main.scss */
+.char30 {
+  z-index: -30;
+  -moz-transform: rotate(20deg);
+  -ms-transform: rotate(20deg);
+  -webkit-transform: rotate(20deg);
+  transform: rotate(20deg);
+}
+
+/* line 95, ../scss/main.scss */
+.char31 {
+  z-index: -31;
+  -moz-transform: rotate(25deg);
+  -ms-transform: rotate(25deg);
+  -webkit-transform: rotate(25deg);
+  transform: rotate(25deg);
+}
+
+/* line 95, ../scss/main.scss */
+.char32 {
+  z-index: -32;
+  -moz-transform: rotate(30deg);
+  -ms-transform: rotate(30deg);
+  -webkit-transform: rotate(30deg);
+  transform: rotate(30deg);
+}
+
+/* line 95, ../scss/main.scss */
+.char33 {
+  z-index: -33;
+  -moz-transform: rotate(35deg);
+  -ms-transform: rotate(35deg);
+  -webkit-transform: rotate(35deg);
+  transform: rotate(35deg);
+}
+>>>>>>> 442d6c3609840ec3c471248069f9fa6908121b85

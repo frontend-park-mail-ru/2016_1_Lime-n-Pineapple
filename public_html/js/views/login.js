@@ -10,9 +10,12 @@ define([
         var Login = BaseView.extend({
             template: tmpl,
             events: {
-                'click .btn-lg-back' : function(e) {
-                    Backbone.history.history.back();
-                }
+
+                'click .btn-back' : function(e) {
+                Backbone.history.navigate("/", true);
+            },
+                'submit' : '_onSubmitEvent'
+
             },
 
             // don't work// must to ask

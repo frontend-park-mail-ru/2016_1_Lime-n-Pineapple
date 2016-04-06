@@ -3,9 +3,9 @@
         <div id="view-holder__menu" class="container center-block" >
             <div class="row menu__row">
             <ul class="list-group text-center">
-                <a id="start" class=" controls btn-circle btn-xl" >Start</a>
-                <a class=" btn-circle btn-xl" href="#scoreboard">Scores</a>
-                <a class=" btn-circle btn-xl" id="login" href="#login">Login</a>
+                <div class=" btn-circle btn-xl" id="start" href="#start">Start</div>
+                <div class=" btn-circle btn-xl" id="scoreboard" href="#scoreboard">Scores</div>
+                <div class=" btn-circle btn-xl" id="login" href="#login">Login</div>
             </ul>
             </div>
         </div>

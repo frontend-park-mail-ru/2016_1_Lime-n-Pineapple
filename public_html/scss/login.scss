@@ -1,0 +1,47 @@
+@import "_fonts";
+@import "_layout";
+@import "_colors";
+
+.js-form__login {
+  input.login-form__input-field  {
+    color: $color_purple_light;
+    border-radius: 20px;
+    line-height: 0;
+    font-size: 2em;
+    width: 33vw ;
+    height: 5vh;
+    display: inline-block;
+    min-width: $layout-width-xs;
+    margin: 1.5vh 0 0 0;
+    border: 5px solid $color_purple_light;
+    background-color: rgba(255,255,255, 0.3);
+    &:hover {
+      border: 5px solid $color_purple_dark;
+    }
+    &:focus {
+      box-shadow: none;
+    }
+    &:invalid:not(empty) {
+      outline: none;
+      border-color: adjust_color($color_purple_dark, $red: 20);
+    }
+    @media (max-width : $layout-width-md) {
+      width: 60vw;
+    }
+
+    @media (max-width : $layout-width-sm) {
+      width: $layout-width-xs;
+    }
+    @media (max-width : $layout-width-xs) {
+      width: 100vw;
+      min-width: 0;
+    }
+  }
+
+}
+
+
+
+
+
+

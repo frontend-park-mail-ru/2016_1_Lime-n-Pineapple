@@ -15,7 +15,9 @@ define([
         ],
 
         events: {
-            'click #start': '_onSubmitEvent'
+                'click #start': '_onSubmitEvent',
+                'click #scoreboard': 'navigate',
+                'click #login': 'navigate'
         },
 
         initialize: function () {
@@ -24,6 +26,10 @@ define([
                 $("#login").attr('href', "#logout");
             });
         },
+
+        navigate: function (e) {
+            Backbone.history.navigate($(e.target).attr("href"), true);
+        }
     });
         return new Main();
     }
