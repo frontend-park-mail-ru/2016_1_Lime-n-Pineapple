@@ -1,29 +1,27 @@
-/**
- * Created by Raaw on 05-Mar-16.
- */
+'use strict';
+
 define([
-        'jquery',
-        'backbone',
-        'models/user',
-        'settings',
-        'views/users_manager'
+    'underscore',
+    'jquery',
+    'backbone',
+    './user',
+    'settings'
     ],
-    function ($, Backbone, UserModel, Settings, UsersManager) {
-
-        var Session = Backbone.Model.extend({
-
+    function (_, $, Backbone, User, Settings) {
+        return Backbone.Model.extend({
+            urlRoot: '/session',
             defaults: {
-                user: null
+                user: null,
+                user_id: 0
             },
-
             initialize: function () {
-                UsersManager.attachEvent(this);
+                //UsersManager.attachEvent(this);
                 this.user = new UserModel();
                 this.trigger("createUser", this.user);
                 console.log("[Session::initialize()]: begin to create" );
             },
 
-            updateSessionUser: function( userData ){
+            updateSessionUser: function updateSessionUser(userData) {
                 this.user.set(_.pick(userData, _.keys(this.user.defaults)));
             },
 
@@ -52,54 +50,41 @@ define([
             },
 
 
-            login: function(opts){
+            login: function login(opts) {
                 console.log("session login func" + this.user.url());
                 var self = this;
-                this.user.save({login: opts.login, password: opts.password, logged_in: true}, {
-                    success: function(model, res){
+                this.user.save({ login: opts.login, password: opts.password, logged_in: true }, {
+                    success: function success(model, res) {
                         console.log("SUCCESS");
-                        self.user.set({logged_in: true, login: opts.login});
+                        self.user.set({ logged_in: true, login: opts.login });
                         Backbone.history.history.back();
                         return true;
                     },
-                    error: function(model, res){
+                    error: function error(model, res) {
                         console.log("NOTSUCCESS");
                         Backbone.history.history.back();
                         return true; // must be false, when front will be use backend
+
                     }
                 });
             },
 
-            logout: function(){
+            logout: function logout() {
                 var self = this;
-                this.user.save({login: this.user.login}, {
-                    success: function(model, res){
-                        self.user.set({logged_in: false, login: ""});
+                this.user.save({ login: this.user.login }, {
+                    success: function success(model, res) {
+                        self.user.set({ logged_in: false, login: "" });
                         Backbone.history.history.back();
                         return true;
                     },
-                    error: function(model, res){
+                    error: function error(model, res) {
                         Backbone.history.history.back();
                     }
                 });
             },
 
-            signup: function(opts){
-            },
-
-            removeAccount: function(opts){
-                this.user.destroy({
-                    success: function(model, res){
-                        console.log("destroy user");
-                    },
-                    error: function(model, res){
-                        console.log("can not destroy user");
-                    }
-                });
-            }
-
+            signup: function signup(opts) {}
 
         });
-        return new Session();
     }
 );

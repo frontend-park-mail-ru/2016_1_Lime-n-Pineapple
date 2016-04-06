@@ -1,0 +1,58 @@
+@import "_layout";
+
+$pageSiteHeaderFullFontSize: 13vh;
+$pageSiteCaptionFullFontSize: 7vh;
+
+#page__site-header {
+  font-family: $titleFontFamily;
+  color: $color_purple_dark;
+  font-size: $pageSiteHeaderFullFontSize;
+  margin-top: $oneLineHeight;
+  min-height: $oneLineHeight;
+  /* When title needs to be at the top*/
+  &.topped {
+    margin-top: 0;
+    font-size: $pageSiteHeaderFullFontSize * 0.75;
+  }
+}
+
+.menu__row {
+  display:block;
+
+}
+
+.btn-circle {
+
+  text-align:center;
+  display: inline-block;
+  margin: 0 1vw;
+  box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
+  font-family: $captionFontFamily;
+
+  color: #ffffff;
+  background-color: #63323E;
+
+  opacity: 0.85;
+  &.btn-xl {
+    width: $oneLineHeight;
+    height: $oneLineHeight;
+    padding: $oneLineHeight/4 0;
+    font-size: $pageSiteCaptionFullFontSize;
+    border-radius: 50%;
+  }
+  &.btn-lg {
+    width: $oneLineHeight/2;
+    height: $oneLineHeight/2;
+    padding: $oneLineHeight/8 0;
+    font-size: $pageSiteCaptionFullFontSize/2;
+    border-radius: 50%;
+  }
+  &:hover {
+    background: #3cb0fd;
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+}

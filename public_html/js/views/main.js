@@ -1,21 +1,21 @@
+'use strict';
 define([
     'jquery',
     'underscore',
     'backbone',
-    '../models/session',
+    'settings',
+    './baseView',
     'tmpl/main_page'
-], function(
-    $,
-    _,
-    Backbone,
-    Session,
-    tmpl
-){
-    var Main = Backbone.View.extend({
+], function( $, _, Backbone, Settings, BaseView, tmpl ){
+    var Main = BaseView.extend({
         template: tmpl,
 
-        events:{
-          'click #start': '_onSubmitEvent'
+        subscriptions: [
+            'loginSuccess'
+        ],
+
+        events: {
+            'click #start': '_onSubmitEvent'
         },
 
         initialize: function () {
@@ -24,34 +24,7 @@ define([
                 $("#login").attr('href', "#logout");
             });
         },
-
-        show: function () {
-            if (!this.$el.html()){
-                this.render();
-            }
-            this.trigger("showView");
-            this.$el.show();
-            console.log(this.$el);
-        },
-
-        _onSubmitEvent: function () {
-            //e.preventDefault();
-            console.log("[views::main::_onSubmitEvent()]: called");
-            Session.checkAuth();
-        },
-
-
-        hide: function () {
-            this.$el.hide();
-        },
-
-        render: function () {
-            console.log("main.show.render()");
-            this.$el.html(this.template());
-            //this.$el.on("submit", this._onSubmitEvent);
-
-            return this;
-        }
     });
-    return new Main();
-});
+        return new Main();
+    }
+);

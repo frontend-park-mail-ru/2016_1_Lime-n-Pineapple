@@ -34,6 +34,23 @@ module.exports = function (grunt) {
                 }
             }
         },
+        babel: {
+            options: {
+                sourceMap: false,
+                presets: ['es2015'],
+                plugins: [
+                    ["transform-es2015-arrow-functions", { "spec": true }]
+                ]
+            },
+            dist: {
+                files: [{
+                    "expand": true,
+                    "cwd": "public_html/js",
+                    "src": "**/*.jsx",
+                    "ext": ".js"
+                }]
+            }
+        },
         watch: {//наблюдает за измененинями
             fest: {
                 files: ['templates/**/*.xml'],
@@ -42,8 +59,17 @@ module.exports = function (grunt) {
                     interrupt: true,
                     atBegin: true,
                     spawn: false,
-                },
+                }
 
+            },
+            babel: {
+                files: ['public_html/js/**/*.jsx'],
+                tasks: ['babel'],
+                options: {
+                    interrupt: true,
+                    atBegin: true,
+                    spawn: false,
+                }
             },
 
             server: {

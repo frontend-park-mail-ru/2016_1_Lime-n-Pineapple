@@ -1,12 +1,19 @@
+'use strict';
 define([
     'jquery',
     'backbone',
-    'tmpl/login',
-    '../models/session'
-    ],
-    function ($, Backbone, tmpl, Session) {
+    'settings',
+    'models/session',
+    './baseView',
+    'tmpl/login'
+    ], function ($, Backbone,  Settings, Session, BaseView, tmpl) {
         var Login = Backbone.View.extend({
             template: tmpl,
+            events: {
+                'click .btn-back' : function(e) {
+                    Backbone.history.history.back();
+                }
+            },
 
             // don't work// must to ask
             //events:{
@@ -35,16 +42,20 @@ define([
                     login = $form.find("input[name='username']").val(),
                     password = $form.find("input[name='password']").val();
 
+                //console.log("Sending request to: " + url + " ...");
                 var reqObj = {
                     "login": login,
                     "password": password
                 };
                 console.log("Login: ", login, "Password: ", password, "Request object: ", reqObj);
                 console.log("Request parsed as JSON: ", JSON.stringify(reqObj));
-                if (Session.login(reqObj)){
-                    Backbone.trigger("changeLoginToLogout");
+                console.log("Login: ", login, "Password: ", password, "Request object: ", reqObj);
+                console.log("Request parsed as JSON: ", JSON.stringify(reqObj));
+                if (Session.login(reqObj)) {
+                    Backbone.trigger("loginSuccess");
                 }
             },
+
 
             render: function () {
                 console.log("[views::login::render()]: called");

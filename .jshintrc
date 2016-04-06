@@ -1,0 +1,32 @@
+{
+  "white":true,
+  "strict": true,
+
+  "multistr": true,
+
+  "phantom": true,
+  "node": true,
+  "jquery":true,
+  "browser":true,
+  "prototypejs":true,
+
+  "esnext": true,
+
+  "freeze": true,
+  "forin":true,
+  "noempty":true,
+  "noarg":true,
+  "nonew":true,
+  "undef":true,
+
+  "eqeqeq":true,
+  "bitwise":true,
+  "plusplus":true,
+
+  "curly":true,
+
+  "globals": {
+    "define": false
+  }
+
+}

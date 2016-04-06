@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru">
-        <div id="view-holder__menu" class="container center-block" > <!-- Блок меню -->
+        <div id="view-holder__menu" class="container center-block" >
             <div class="row menu__row">
             <ul class="list-group text-center">
                 <a id="start" class=" controls btn-circle btn-xl" >Start</a>
