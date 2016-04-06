@@ -1,7 +1,7 @@
 @import "_layout";
 
 $pageSiteHeaderFullFontSize: 13vh;
-$pageSiteCaptionFullFontSize: 7vh;
+$pageSiteCaptionFullFontSize: 6vh;
 
 #page__site-header {
   font-family: $titleFontFamily;
@@ -22,7 +22,6 @@ $pageSiteCaptionFullFontSize: 7vh;
 }
 
 .btn-circle {
-
   text-align:center;
   display: inline-block;
   margin: 0 1vw;
@@ -47,12 +46,17 @@ $pageSiteCaptionFullFontSize: 7vh;
     font-size: $pageSiteCaptionFullFontSize/2;
     border-radius: 50%;
   }
+
+  &.btn-lg-success {
+    &:hover {
+      background: #00ff80;
+    }
+  }
+
   &:hover {
     background: #3cb0fd;
     background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
     text-decoration: none;
     cursor: pointer;
   }
-
-
 }

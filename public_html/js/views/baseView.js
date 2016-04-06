@@ -24,6 +24,7 @@ define([
                 this._invalidateView = false;
             }
             Backbone.trigger(Settings.EVENT_VIEWMANAGER_SHOW, this);
+            this.$el.show();
         },
 
         invalidateView: function(forceRender) {
@@ -38,6 +39,7 @@ define([
         },
 
         render: function () {
+            console.log("BaseView render");
             this.$el.html(this.template({}));
             return this;
         }

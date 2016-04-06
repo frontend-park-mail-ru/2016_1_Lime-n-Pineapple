@@ -21,10 +21,11 @@
                 </input>
             </fieldset>
             <div class="form-group">
-                <button id="login-form__btn-success"
-                     type="submit" role="button" class="btn btn-success" style="text-decoration: none">OK</button>
+                <button id="login-form__tn-success"
+                     type="submit" role="button" class="btn btn-circle btn-lg btn-lg-success" style="text-decoration: none">OK</button>
+                <fest:include src="./btn_back.xml"/>
             </div>
         </form>
-        <fest:include src="./btn_back.xml"/>
+
     </div>
 </fest:template>

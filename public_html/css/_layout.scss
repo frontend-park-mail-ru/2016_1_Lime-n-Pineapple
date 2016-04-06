@@ -8,6 +8,6 @@ $numLines: 100 / $oneLineHeight;
 body {
   margin: 0;
   background-image: url($bgImageUrl);
-  background-attachment: fixed;
+  //background-attachment: fixed;
   background-size: cover;
 }

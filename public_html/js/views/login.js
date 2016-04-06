@@ -7,7 +7,7 @@ define([
     './baseView',
     'tmpl/login'
     ], function ($, Backbone,  Settings, Session, BaseView, tmpl) {
-        var Login = Backbone.View.extend({
+        var Login = BaseView.extend({
             template: tmpl,
             events: {
                 'click .btn-back' : function(e) {
@@ -21,18 +21,6 @@ define([
             //},
 
             initialize: function () {
-            },
-
-            show: function () {
-                if (!this.$el.html()){
-                    this.render();
-                }
-                console.log("i am in login.show()");
-                this.trigger("showView");
-                this.$el.show();
-            },
-            hide: function () {
-                this.$el.hide();
             },
 
             _onSubmitEvent: function (e) {
@@ -54,18 +42,8 @@ define([
                 if (Session.login(reqObj)) {
                     Backbone.trigger("loginSuccess");
                 }
-            },
-
-
-            render: function () {
-                console.log("[views::login::render()]: called");
-                console.log(this.$el);
-                if (!this.$el.html()){
-                    this.$el.on("submit", this._onSubmitEvent);
-                }
-                this.$el.html(this.template());
-                return this;
             }
+
         });
         return new Login();
     }
