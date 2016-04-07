@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
     <fest:div class="text-center"><h3>List of players!</h3>
-        <div style="text-align: left">
+        <div style="text-align:left">
             <!--<ul style="margin-left:37%">-->
             <ul class="col-lg-12 col-lg-offset-5 col-md-12 col-md-offset-5 col-sm-12 col-sm-offset-5 col-xs-12 col-xs-offset-4">
                 <fest:for iterate="json.person" index="i">
@@ -9,6 +9,6 @@
                 </fest:for>
             </ul>
         </div>
-
+        <fest:include src="./btn_back.xml"/>
     </fest:div>
 </fest:template>

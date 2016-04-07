@@ -4,3 +4,5 @@ node_modules
 *.log
 public_html/js/tmpl/*
 *-compiled.js*
+/public_html/.sass-cache
+/.sass-cache

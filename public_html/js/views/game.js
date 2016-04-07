@@ -1,28 +1,26 @@
+'use strict';
 define([
+    'jquery',
+    'underscore',
     'backbone',
+    'settings',
+    './baseView',
     'tmpl/game'
 ], function(
+    $,
+    _,
     Backbone,
+    Settings,
+    BaseView,
     tmpl
 ){
-
-    var Game = Backbone.View.extend({
-
+    var Game = BaseView.extend({
         template: tmpl,
-        initialize: function () {
-            // TODO
-        },
-        render: function () {
-            // TODO
-        },
-        show: function () {
-            this.trigger("showView");
-            // TODO
-        },
-        hide: function () {
-            // TODO
-        }
 
+        show: function () {
+            this.prototype.show.call(this);
+            this.trigger("startGame", this);
+        }
     });
     return new Game();
 });

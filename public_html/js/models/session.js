@@ -1,102 +1,90 @@
-/**
- * Created by Raaw on 05-Mar-16.
- */
+'use strict';
+
 define([
-        'jquery',
-        'backbone',
-        'models/user',
-        'settings'
+    'underscore',
+    'jquery',
+    'backbone',
+    './user',
+    'settings'
     ],
-    function ($, Backbone, UserModel, Settings) {
-
-        var Session = Backbone.Model.extend({
-
+    function (_, $, Backbone, User, Settings) {
+        return Backbone.Model.extend({
+            urlRoot: '/session',
             defaults: {
-                user_id: 0,
-                game_room_id: 0,
-                logged_in: false
+                user: null,
+                user_id: 0
             },
-
             initialize: function () {
-                //_.bindAll(this);
+                //UsersManager.attachEvent(this);
                 this.user = new UserModel();
-                console.log("[Session::initialize()]: begin to create");
+                this.trigger("createUser", this.user);
+                console.log("[Session::initialize()]: begin to create" );
             },
 
-            updateSessionUser: function( userData ){
+            updateSessionUser: function updateSessionUser(userData) {
                 this.user.set(_.pick(userData, _.keys(this.user.defaults)));
             },
 
             checkAuth: function() {
+                console.log("[Session::checkAuth()]: before start");
                 var self = this;
-                this.fetch({
-                    success: function(mod, res){
-                        if(!res.error && res.user){
-                            self.updateSessionUser(res.user);
-                            self.set({ logged_in : true });
-                        } else {
-                            self.set({ logged_in : false });
-                        }
-                    }, error:function(mod, res){
-                        self.set({ logged_in : false });
+                //this.fetch({
+                //    success: function(mod, res){
+                //        if(!res.error && res.user){
+                //            self.updateSessionUser(res.user);
+                //            self.set({ logged_in : true });
+                //        } else {
+                //            self.set({ logged_in : false });
+                //            this.trigger("loginAction");
+                //        }
+                //    }, error:function(mod, res){
+                //        self.set({ logged_in : false });
+                //    }
+                //}).complete( function(){
+                //});
+                if (!self.user.logged_in) {
+                    console.log("[Session::checkAuth()]: before start");
+                    //this.trigger("#loginAction");
+                    Backbone.history.navigate("login", true);
+                }
+            },
+
+
+            login: function login(opts) {
+                console.log("session login func" + this.user.url());
+                var self = this;
+                this.user.save({ login: opts.login, password: opts.password, logged_in: true }, {
+                    success: function success(model, res) {
+                        console.log("SUCCESS");
+                        self.user.set({ logged_in: true, login: opts.login });
+                        Backbone.history.history.back();
+                        return true;
+                    },
+                    error: function error(model, res) {
+                        console.log("NOTSUCCESS");
+                        Backbone.history.history.back();
+                        return true; // must be false, when front will be use backend
+
                     }
-                }).complete( function(){
                 });
             },
 
-            postAuth: function(opts){
-                var url = Settings.getActiveServerUrl() + '/api/v1/session';
-                $.ajax({
-                    url: url + '/' + opts.method,
-                    type: "POST",
-                    contentType: "application/json",
-                    data:  JSON.stringify( _.omit(opts, 'method') ),
-                    dataType: "json"
-                })
-                    .done(
-                        function (e) {
-                            console.log("Accepted");
-                            if (opts.method === "login") {
-                                $("#login").text("Logout");
-                                $("#login").attr('href', "#logout");
-                            }
-                            else if (opts.method === "logout"){
-                                $("#login").text("Login");
-                                $("#login").attr('href', "#login");
-                            }
-                            Backbone.history.history.back();
-                        }
-                    )
-                    .fail(
-                        function (req, err, e) {
-                            console.log("Failed to fetch request");
-                            console.log(req);
-                            console.log(err);
-                            console.log(e);
-                            Backbone.history.history.back();
-                        });
-
+            logout: function logout() {
+                var self = this;
+                this.user.save({ login: this.user.login }, {
+                    success: function success(model, res) {
+                        self.user.set({ logged_in: false, login: "" });
+                        Backbone.history.history.back();
+                        return true;
+                    },
+                    error: function error(model, res) {
+                        Backbone.history.history.back();
+                    }
+                });
             },
 
-
-            login: function(opts){
-                this.postAuth(_.extend(opts, { method: 'login' }));
-            },
-
-            logout: function(opts){
-                this.postAuth(_.extend(opts, { method: 'logout' }));
-            },
-
-            signup: function(opts){
-                this.postAuth(_.extend(opts, { method: 'signup' }));
-            },
-
-            removeAccount: function(opts){
-                this.postAuth(_.extend(opts, { method: 'remove_account' }));
-            }
-
+            signup: function signup(opts) {}
 
         });
-        return new Session();
     }
 );

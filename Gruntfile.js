@@ -10,6 +10,9 @@ module.exports = function (grunt) {
             options: {
                 stdout: true,
                 stderr: true
+            //},
+            //server: {
+            //    command: 'node server.js'
             }
         },
         fest: {
@@ -31,6 +34,42 @@ module.exports = function (grunt) {
                 }
             }
         },
+        babel: {
+            options: {
+                sourceMap: false,
+                presets: ['es2015'],
+                plugins: [
+                    ["transform-es2015-arrow-functions", { "spec": true }]
+                ]
+            },
+            dist: {
+                files: [{
+                    "expand": true,
+                    "cwd": "public_html/js",
+                    "src": "**/*.jsx",
+                    "ext": ".js"
+                }]
+            }
+        },
+        compass: {
+            dev: {
+                src: 'public_html/scss',
+                dest: 'public_html/css',
+                linecomments: true,
+                forcecompile: true,
+                debugsass: true
+
+            },
+            prod: {
+                src: 'public_html/scss',
+                dest: 'public_html/css',
+                outputstyle: 'compressed',
+                linecomments: false,
+                forcecompile: true,
+                debugsass: false
+
+            }
+        },
         watch: {//наблюдает за измененинями
             fest: {
                 files: ['templates/**/*.xml'],
@@ -39,8 +78,21 @@ module.exports = function (grunt) {
                     interrupt: true,
                     atBegin: true,
                     spawn: false,
-                },
+                }
 
+            },
+            compass: {
+                files: [ 'public_html/scss/*.scss' ],
+                tasks: [ 'compass:dev', 'compass:prod' ]
+            },
+            babel: {
+                files: ['public_html/js/**/*.jsx'],
+                tasks: ['babel'],
+                options: {
+                    interrupt: true,
+                    atBegin: true,
+                    spawn: false,
+                }
             },
 
             server: {
@@ -66,6 +118,7 @@ module.exports = function (grunt) {
     });
 
     require('load-grunt-tasks')(grunt);
+    grunt.registerTask('test', ['qunit:all']);
     grunt.registerTask('default', ['concurrent']);
 
 };

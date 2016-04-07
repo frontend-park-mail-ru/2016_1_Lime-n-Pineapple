@@ -1,20 +1,13 @@
+'use strict';
 define([
         'jquery',
         'underscore',
         'backbone',
-        'views/all_views',
-        'views/view_manager'
+        'views/allViews',
+        'controllers/viewManager',
+        'models/session'
 ],
-    function ($, underscore, Backbone, Views, VM) {
-        VM.addArray([
-            Views.main,
-            Views.scoreboard,
-            Views.game,
-            Views.login,
-            Views.logout,
-            Views.btnBack
-        ]);
-
+    function ($, underscore, Backbone, Views, ViewManager, Session) {
         var Router = Backbone.Router.extend({
                 routes: {
                     "game": "gameAction",
@@ -27,18 +20,21 @@ define([
                 _setTagNameViewsEl: function (view, wantTagName) {
                     if (view !== undefined && (view.$el.tagName === undefined || (wantTagName && wantTagName.isString()))) {
                             view.$el.appendTo($(wantTagName));
-                            view.render();
                     }
                 },
 
                 initialize: function () {
-                    this._setTagNameViewsEl(Views.btnBack, "#view__btn_back");
-                    this._setTagNameViewsEl(Views.game, "#view__holder");
-                    this._setTagNameViewsEl(Views.main, "#view__holder");
-                    this._setTagNameViewsEl(Views.scoreboard, "#view__holder");
-                    this._setTagNameViewsEl(Views.login, "#view__holder");
-                    // this["btn_back"] ==== this.btn_back !=== this."btn_back"
-                    this.defaultAction();
+                    this.VM = new ViewManager(
+                        Views.game,
+                        Views.main,
+                        Views.scoreboard,
+                        Views.login
+                    );
+                    this._setTagNameViewsEl(Views.game, "#page__view-holder");
+                    this._setTagNameViewsEl(Views.main, "#page__view-holder");
+                    this._setTagNameViewsEl(Views.scoreboard, "#page__view-holder");
+                    this._setTagNameViewsEl(Views.login, "#page__view-holder");
+                    // this.defaultAction(); - Works without it
                 },
 
                 defaultAction: function () {
@@ -46,22 +42,20 @@ define([
                 },
 
                 scoreboardAction: function () {
+                    console.log("Scoreboard action showing...");
                     Views.scoreboard.show();
-                    Views.btnBack.show();
                 },
 
                 gameAction: function () {
                     Views.game.show();
-                    Views.btnBack.show();
                 },
 
                 loginAction: function () {
                     Views.login.show();
-                    Views.btnBack.show();
                 },
 
                 logoutAction: function() {
-                    Views.logout.onSubmitEvent();
+                    Session.logout();
                 }
             });
 
