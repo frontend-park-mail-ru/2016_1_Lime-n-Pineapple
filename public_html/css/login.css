@@ -23,15 +23,15 @@
   border: 5px solid #63323E;
   background-color: rgba(255, 255, 255, 0.3);
 }
-/* line 21, ../scss/login.scss */
+/* line 19, ../scss/login.scss */
 .js-form__login input.login-form__input-field:hover {
   border: 5px solid #63223E;
 }
-/* line 24, ../scss/login.scss */
+/* line 22, ../scss/login.scss */
 .js-form__login input.login-form__input-field:focus {
   box-shadow: none;
 }
-/* line 27, ../scss/login.scss */
+/* line 25, ../scss/login.scss */
 .js-form__login input.login-form__input-field:invalid:not(empty) {
   outline: none;
   border-color: #77223e;
