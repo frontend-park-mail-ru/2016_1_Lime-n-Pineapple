@@ -11,16 +11,11 @@ define([
             template: tmpl,
             events: {
 
-                'click .btn-back' : function(e) {
+                'click .btn-lg-back' : function(e) {
                 Backbone.history.navigate("/", true);
             },
-                'submit' : '_onSubmitEvent'
+                'submit #login-form__btn-success' : '_onSubmitEvent'
             },
-
-            // don't work// must to ask
-            //events:{
-            //    'submit #login-form__btn-success': '_onSubmitEvent'
-            //},
 
             initialize: function () {
             },

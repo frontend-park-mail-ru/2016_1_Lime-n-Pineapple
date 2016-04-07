@@ -19,8 +19,8 @@
                 </input>
             </fieldset>
             <div class="form-group inline-group">
-                <button id="login-form__tn-success"
-                     type="submit" role="button" class="btn-circle btn-lg" style="text-decoration: none">OK</button>
+                <button id="login-form__btn-success"
+                     type="submit" role="button" class="btn-circle btn-lg btn-lg-success" style="text-decoration: none">OK</button>
                 <fest:include src="./btn_back.xml"/>
             </div>
 

@@ -39,8 +39,6 @@ body {
 
 }
 
-
-
 .menu__row {
   display:block;
 
@@ -70,7 +68,7 @@ body {
     @include setBtnSize($oneLineHeight, $font-size__Caption-Full);
   }
   &.btn-lg {
-    @include setBtnSize($oneLineHeight * 0.7, $font-size__Caption-Full * 0.75)
+    @include setBtnSize($oneLineHeight * 0.7, $font-size__Caption-Full * 0.75);
   }
 
   &:hover {
