@@ -7,9 +7,10 @@
     color: $color_purple_light;
     border-radius: 20px;
     line-height: 0;
-    font-size: 2em;
+    font-size: 4vh;
     width: 33vw ;
-    height: 5vh;
+    height: 6vh;
+    min-height: 1.5em;
     display: inline-block;
     min-width: $layout-width-xs;
     margin: 1.5vh 0 0 0;
@@ -39,7 +40,6 @@
   }
 
 }
-
 
 
 

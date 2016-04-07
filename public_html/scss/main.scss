@@ -53,6 +53,7 @@ body {
     line-height: $size;
     font-size: $fontSize;
     border-radius: 50%;
+    margin-top: 1vh;
   }
 
   display: inline-block;
@@ -66,9 +67,22 @@ body {
   opacity: 0.85;
   &.btn-xl {
     @include setBtnSize($oneLineHeight, $font-size__Caption-Full);
+    padding: $oneLineHeight/32 0;
   }
   &.btn-lg {
     @include setBtnSize($oneLineHeight * 0.7, $font-size__Caption-Full * 0.75);
+    padding: $oneLineHeight/16 0;
+    &.btn-lg-success {
+      &:hover {
+          background: #00ff80;
+      }
+    }
+
+    &.btn-lg-back {
+      &:hover {
+        background: #ff0000;
+      }
+    }
   }
 
   &:hover {
