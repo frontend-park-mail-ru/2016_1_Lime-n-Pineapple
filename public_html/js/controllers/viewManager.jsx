@@ -9,11 +9,11 @@ define([
     var ViewManager = Backbone.View.extend({
         initialize : function(...views) {
             this.views = views;
-            Backbone.on( Settings.EVENT_VIEWMANAGER_SHOW, (view ) => {
+            Backbone.on(Settings.EVENT_VIEWMANAGER_SHOW, (view) => {
                 console.log("[ViewManager::add::listenTo] Triggered!");
                 this.hide(view);
                 view.$el.show();
-            }, this);
+            });
         },
         hide: function (exceptThisView) {
             console.log("[ViewManager::hide] executing...");

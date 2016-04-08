@@ -19,7 +19,7 @@ define(['backbone'], function (Backbone) {
 
                 console.log("[ CATCHED THAT BITCH EVENT!!]");
                 this.increment(inc);
-            }.bind(this), this);
+            }.bind(this));
         },
 
         increment: function increment(count) {

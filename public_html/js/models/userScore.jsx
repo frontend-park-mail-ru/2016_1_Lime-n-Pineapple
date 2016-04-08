@@ -18,7 +18,7 @@ define([
                         console.log("[ CATCHED THAT BITCH EVENT!!]");
                         this.increment(inc);
 
-                    }, this);
+                    });
                 },
 
                 increment: function (count) {

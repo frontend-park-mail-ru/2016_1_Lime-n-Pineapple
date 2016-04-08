@@ -19,7 +19,7 @@ define(['underscore', 'backbone', 'settings'], function (_, Backbone, Settings) 
                 console.log("[ViewManager::add::listenTo] Triggered!");
                 this.hide(view);
                 view.$el.show();
-            }.bind(this), this);
+            }.bind(this));
         },
         hide: function hide(exceptThisView) {
             console.log("[ViewManager::hide] executing...");

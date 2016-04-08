@@ -21,7 +21,8 @@ define([
 
         defaults:{
             'renderer': "null",
-            'stage': "null"
+            'stage': "null",
+
         },
 
         initialize: function(){
@@ -41,47 +42,55 @@ define([
 
         render: function () {
             BaseView.prototype.render.call(this);
-            this.renderer = pixi.autoDetectRenderer($("#game_window").width()/1.5, $("#game_window").height(), {transparent: true});
+            this.renderer = pixi.autoDetectRenderer($("#game_window").width()/1.2, $("#game_window").height(), {transparent: true});
             document.getElementById("game_window").appendChild(this.renderer.view);
             this.stage = new pixi.Container();
-            var texture = pixi.Texture.fromImage('static/resources/card1.png');
             var container = new pixi.Container();
+            var containerInfighting = new pixi.Container();
+            var containerDistantFighting = new pixi.Container();
+
             this.stage.addChild(container);
-            var card = new pixi.Sprite(texture);
-            console.log($(window).height());
+            this.stage.addChild(containerInfighting);
+            this.stage.addChild(containerDistantFighting);
+
             let h = $(window).height()/6;
             let w = $(window).width();
 
 
-            for (var i = 0; i < 5; i++) {
-                let card = PIXI.Sprite.fromImage('static/resources/card1.png');
+            for (var i = 0; i < 9; i++) {
+                let card = PIXI.Sprite.fromImage('static/resources/card' + (Math.floor(Math.random() * (8 - 1 + 1)) + 1) + '.png');
                 card.interactive = true;
                 card.buttonMode = true;
-                card
-                    // events for drag start
-                    .on('mousedown', this.onDragStart)
-                    .on('touchstart', this.onDragStart)
-                    // events for drag end
-                    .on('mouseup', this.onDragEnd)
-                    .on('mouseupoutside', this.onDragEnd)
-                    .on('touchend', this.onDragEnd)
-                    .on('touchendoutside', this.onDragEnd)
-                    // events for drag move
-                    .on('mousemove', this.onDragMove)
-                    .on('touchmove', this.onDragMove);
                 card.width = h - h/6;
                 card.height = h;
-                card.x = card.width * i + 2;
+                card.x = card.width * i + 2 + card.width/2;
+                card.y = card.y + card.height/2
                 card.anchor.set(0.5);
+                card
+                    .on('mousedown', function(event) {
+                        self.onClickCard(event, container, card)
+                    })
+                    .on('touchstart', function(event) {
+                        self.onClickCard(event, container, card)
+                    });
+
+
                 container.addChild(card);
             }
+            container.y = 4 * h + 9;
 
-            container.y = 4 * h + 5;
+            containerInfighting
+                .on("mousedown", function(event){
+
+                });
+
+            containerInfighting.y = 2 * h + 9;
+            containerDistantFighting.y = 3 * h + 9;
+
             var self = this;
-
             setInterval(function() {
                 self.animate(self);
-            }, 50);
+            }, 100);
 
         },
 
@@ -90,31 +99,37 @@ define([
             self.renderer.render(this.stage);
         },
 
-        onDragStart: function(event) {
-            this.data = event.data;
-            this.alpha = 0.5;
-            this.dragging = true;
-        },
-
-        onDragEnd: function()
-        {
-            this.alpha = 1;
-
-            this.dragging = false;
-
-            // set the interaction data to null
-            this.data = null;
-        },
-
-        onDragMove: function()
-        {
-            if (this.dragging)
-            {
-                var newPosition = this.data.getLocalPosition(this.parent);
-                this.position.x = newPosition.x;
-                this.position.y = newPosition.y;
+        onClickCard: function(event, container, card) {
+            console.log(event.data.originalEvent.which);
+            switch (event.data.originalEvent.which) {
+                case 1:
+                    if (card.alpha == 0.5){
+                        card.alpha = 1;
+                        this.infoCard.renderable = false;
+                        for (var i = 0; i < container.children.length; i++){
+                            container.children[i].interactive = true;
+                        }
+                    }
+                    else {
+                        this.infoCard = new pixi.Sprite(card.texture);
+                        for (var i = 0; i < container.children.length; i++){
+                            container.children[i].interactive = false;
+                        }
+                        card.interactive = true;
+                        card.alpha = 0.5;
+                        this.infoCard.width = card.width * 2.5;
+                        this.infoCard.height = card.height * 2.5;
+                        this.infoCard.anchor.set(0.5);
+                        this.infoCard.x = this.renderer.width - this.infoCard.width / 2 - 10;
+                        this.infoCard.y = this.infoCard.height / 2;
+                        this.infoCard.setParent(this.stage);
+                        this.infoCard.renderable = true;
+                        this.stage.addChild(this.infoCard);
+                    }
+                    break;
             }
-        }
+        },
+
 
 
 
