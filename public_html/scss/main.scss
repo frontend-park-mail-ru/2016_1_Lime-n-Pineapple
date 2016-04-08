@@ -2,13 +2,40 @@
 @import "compass/css3/transform";
 
 
+html {
+  height: 100vh;
+  padding:0;
+  margin:0;
+}
 
 body {
+  width: 100%;
+  height: calc(100vh - 100vh/6);
   margin: 0;
   background: url($bgImageUrl) no-repeat fixed left;
   background-size: 100vw 100%;
 }
 
+#page {
+  height: calc(100vh - 100vh/6);
+  width: 100%;
+}
+
+#page__view-holder {
+  height: calc(100vh - 200vh/6);
+  width: 100%;
+}
+
+
+mytag {
+  height: calc(100vh - 100vh/6);
+  width: 100vw;
+}
+
+#game_window {
+  height: calc(100vh - 100vh/6 - 3px);
+  width: 100vw;
+}
 
 
 #page__site-header {
@@ -92,6 +119,8 @@ body {
     cursor: pointer;
   }
 }
+
+
 
 
 .font-ink {

@@ -15,7 +15,7 @@ define([
         ],
 
         events: {
-                'click #start': '_onSubmitEvent',
+                'click #start': 'navigate',
                 'click #scoreboard': 'navigate',
                 'click #login': 'navigate'
         },
