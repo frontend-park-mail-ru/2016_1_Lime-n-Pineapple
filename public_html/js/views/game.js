@@ -49,12 +49,28 @@ define([
             var containerInfighting = new pixi.Container();
             var containerDistantFighting = new pixi.Container();
 
+            let h = $(window).height()/6;
+            let w = $(window).width();
+
+            container.y = 4 * h + 9;
+            containerInfighting.y = 2 * h + 9;
+            containerDistantFighting.y = 3 * h + 9;
+
+            console.log(containerInfighting.y + "ojojojojoj");
+
+            containerInfighting.hitArea = new pixi.Rectangle(0, 0, this.renderer.width, h);
+            containerDistantFighting.hitArea = new pixi.Rectangle(0, 0, this.renderer.width, h);
+
+            containerInfighting.interactive = true;
+            containerInfighting.buttonMode = true;
+            containerDistantFighting.interactive = true;
+            containerDistantFighting.buttonMode = true;
+
             this.stage.addChild(container);
             this.stage.addChild(containerInfighting);
             this.stage.addChild(containerDistantFighting);
 
-            let h = $(window).height()/6;
-            let w = $(window).width();
+
 
 
             for (var i = 0; i < 9; i++) {
@@ -67,7 +83,7 @@ define([
                 card.y = card.y + card.height/2
                 card.anchor.set(0.5);
                 card
-                    .on('mousedown', function(event) {
+                    .on('click', function(event) {
                         self.onClickCard(event, container, card)
                     })
                     .on('touchstart', function(event) {
@@ -77,15 +93,19 @@ define([
 
                 container.addChild(card);
             }
-            container.y = 4 * h + 9;
+
 
             containerInfighting
-                .on("mousedown", function(event){
-
+                .on('mousedown', function(event){
+                    self.onClickBattleField(event, containerInfighting);
                 });
 
-            containerInfighting.y = 2 * h + 9;
-            containerDistantFighting.y = 3 * h + 9;
+            containerDistantFighting
+                .on('mousedown', function(event){
+                    self.onClickBattleField(event, containerDistantFighting);
+                });
+
+
 
             var self = this;
             setInterval(function() {
@@ -97,6 +117,25 @@ define([
         animate: function (self) {
             console.log("i am here");
             self.renderer.render(this.stage);
+        },
+
+        onClickBattleField: function(event, container){
+            console.log("in onClickBattleField");
+            if (this.infoCard && this.infoCard.renderable){
+                var card = new pixi.Sprite(this.infoCard.texture);
+
+                card.width = this.infoCard.width / 2.5;
+                card.height = this.infoCard.height / 2.5;
+                card.anchor.set(0);
+
+                card.x = 0 + container.children.length * card.width + 2;
+                card.y = 0;
+
+                container.addChild(card);
+
+
+
+            }
         },
 
         onClickCard: function(event, container, card) {
