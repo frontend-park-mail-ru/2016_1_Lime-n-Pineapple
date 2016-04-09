@@ -52,14 +52,7 @@ define([
             this.oneLineHeight = $(window).height()/6;
             this.widht = $(window).width();
 
-            let i = 4;
-            for (var key in this.containers){
-                this.containers[key].y = i * this.oneLineHeight;
-                --i;
-            }
-
-            this.containers.containerInfighting.hitArea = new pixi.Rectangle(0, 0, this.widht / 1.5, this.oneLineHeight);
-            this.containers.containerDistantFighting.hitArea = new pixi.Rectangle(0, 0, this.widht / 1.5, this.oneLineHeight);
+            this.setContainerPosition();
 
             let self = this;
             this.containers.containerInfighting
@@ -73,9 +66,31 @@ define([
 
                 });
 
+            window.addEventListener('resize', function() {
+                self.resize(self);
+            });
+
+
             this.createDeck(this.containers.container);
             this.createDeck(this.containers.containerEnemy);
 
+        },
+
+        //don't work
+        setContainerPosition: function(){
+            this.oneLineHeight = $(window).height()/6;
+            this.widht = $(window).width();
+            this.renderer = pixi.autoDetectRenderer($("#game_window").width()/1.2, $("#game_window").height());
+            let i = 4;
+            for (var key in this.containers){
+                this.containers[key].y = 0;
+                this.containers[key].x = 0;
+                this.containers[key].y = i * this.oneLineHeight;
+                --i;
+            }
+
+            this.containers.containerInfighting.hitArea = new pixi.Rectangle(0, 0, this.widht / 1.5, this.oneLineHeight);
+            this.containers.containerDistantFighting.hitArea = new pixi.Rectangle(0, 0, this.widht / 1.5, this.oneLineHeight);
         },
 
         show: function () {
@@ -91,6 +106,10 @@ define([
             BaseView.prototype.hide.call(this);
             clearInterval(this.intervalID);
             $("#page__site-header").removeClass("topped");
+        },
+
+        resize: function(self){
+            self.setContainerPosition();
         },
 
 
@@ -137,14 +156,13 @@ define([
         animate: function (self) {
             console.log("i am here");
             if (!self.containers.container.children.length){
-                BaseView.prototype.render.call(this);
                 self.containers = {};
                 self.renderer = null;
                 self.stage = null;
                 self.initialize();
                 self.hide();
-                self.show();
                 self.render();
+                self.show();
             }
             self.renderer.render(self.stage);
         },
