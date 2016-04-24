@@ -51,25 +51,25 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        compass: {
-            dev: {
-                src: 'public_html/scss',
-                dest: 'public_html/css',
-                linecomments: true,
-                forcecompile: true,
-                debugsass: true
-
-            },
-            prod: {
-                src: 'public_html/scss',
-                dest: 'public_html/css',
-                outputstyle: 'compressed',
-                linecomments: false,
-                forcecompile: true,
-                debugsass: false
-
-            }
-        },
+        //compass: {
+        //    dev: {
+        //        src: 'public_html/scss',
+        //        dest: 'public_html/css',
+        //        linecomments: true,
+        //        forcecompile: true,
+        //        debugsass: true
+        //
+        //    },
+        //    prod: {
+        //        src: 'public_html/scss',
+        //        dest: 'public_html/css',
+        //        outputstyle: 'compressed',
+        //        linecomments: false,
+        //        forcecompile: true,
+        //        debugsass: false
+        //
+        //    }
+        //},
         watch: {//наблюдает за измененинями
             fest: {
                 files: ['templates/**/*.xml'],
@@ -81,10 +81,10 @@ module.exports = function (grunt) {
                 }
 
             },
-            compass: {
-                files: [ 'public_html/scss/*.scss' ],
-                tasks: [ 'compass:dev', 'compass:prod' ]
-            },
+            //compass: {
+            //    files: [ 'public_html/scss/*.scss' ],
+            //    tasks: [ 'compass:dev', 'compass:prod' ]
+            //},
             babel: {
                 files: ['public_html/js/**/*.jsx'],
                 tasks: ['babel'],

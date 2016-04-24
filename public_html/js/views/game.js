@@ -22,6 +22,7 @@ define([
         defaults:{
             'renderer': "null",
             'stage':    "null",
+            'domID': "game_window",
             containers: {
                 container:                      null,
                 containerDistantFighting:       null,
@@ -36,19 +37,19 @@ define([
             BaseView.prototype.initialize.call(this);
             this.stage = new pixi.Container();
             this.containers = this.defaults.containers;
+            this.domID = this.defaults.domID;
 
-            for (var key in this.containers){
+
+            _.forEach(this.containers, function(value, key){
                 this.containers[key] = new pixi.Container();
-            }
-            console.log(this.containers);
+                this.stage.addChild(this.containers[key]);
+            }, this);
+
             this.containers.containerInfighting.interactive = true;
             this.containers.containerInfighting.buttonMode = true;
             this.containers.containerDistantFighting.interactive = true;
             this.containers.containerDistantFighting.buttonMode = true;
 
-            for(var key in this.containers){
-                this.stage.addChild(this.containers[key]);
-            }
             this.oneLineHeight = $(window).height()/6;
             this.widht = $(window).width();
 
@@ -70,24 +71,39 @@ define([
                 self.resize(self);
             });
 
+            this.loader = new pixi.loaders.Loader();
 
-            this.createDeck(this.containers.container);
-            this.createDeck(this.containers.containerEnemy);
 
+            for(let i = 1; i < 10; i+=1){
+                this.loader.add("card" + i, 'static/resources/card' + i + ".png");
+            }
+
+
+
+            this.loader.once("complete", function () {
+                this.trigger("event.loaded");
+                this.createDeck(this.containers.container);
+                this.createDeck(this.containers.containerEnemy);
+                this.setTouchEventCard(this.containers.container);
+            }, this);
+
+            this.loader.load();
         },
 
         //don't work
         setContainerPosition: function(){
             this.oneLineHeight = $(window).height()/6;
             this.widht = $(window).width();
-            this.renderer = pixi.autoDetectRenderer($("#game_window").width()/1.2, $("#game_window").height());
+            //this.renderer = pixi.autoDetectRenderer($("#game_window").width()/1.2, $("#game_window").height());
             let i = 4;
-            for (var key in this.containers){
+
+            _.forEach(this.containers, function(val, key){
                 this.containers[key].y = 0;
                 this.containers[key].x = 0;
                 this.containers[key].y = i * this.oneLineHeight;
-                --i;
-            }
+                i-=1;
+            }, this);
+
 
             this.containers.containerInfighting.hitArea = new pixi.Rectangle(0, 0, this.widht / 1.5, this.oneLineHeight);
             this.containers.containerDistantFighting.hitArea = new pixi.Rectangle(0, 0, this.widht / 1.5, this.oneLineHeight);
@@ -115,30 +131,48 @@ define([
 
         render: function () {
             BaseView.prototype.render.call(this);
-            this.renderer = pixi.autoDetectRenderer($("#game_window").width()/1.2, $("#game_window").height(), {transparent: true});
-            document.getElementById("game_window").appendChild(this.renderer.view);
+            this.renderer = pixi.autoDetectRenderer($(this.el).width()/1.2, $(this.el).height(), {transparent: true});
+            document.getElementById(this.domID).appendChild(this.renderer.view);
         },
 
+        // onAssetsLoader
         createDeck: function(container) {
-            let self = this;
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 8; i+=1) {
 
-                let card = new pixi.Sprite.fromImage('static/resources/card' + (Math.floor(Math.random() * (8 - 1 + 1)) + 1) + '.png');
+                let texture = new pixi.Texture.fromImage('static/resources/card' + (Math.floor(Math.random() * (8 - 1 + 1)) + 1) + '.png');
+                //let card = new pixi.Sprite.fromImage('static/resources/card' + (Math.floor(Math.random() * (8 - 1 + 1)) + 1) + '.png');
+                let card = new pixi.Sprite(texture);
                 card.interactive = true;
                 card.buttonMode = true;
-                card.width = this.oneLineHeight - this.oneLineHeight/6;
+                if (i === 0) {
+                    console.log(card.width, card.height);
+                }
+                card.width = card.width * this.oneLineHeight * 1.2 / card.height;
                 card.height = this.oneLineHeight;
-                card.x = card.width * i + 2 + card.width/2;
+                if (i === 0) {
+                    console.log(card.width, card.height);
+                }
+                card.x = card.width * i + 2 * i + card.width/2;
                 card.y = card.y + card.height/2;
                 card.anchor.set(0.5);
-                card
-                    .on('click', function(event) {
-                        self.onClickCard(event, container, card);
-                    })
-                    .on('touchstart', function(event) {
-                        self.onClickCard(event, container, card)
-                    });
                 container.addChild(card);
+            }
+        },
+
+        setTouchEventCard: function(container){
+            let self = this;
+            if (container.children.length){
+                for (let i = 0; i < container.children.length; i++){
+                    let card = container.getChildAt(i);
+                    container.getChildAt(i)
+                        .on('click', function(event) {
+                            console.log(container.children.length);
+                            self.onClickCard(event, container, card);
+                        })
+                        .on('touchstart', function(event) {
+                            self.onClickCard(event, container, card);
+                        });
+                }
             }
         },
 
