@@ -1,3 +1,19 @@
-/**
- * Created by leegheid on 09.04.16.
- */
+"use strict";
+define([
+    'jquery',
+    'underscore',
+    'backbone',
+    'settings',
+    'pixi'
+], function ($, _, Backbone, Settings, pixi) {
+        class Renderer {
+            constructor() {
+
+            }
+
+        }
+        return Renderer;
+    }
+);
+
+

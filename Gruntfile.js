@@ -91,7 +91,7 @@ module.exports = function (grunt) {
                 options: {
                     interrupt: true,
                     atBegin: true,
-                    spawn: false,
+                    spawn: false
                 }
             },
 

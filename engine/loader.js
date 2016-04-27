@@ -1,22 +1,23 @@
 "use strict";
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define([], function () {
-    var Loader = function () {
-        function Loader() {
-            _classCallCheck(this, Loader);
+define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './engine-compiled', './card_collection-compiled'], function ($, _, Backbone, Settings, pixi, Engine, CardCollection) {
+    var Loader = function Loader() {
+        _classCallCheck(this, Loader);
+
+        this.loader = new pixi.loaders.Loader();
+
+        for (var i = 1; i < 10; i += 1) {
+            this.loader.add("card" + i, 'static/resources/card' + i + ".png");
         }
 
-        _createClass(Loader, [{
-            key: "initialize",
-            value: function initialize() {}
-        }]);
-
-        return Loader;
-    }();
+        this.loader.load(function (loader, res) {
+            this.playerCollectionCard = new CardCollection(res);
+            this.enemyCollectionCard = new CardCollection(res);
+            this.engine = new Engine(res, this.playerCollectionCard, this.enemyCollectionCard);
+        }, this);
+    };
 
     return Loader;
 });

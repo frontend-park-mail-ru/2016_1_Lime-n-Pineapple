@@ -24,6 +24,7 @@
   "plusplus":true,
 
   "curly":true,
+  "loopfunc": true,
 
   "globals": {
     "define": false
