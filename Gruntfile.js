@@ -34,23 +34,23 @@ module.exports = function (grunt) {
                 }
             }
         },
-        babel: {
-            options: {
-                sourceMap: false,
-                presets: ['es2015'],
-                plugins: [
-                    ["transform-es2015-arrow-functions", { "spec": true }]
-                ]
-            },
-            dist: {
-                files: [{
-                    "expand": true,
-                    "cwd": "public_html/js",
-                    "src": "**/*.jsx",
-                    "ext": ".js"
-                }]
-            }
-        },
+        //babel: {
+        //    options: {
+        //        sourceMap: false,
+        //        presets: ['es2015'],
+        //        plugins: [
+        //            ["transform-es2015-arrow-functions", { "spec": true }]
+        //        ]
+        //    },
+        //    dist: {
+        //        files: [{
+        //            "expand": true,
+        //            "cwd": "public_html/js",
+        //            "src": "**/*.jsx",
+        //            "ext": ".js"
+        //        }]
+        //    }
+        //},
         //compass: {
         //    dev: {
         //        src: 'public_html/scss',
@@ -85,15 +85,15 @@ module.exports = function (grunt) {
             //    files: [ 'public_html/scss/*.scss' ],
             //    tasks: [ 'compass:dev', 'compass:prod' ]
             //},
-            babel: {
-                files: ['public_html/js/**/*.jsx'],
-                tasks: ['babel'],
-                options: {
-                    interrupt: true,
-                    atBegin: true,
-                    spawn: false
-                }
-            },
+            //babel: {
+            //    files: ['public_html/js/**/*.jsx'],
+            //    tasks: ['babel'],
+            //    options: {
+            //        interrupt: true,
+            //        atBegin: true,
+            //        spawn: false
+            //    }
+            //},
 
             server: {
                 files: [

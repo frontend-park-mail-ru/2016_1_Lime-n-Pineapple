@@ -1,25 +1,25 @@
 "use strict";
 define([
     'jquery',
-    'underscore',
     'backbone',
-    'settings',
     'pixi',
     './engine-compiled',
-    './card_collection-compiled'
-], function ($, _, Backbone, Settings, pixi, Engine, CardCollection) {
+    './renderer-compiled'
+], function ($, Backbone, pixi, Engine, Renderer) {
     class Loader {
-            constructor() {
+            constructor(el, domID) {
                 this.loader = new pixi.loaders.Loader();
+
+                console.log("[loader.jsx], constructor");
 
                 for(let i = 1; i < 10; i+=1){
                     this.loader.add("card" + i, 'static/resources/card' + i + ".png");
                 }
 
                 this.loader.load(function(loader, res){
-                    this.playerCollectionCard = new CardCollection(res);
-                    this.enemyCollectionCard = new CardCollection(res);
-                    this.engine = new Engine(res, this.playerCollectionCard, this.enemyCollectionCard);
+                    console.log("[loader.jsx], load");
+                    this.renderer = new Renderer(el, domID);
+                    this.engine = new Engine(res);
                 }, this);
             }
 

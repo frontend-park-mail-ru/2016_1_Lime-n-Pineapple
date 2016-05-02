@@ -2,7 +2,7 @@
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './engine-compiled', './card_collection-compiled'], function ($, _, Backbone, Settings, pixi, Engine, CardCollection) {
+define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './engine-compiled', './card_collection-compiled+'], function ($, _, Backbone, Settings, pixi, Engine, CardCollection) {
     var Loader = function Loader() {
         _classCallCheck(this, Loader);
 

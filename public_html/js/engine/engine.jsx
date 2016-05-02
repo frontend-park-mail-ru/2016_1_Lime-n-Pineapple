@@ -4,16 +4,18 @@ define([
         'underscore',
         'backbone',
         'settings',
-        'pixi'
-    ], function ($, _, Backbone, Settings, pixi) {
+        'pixi',
+        './card_collection-compiled'
+    ], function ($, _, Backbone, Settings, pixi, CardCollection) {
 
         let oneLineHeight = $(window).height()/6;
         let width = $(window).width();
 
+        // class completed
         class Container {
             constructor() {
                 this.containers = {
-                    containerPlayer:                      null,
+                    containerPlayer:                null,
                     containerDistantFighting:       null,
                     containerInfighting:            null,
                     containerEnemyInfighting:       null,
@@ -40,10 +42,9 @@ define([
                 this.containers.containerDistantFighting.hitArea = new pixi.Rectangle(0, 0, width / 1.5, oneLineHeight);
             }
 
+            // nice work
             setContainerPosition(){
-                //this.renderer = pixi.autoDetectRenderer($("#game_window").width()/1.2, $("#game_window").height());
                 let i = 4;
-
                 _.forEach(this.containers, function(val, key){
                     this.containers[key].y = 0;
                     this.containers[key].x = 0;
@@ -53,15 +54,19 @@ define([
             }
         }
 
+
         class Engine {
-            constructor(loaderRes, playerCollectionCard, enemyCollectionCard) {
+
+            constructor(loaderRes) {
+
                 this.container = new Container();
                 this.loaderRes = loaderRes;
-                this.playerCollectionCard = playerCollectionCard;
-                this.enemyCollectionCard = enemyCollectionCard;
-                //this.domID = this.defaults.domID;
+
+                this.playerCollectionCard = new CardCollection(loaderRes, oneLineHeight, width);
+                this.enemyCollectionCard = new CardCollection(loaderRes, oneLineHeight, width);
 
                 let self = this;
+
                 this.container.containers.containerInfighting
                     .on('mousedown', function(event){
                         self.onClickBattleField(event, self.container.containers.containerInfighting);
@@ -75,13 +80,18 @@ define([
 
                 this.createDeck(this.container.containers.containerPlayer, this.playerCollectionCard);
                 this.createDeck(this.container.containers.containerEnemy, this.enemyCollectionCard);
+
                 this.setTouchEventCard(this.container.containers.containerPlayer);
 
-                //window.addEventListener('resize', function() {
-                //    self.resize(self);
-                //});
+                Backbone.on("AllRendered", function(renderer){
+                    self.renderer = renderer;
+                });
+
+                Backbone.trigger("GameRender", this.container);
+
             }
 
+            // nice work
             createDeck(container, collectionCard) {
                 for (let i = 0; i < collectionCard.cardCollection.length; i+=1) {
 
@@ -94,30 +104,32 @@ define([
                 }
             }
 
+            // nice work
             setTouchEventCard(container){
-                let self = this;
                 if (container.children.length){
                     for (let i = 0; i < container.children.length; i+=1){
                         let card = container.getChildAt(i);
                         container.getChildAt(i)
                             .on('click', function(event) {
                                 console.log(container.children.length);
-                                self.onClickCard(event, container, card);
-                            })
+                                this.onClickCard(event, container, card);
+                            }, this)
                             .on('touchstart', function(event) {
-                                self.onClickCard(event, container, card);
-                            });
+                                this.onClickCard(event, container, card);
+                            }, this);
                     }
                 }
             }
 
+            // maybe to do more nice
             onClickCard(event, container, card) {
-                console.log(event.data.originalEvent.which);
                 switch (event.data.originalEvent.which) {
                     case 1:
                         if (card.alpha === 0.5){
                             card.alpha = 1;
                             this.infoCard.renderable = false;
+                            delete this.infoCard;
+                            console.log(this.infoCard);
                             for (let i = 0; i < container.children.length; i+=1){
                                 container.children[i].interactive = true;
                             }
@@ -130,23 +142,22 @@ define([
                             }
                             card.interactive = true;
                             card.alpha = 0.5;
+
                             this.infoCard.width = card.width * 2.5;
                             this.infoCard.height = card.height * 2.5;
                             this.infoCard.anchor.set(0.5);
                             this.infoCard.x = this.renderer.width - this.infoCard.width / 2;
                             this.infoCard.y = this.infoCard.height / 2;
                             this.infoCard.card = card;
-                            this.infoCard.renderable = true;
-                            this.stage.addChild(this.infoCard);
-
+                            this.container.stage.addChild(this.infoCard);
                         }
                         break;
                 }
             }
 
+            // nice work
             onClickBattleField(event, container){
-                console.log("in onClickBattleField");
-                if (this.infoCard && this.infoCard.renderable){
+                if (this.infoCard){
                     var card = new pixi.Sprite(this.infoCard.texture);
 
                     card.width = this.infoCard.width / 2.5;
@@ -158,38 +169,38 @@ define([
 
                     container.addChild(card);
                     this.infoCard.renderable = false;
-                    for (var i = 0; i < this.containers.container.children.length; i++){
-                        this.containers.container.children[i].interactive = true;
+                    for (var i = 0; i < this.container.containers.containerPlayer.children.length; i+=1){
+                        this.container.containers.containerPlayer.children[i].interactive = true;
                     }
-                    this.containers.container.removeChild(this.infoCard.card);
-                    this.removeGapsInDeck(this.containers.container);
+                    this.container.containers.containerPlayer.removeChild(this.infoCard.card);
+                    this.removeGapsInDeck(this.container.containers.containerPlayer);
                     this.AImove();
                 }
             }
 
+            // nice work
             removeGapsInDeck(container) {
                 let wid;
-                console.log(container.children.length);
                 if (container.children.length){
                     wid = container.getChildAt(0).width;
                 }
-                for (let i = 0; i < container.children.length; i++){
+                for (let i = 0; i < container.children.length; i+=1){
                     container.getChildAt(i).x = wid * i + 2 + wid/2;
                 }
             }
 
             AImove() {
-                if (this.containers.containerEnemy.children.length) {
-                    var card = this.containers.containerEnemy.getChildAt((Math.floor(Math.random() * (this.containers.containerEnemy.children.length))));
-                    this.containers.containerEnemy.removeChild(card);
+                if (this.container.containers.containerEnemy.children.length) {
+                    var card = this.container.containers.containerEnemy.getChildAt((Math.floor(Math.random() * (this.container.containers.containerEnemy.children.length))));
+                    this.container.containers.containerEnemy.removeChild(card);
                     let r = Math.floor(Math.random() * (2) + 1);
-                    if (r == 1){
-                        this.containers.containerEnemyDistantFighting.addChild(card);
-                        this.removeGapsInDeck(this.containers.containerEnemyDistantFighting);
+                    if (r === 1){
+                        this.container.containers.containerEnemyDistantFighting.addChild(card);
+                        this.removeGapsInDeck(this.container.containers.containerEnemyDistantFighting);
                     }
                     else{
-                        this.containers.containerEnemyInfighting.addChild(card);
-                        this.removeGapsInDeck(this.containers.containerEnemyInfighting);
+                        this.container.containers.containerEnemyInfighting.addChild(card);
+                        this.removeGapsInDeck(this.container.containers.containerEnemyInfighting);
                     }
                 }
             }

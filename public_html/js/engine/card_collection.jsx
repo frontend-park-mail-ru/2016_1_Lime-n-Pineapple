@@ -9,10 +9,10 @@ define([
 ], function ($, _, Backbone, Settings, pixi, Card) {
         class CardCollection {
 
-            constructor(loaderRes) {
+            constructor(loaderRes, oneLineHeight, width) {
                 this.cardCollection = [];
                 for (let i = 0; i < 8; i+=1) {
-                    this.cardCollection.push(new Card(loaderRes));
+                    this.cardCollection.push(new Card(loaderRes, oneLineHeight, width));
                 }
             }
 
