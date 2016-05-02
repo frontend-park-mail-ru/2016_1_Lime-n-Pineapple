@@ -4,7 +4,7 @@ define([
     ],
     function (pixi) {
         class Card {
-            constructor(loaderRes, oneLineHeight, width) {
+            constructor(loaderRes, oneLineHeight) {
                 //this.texture = new pixi.Texture.fromImage('static/resources/card' + (Math.floor(Math.random() * (8 - 1 + 1)) + 1) + '.png');
                 this.texture = new pixi.Texture.fromImage(loaderRes['card' + (Math.floor(Math.random() * (8 - 1 + 1)) + 1)].url);
                 this.cardStrite = new pixi.Sprite(this.texture);

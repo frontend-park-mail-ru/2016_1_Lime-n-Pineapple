@@ -16,38 +16,34 @@ define([
 
                 Backbone.on("GameRender", function(container){
                     console.log("[renderer], GameRender event");
-                    self.container = container;
+                    this.container = container;
 
-                    self.renderer = pixi.autoDetectRenderer($(self.viewEl).width()/1.2, $(self.viewEl).height(), {transparent: true});
-                    document.getElementById(self.domID).appendChild(self.renderer.view);
+                    this.renderer = pixi.autoDetectRenderer($(this.viewEl).width()/1.2, $(this.viewEl).height(), {transparent: true});
+                    document.getElementById(this.domID).appendChild(this.renderer.view);
 
-                    Backbone.trigger("AllRendered", self.renderer);
+                    Backbone.trigger("AllRendered", this.renderer);
 
-                    self.intervalID = setInterval(function() {
-                        self.animate(self, container);
+                    this.intervalID = setInterval(function() {
+                        self.animate(self.container);
                     }, 100);
-                });
+                }, this);
 
                 Backbone.on("StopRender", function(){
-                    clearInterval(self.intervalID);
+                    clearInterval(this.intervalID);
                     Backbone.trigger("RendererStoped");
-                });
+                }, this);
 
                 Backbone.on("ResumeRender", function(){
-                    self.intervalID = setInterval(function() {
-                        self.animate(self, self.container);
+                    this.intervalID = setInterval(function() {
+                        self.animate(self.container);
                     }, 100);
                     Backbone.trigger("RendererResume");
-                });
+                }, this);
             }
 
-            animate(self, container) {
+            animate(container) {
                 console.log("animate");
-                if (!container.containers.containerPlayer.children.length){
-                    container = {};
-                    self.renderer = null;
-                }
-                self.renderer.render(container.stage);
+                this.renderer.render(container.stage);
             }
 
         }
