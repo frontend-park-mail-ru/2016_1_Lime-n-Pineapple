@@ -5,8 +5,8 @@ define([
         'backbone',
         'settings',
         'pixi',
-        './player-compiled',
-        './bot_player-compiled'
+        './player',
+        './bot_player'
     ], function ($, _, Backbone, Settings, pixi, Player, Bot) {
 
         let oneLineHeight = $(window).height()/6;
@@ -93,7 +93,7 @@ define([
                 this.removeGapsInDeck(this.containers.containerPlayer);
                 Backbone.trigger("CardAreThrown", actionCard, container);
                 Backbone.trigger("AIprocess");
-            }   
+            }
 
             removeGapsInDeck(container) {
                 let wid;

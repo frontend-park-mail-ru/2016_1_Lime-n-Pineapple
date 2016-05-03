@@ -3,8 +3,8 @@ define([
     'jquery',
     'backbone',
     'pixi',
-    './engine-compiled',
-    './renderer-compiled'
+    './engine',
+    './renderer'
 ], function ($, Backbone, pixi, Engine, Renderer) {
     class Loader {
             constructor(el, domID) {

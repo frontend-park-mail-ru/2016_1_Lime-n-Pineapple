@@ -3,7 +3,7 @@ define([
         'jquery',
         'backbone',
         'pixi',
-        './card_collection-compiled'
+        './card_collection'
 ],  function ($, Backbone, pixi, CardCollection) {
         class AbstractPlayer {
 

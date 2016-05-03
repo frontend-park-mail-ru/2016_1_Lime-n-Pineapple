@@ -5,7 +5,7 @@ define([
         'backbone',
         'settings',
         'pixi',
-        './card-compiled'
+        './card'
 ], function ($, _, Backbone, Settings, pixi, Card) {
         class CardCollection {
 

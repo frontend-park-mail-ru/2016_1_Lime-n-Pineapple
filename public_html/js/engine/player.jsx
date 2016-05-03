@@ -3,7 +3,7 @@ define([
         'jquery',
         'backbone',
         'pixi',
-        './abstract_player-compiled'
+        './abstract_player'
     ],  function ($, Backbone, pixi, AbstractPlayer) {
         class Player extends AbstractPlayer{
 
