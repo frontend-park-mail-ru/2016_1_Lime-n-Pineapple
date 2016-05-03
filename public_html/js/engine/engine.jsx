@@ -42,26 +42,38 @@ define([
 
                 this.setContainerPosition();
 
-                Backbone.on("CardPressed", function (actionCard) {
+                Backbone.on("CardPressed", function (actionCard, infoCard) {
                     this.containers.containerInfighting
                         .on('mousedown', function(event){
-                            this.onClickBattleField(event, this.containers.containerInfighting, actionCard);
+                            this.onClickBattleField(event, this.containers.containerInfighting, actionCard, infoCard);
                         }, this);
 
                     this.containers.containerDistantFighting
                         .on('mousedown', function(event){
-                            this.onClickBattleField(event, this.containers.containerDistantFighting, actionCard);
+                            this.onClickBattleField(event, this.containers.containerDistantFighting, actionCard, infoCard);
 
                         }, this);
 
                 }, this);
 
-                Backbone.on("CardAreThrown", function(){
+                Backbone.on("CardAreThrown CardBackIntoDesc", function(){
                     this.containers.containerInfighting
                         .off('mousedown');
 
                     this.containers.containerDistantFighting
                         .off('mousedown');
+                }, this);
+
+                Backbone.on("CardMustAddToContainer", function (actionCard, container) {
+                    actionCard.x = container.children.length * actionCard.width + 2 + actionCard.width/2;
+                    actionCard.y = actionCard.height/2;
+                    container.addChild(actionCard);
+
+                    console.log(container.x, container.y, container.height);
+                    actionCard.alpha = 1;
+                    container.visible = true;
+                    console.log(actionCard.x, actionCard.y);
+                    console.log(container);
                 }, this);
 
                 Backbone.on("RemoveGapsInDeckForAI", function(container){
@@ -72,19 +84,16 @@ define([
                 this.containers.containerDistantFighting.hitArea = new pixi.Rectangle(0, 0, width / 1.5, oneLineHeight);
             }
 
-            onClickBattleField(event, container, actionCard){
-                    actionCard.alpha = 1;
-                    actionCard.anchor.set(0);
-                    actionCard.x = container.children.length * actionCard.width + 2;
-                    actionCard.y = 0;
-                    container.addChild(actionCard);
-                    for (var i = 0; i < this.containers.containerPlayer.children.length; i+=1){
-                        this.containers.containerPlayer.children[i].interactive = true;
-                    }
-                    this.removeGapsInDeck(this.containers.containerPlayer);
-                    Backbone.trigger("CardAreThrown");
-                    Backbone.trigger("AIprocess");
-            }
+            onClickBattleField(event, container, actionCard, infoCard){
+                actionCard.mustX = container.children.length * actionCard.width + 2 + actionCard.width/2;
+                actionCard.mustY = container.y + actionCard.height/2;
+                this.stage.addChild(actionCard);
+                actionCard.x = infoCard.x;
+                actionCard.y = infoCard.y;
+                this.removeGapsInDeck(this.containers.containerPlayer);
+                Backbone.trigger("CardAreThrown", actionCard, container);
+                Backbone.trigger("AIprocess");
+            }   
 
             removeGapsInDeck(container) {
                 let wid;

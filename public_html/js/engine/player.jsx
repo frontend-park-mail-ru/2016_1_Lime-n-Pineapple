@@ -10,9 +10,17 @@ define([
             constructor(loaderRes, oneLineHeight, container, stage, renderer){
                 super(loaderRes, oneLineHeight, stage, renderer);
                 this.createDesc(container);
-                Backbone.on("CardAreThrown", function(){
-                    this.stage.removeChild(this.infoCard);
+                Backbone.on("CardAreThrown CardBackIntoDesc", function(){
+                    this._cardBackOrThrown();
                 }, this);
+            }
+
+            _cardBackOrThrown(){
+                this.stage.removeChild(this.infoCard);
+                delete this.infoCard;
+                for (let i = 0; i < this.container.children.length; i+=1){
+                    this.container.children[i].interactive = true;
+                }
             }
 
             act(){
@@ -44,35 +52,40 @@ define([
             onClickCard(event, container, card) {
                 switch (event.data.originalEvent.which) {
                     case 1:
-                        if (card.alpha === 0.5){
+                        if (card.alpha === 0.1){
                             card.alpha = 1;
-                            Backbone.trigger("CardAreThrown");
-                            //this.stage.removeChild(this.infoCard);
-                            delete this.infoCard;
-                            for (let i = 0; i < container.children.length; i+=1){
-                                container.children[i].interactive = true;
-                            }
+                            Backbone.trigger("CardBackIntoDesc");
                         }
                         else {
-                            this.infoCard = new pixi.Sprite(card.texture);
                             this.actionCard = card;
 
                             for (let i = 0; i < container.children.length; i+=1){
                                 container.children[i].interactive = false;
                             }
                             card.interactive = true;
-                            card.alpha = 0.5;
+                            card.alpha = 0.1;
+                            this._createInfoCard(card);
 
-                            this.infoCard.width = card.width * 2.5;
-                            this.infoCard.height = card.height * 2.5;
-                            this.infoCard.anchor.set(0.5);
-                            this.infoCard.x = this.renderer.width - this.infoCard.width / 2;
-                            this.infoCard.y = this.infoCard.height / 2;
-                            this.stage.addChild(this.infoCard);
-                            Backbone.trigger("CardPressed", this.actionCard);
+                            Backbone.trigger("CardPressed", card, this.infoCard);
                         }
                         break;
                 }
+            }
+
+            _createInfoCard(card){
+                this.infoCard = new pixi.Sprite(card.texture);
+                this.infoCard.width = card.width * 2;
+                this.infoCard.height = card.height * 2;
+                this.infoCard.anchor.set(0.5);
+                //this.infoCard.x = this.renderer.width - this.infoCard.width / 2;
+                //this.infoCard.y = this.infoCard.height / 2;
+                this.stage.addChild(this.infoCard);
+                this.infoCard.x = card.x;
+                this.infoCard.y = this.container.y;
+                this.infoCard.mustX = this.renderer.width - this.infoCard.width / 2;
+                this.infoCard.mustY = this.infoCard.height / 2;
+
+                Backbone.trigger("InfoCardMoveToInfoCeil", this.infoCard);
             }
         }
         return Player;
