@@ -5,32 +5,35 @@ define([
         'pixi',
         './card_collection'
 ],  function ($, Backbone, pixi, CardCollection) {
+
+        let oneLineHeight = $(window).height()/6;
+        let width = $(window).width();
+
+
         class AbstractPlayer {
 
-            constructor(loaderRes, oneLineHeight, stage, renderer){
+            constructor(loaderRes, container, stage, renderer){
+                _.extend(this, Backbone.Events);
                 this.cardCollection = new CardCollection(loaderRes, oneLineHeight);
+                this.playersCardDeck = container.playersCardsDeck;
+                this.playersCardContainerInfightng = container.playersCardContainerInfighting;
+                this.playerCardContainerDistant = container.playersCardContainerDistant;
                 console.log(this.cardCollection);
                 this.renderer = renderer;
                 this.stage = stage;
 
+                this.on("Act", function(){
+                    this.trigger("PlayerAct");
+                }, this);
             }
 
             act(){
                 console.log("[AbstractPlayer] constructor");
             }
 
-            createDeck(container) {
+            createDeck() {
                 console.log("[AbstractPlayer], createDesc");
-                this.container = container;
-                for (let i = 0; i < this.cardCollection.length; i+=1) {
-                    this.cardCollection[i].cardStrite.x = this.cardCollection[i].cardStrite.width *
-                        i + 2 * i + this.cardCollection[i].cardStrite.width/2;
-                    this.cardCollection[i].cardStrite.y = this.cardCollection[i].cardStrite.y +
-                        this.cardCollection[i].cardStrite.height/2;
-                    this.cardCollection[i].cardStrite.anchor.set(0.5);
-                    this.container.addChild(this.cardCollection[i].cardStrite);
-                }
-                console.log(this.container);
+                this.playersCardDeck.trigger("CreatePlayersDeck", this.cardCollection);
             }
 
         }

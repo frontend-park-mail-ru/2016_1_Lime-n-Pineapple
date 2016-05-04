@@ -1,125 +1,79 @@
 "use strict";
-define([
-    'jquery',
-    'underscore',
-    'backbone',
-    'settings',
-    'pixi'
-], function ($, _, Backbone, Settings, pixi) {
-        class Renderer {
-            constructor(viewEl, viewDomID) {
-                this.domID = viewDomID;
-                this.viewEl = viewEl;
-                let self = this;
-                this.moveTimeRender = 10;
 
-                console.log("[renderer], constructor");
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-                Backbone
-                    .on("GameRender", function(container){
-                        console.log("[renderer], GameRender event");
-                        this.container = container;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-                        this.renderer = pixi.autoDetectRenderer($(this.viewEl).width()/1.2, $(this.viewEl).height(), {transparent: true});
-                        document.getElementById(this.domID).appendChild(this.renderer.view);
+define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _, Backbone, Settings, pixi) {
+    var Renderer = function () {
+        function Renderer(viewEl, viewDomID) {
+            _classCallCheck(this, Renderer);
 
-                        Backbone.trigger("AllRendered", this.renderer);
+            _.extend(this, Backbone.Events);
+            this.domID = viewDomID;
+            this.viewEl = viewEl;
+            var self = this;
 
-                        this.globalID = requestAnimationFrame(function(timeStamp){
-                            self.animate(timeStamp);
-                        });
+            console.log("[renderer], constructor");
 
-                    }, this)
+            Backbone.on("GameRender", function () {
+                console.log("[renderer], GameRender event");
 
-                    .on("StopRender", function(){
-                        if (this.globalID) {
-                            cancelAnimationFrame(this.globalID);
-                        }
-                        Backbone.trigger("RendererStoped");
-                    }, this)
+                this.stage = new pixi.Container();
+                _.extend(this.stage, Backbone.Events);
 
-                    .on("ResumeRender", function(){
-                        if (this.globalID){
-                            cancelAnimationFrame(this.globalID);
-                        }
-                        this.globalID = requestAnimationFrame(function(timeStamp){
-                            self.animate(timeStamp);
-                        });
-                        Backbone.trigger("RendererResume");
-                    }, this)
+                this.stage.on("AddChildToStage", function (sprite) {
+                    this.stage.addChild(sprite);
+                }, this);
 
-                    .on("InfoCardMoveToInfoCeil", function(infoCard){
-                        Backbone.trigger("StopRender");
-                        this.globalID = requestAnimationFrame(function(timeStamp){
-                            let deltaX = self.renderer.width - infoCard.width / 2 - infoCard.x,
-                                deltaY = infoCard.height / 2 - infoCard.y;
-                            let rateX = deltaX/(self.moveTimeRender),
-                                rateY = deltaY/(self.moveTimeRender);
+                this.renderer = pixi.autoDetectRenderer($(this.viewEl).width() / 1.2, $(this.viewEl).height(), { transparent: true });
+                document.getElementById(this.domID).appendChild(this.renderer.view);
 
-                            self.animateMoveCard(timeStamp, infoCard, rateX, rateY);
-                        });
+                Backbone.trigger("AllRendered", this.renderer, this.stage);
 
-                    }, this)
+                Backbone.on("CardMoveToCeil", function (moveFunc, card) {
+                    this.moveFunc = moveFunc;
+                    this.card = card;
+                }, this);
 
-                    .on("CardAreThrown", function(actionCard, container){
-                        console.log("[Renderer], CardAreThrown EVENT");
-                        Backbone.trigger("StopRender");
-                        this.globalID = requestAnimationFrame(function(timeStamp){
-                            actionCard.alpha = 1;
-                            let deltaX = container.children.length * actionCard.width + 2 + actionCard.width/2 - actionCard.x,
-                                deltaY = container.y + actionCard.height/2 - actionCard.y;
-                            let rateX = deltaX/(self.moveTimeRender * 3),
-                                rateY = deltaY/(self.moveTimeRender * 3);
-                            console.log(rateX, rateY);
+                this.on("CardMoved", function () {
+                    delete this.card;
+                    delete this.moveFunc;
+                }, this);
 
-                            self.animateMoveCard(timeStamp, actionCard, rateX, rateY, container);
-                        });
-                    }, this);
-            }
-            
-            cardMoveToCeil(card, rateX, rateY, container){
-                card.x+=rateX;
-                card.y+=rateY;
-                if (Math.abs(card.x - card.mustX) < 10 && Math.abs(card.y - card.mustY) < 10){
-                    Backbone.trigger("StopRender");
-                    Backbone.trigger("ResumeRender");
-                    if (container){
-                        Backbone.trigger("CardMustAddToContainer", card, container);
-                    }
-                    return 1;
-                }
-                return 0;
-            }
-
-            animateMoveCard(time, card, rateX, rateY, container){
-                let self = this;
-                console.log("animateMoveCard");
-                if (this.cardMoveToCeil(card, rateX, rateY, container)) {
-                    return;
-                }
-                this._render();
-                this.globalID = requestAnimationFrame(function(timeStamp){
-                    self.animateMoveCard(timeStamp, card, rateX, rateY, container);
-                });
-            }
-
-            animate(time) {
-                let self = this;
-                console.log("animate");
-                this._render();
-                this.globalID = requestAnimationFrame(function(timeStamp){
+                this.intervalID = requestAnimationFrame(function (timeStamp) {
                     self.animate(timeStamp);
                 });
-            }
+            }, this);
 
-            _render(){
-                this.renderer.render(this.container.stage);
-            }
-
-
+            this.on("StopRender", function () {
+                cancelAnimationFrame(this.intervalID);
+                Backbone.trigger("RendererStoped");
+            }, this).on("ResumeRender", function () {
+                this.intervalID = requestAnimationFrame(function (timeStamp) {
+                    self.animate();
+                });
+                Backbone.trigger("RendererResume");
+            }, this);
         }
+
+        _createClass(Renderer, [{
+            key: 'animate',
+            value: function animate() {
+                var self = this;
+                console.log("animate");
+                //if (this.moveFunc) {
+                this.moveFunc(this.card);
+                //}
+                this.renderer.render(this.stage);
+                this.intervalID = requestAnimationFrame(function (timeStamp) {
+                    self.animate();
+                });
+            }
+        }]);
+
         return Renderer;
-    }
-);
+    }();
 
-
+    return Renderer;
+});

@@ -14,14 +14,21 @@ define(['jquery', 'backbone', 'pixi', './abstract_player'], function ($, Backbon
     var Player = function (_AbstractPlayer) {
         _inherits(Player, _AbstractPlayer);
 
-        function Player(loaderRes, oneLineHeight, container, stage, renderer) {
+        function Player(loaderRes, container, stage, renderer) {
             _classCallCheck(this, Player);
 
-            var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Player).call(this, loaderRes, oneLineHeight, stage, renderer));
+            var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Player).call(this, loaderRes, container, stage, renderer));
 
-            _this.createDesc(container);
+            _get(Object.getPrototypeOf(Player.prototype), 'createDeck', _this).call(_this);
+
+            _this.on("PlayerAct", function () {
+                this.act();
+            }, _this);
+
             Backbone.on("CardAreThrown CardBackIntoDesc", function () {
                 this._cardBackOrThrown();
+            }, _this).on("InfoCardAreCreated", function (infoCard) {
+                this.infoCard = infoCard;
             }, _this);
             return _this;
         }
@@ -37,74 +44,16 @@ define(['jquery', 'backbone', 'pixi', './abstract_player'], function ($, Backbon
             }
         }, {
             key: 'act',
-            value: function act() {}
-        }, {
-            key: 'createDesc',
-            value: function createDesc(container) {
-                console.log("[Player], createDesc");
-                _get(Object.getPrototypeOf(Player.prototype), 'createDeck', this).call(this, container);
+            value: function act() {
+                console.log("PLAYERACT");
                 this.setTouchEventCard();
             }
         }, {
             key: 'setTouchEventCard',
             value: function setTouchEventCard() {
-                var _this2 = this;
-
-                if (this.container.children.length) {
-                    var _loop = function _loop(i) {
-                        var card = _this2.container.getChildAt(i);
-                        _this2.container.getChildAt(i).on('click', function (event) {
-                            console.log(this.container.children.length);
-                            this.onClickCard(event, this.container, card);
-                        }, _this2).on('touchstart', function (event) {
-                            this.onClickCard(event, this.container, card);
-                        }, _this2);
-                    };
-
-                    for (var i = 0; i < this.container.children.length; i += 1) {
-                        _loop(i);
-                    }
+                for (var i = 0; i < this.cardCollection.length; i += 1) {
+                    this.cardCollection[i].trigger("SetTouchEventCard");
                 }
-            }
-        }, {
-            key: 'onClickCard',
-            value: function onClickCard(event, container, card) {
-                switch (event.data.originalEvent.which) {
-                    case 1:
-                        if (card.alpha === 0.1) {
-                            card.alpha = 1;
-                            Backbone.trigger("CardBackIntoDesc");
-                        } else {
-                            this.actionCard = card;
-
-                            for (var i = 0; i < container.children.length; i += 1) {
-                                container.children[i].interactive = false;
-                            }
-                            card.interactive = true;
-                            card.alpha = 0.1;
-                            this._createInfoCard(card);
-
-                            Backbone.trigger("CardPressed", card, this.infoCard);
-                        }
-                        break;
-                }
-            }
-        }, {
-            key: '_createInfoCard',
-            value: function _createInfoCard(card) {
-                this.infoCard = new pixi.Sprite(card.texture);
-                this.infoCard.width = card.width * 2;
-                this.infoCard.height = card.height * 2;
-                this.infoCard.anchor.set(0.5);
-                //this.infoCard.x = this.renderer.width - this.infoCard.width / 2;
-                //this.infoCard.y = this.infoCard.height / 2;
-                this.stage.addChild(this.infoCard);
-                this.infoCard.x = card.x;
-                this.infoCard.y = this.container.y;
-                this.infoCard.mustX = this.renderer.width - this.infoCard.width / 2;
-                this.infoCard.mustY = this.infoCard.height / 2;
-
-                Backbone.trigger("InfoCardMoveToInfoCeil", this.infoCard);
             }
         }]);
 

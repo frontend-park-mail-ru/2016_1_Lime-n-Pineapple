@@ -5,14 +5,26 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 define(['jquery', 'backbone', 'pixi', './card_collection'], function ($, Backbone, pixi, CardCollection) {
+
+    var oneLineHeight = $(window).height() / 6;
+    var width = $(window).width();
+
     var AbstractPlayer = function () {
-        function AbstractPlayer(loaderRes, oneLineHeight, stage, renderer) {
+        function AbstractPlayer(loaderRes, container, stage, renderer) {
             _classCallCheck(this, AbstractPlayer);
 
+            _.extend(this, Backbone.Events);
             this.cardCollection = new CardCollection(loaderRes, oneLineHeight);
+            this.playersCardDeck = container.playersCardsDeck;
+            this.playersCardContainerInfightng = container.playersCardContainerInfighting;
+            this.playerCardContainerDistant = container.playersCardContainerDistant;
             console.log(this.cardCollection);
             this.renderer = renderer;
             this.stage = stage;
+
+            this.on("Act", function () {
+                this.trigger("PlayerAct");
+            }, this);
         }
 
         _createClass(AbstractPlayer, [{
@@ -22,16 +34,9 @@ define(['jquery', 'backbone', 'pixi', './card_collection'], function ($, Backbon
             }
         }, {
             key: 'createDeck',
-            value: function createDeck(container) {
+            value: function createDeck() {
                 console.log("[AbstractPlayer], createDesc");
-                this.container = container;
-                for (var i = 0; i < this.cardCollection.length; i += 1) {
-                    this.cardCollection[i].cardStrite.x = this.cardCollection[i].cardStrite.width * i + 2 * i + this.cardCollection[i].cardStrite.width / 2;
-                    this.cardCollection[i].cardStrite.y = this.cardCollection[i].cardStrite.y + this.cardCollection[i].cardStrite.height / 2;
-                    this.cardCollection[i].cardStrite.anchor.set(0.5);
-                    this.container.addChild(this.cardCollection[i].cardStrite);
-                }
-                console.log(this.container);
+                this.playersCardDeck.trigger("CreatePlayersDeck", this.cardCollection);
             }
         }]);
 
