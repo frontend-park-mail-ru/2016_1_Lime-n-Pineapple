@@ -40,15 +40,15 @@ define([
 
                 this.loaderRes = loaderRes;
 
-                Backbone.on("AllRendered", function(renderer, stage){
+                Backbone.on("AllRendered", function(stage){
                     Backbone.trigger("SetContainerPosition", this.container, stage);
-                    this.engineWork(renderer, stage);
+                    this.engineWork();
                 }, this);
 
                 Backbone.trigger("GameRender");
             }
 
-            engineWork(renderer, stage){
+            engineWork(){
                 let containerPlayer = {
                     "playersCardsDeck"                  :   this.container.playersCardsDeck,
                     "playersCardContainerDistant"       :   this.container.playersCardContainerDistant,
@@ -61,10 +61,8 @@ define([
                     "playersCardContainerDistant"       :   this.container.enemyCardContainerDistant
                 };
 
-                this.player = new Player(this.loaderRes, containerPlayer,
-                    stage, renderer);
-                this.enemy  = new Bot   (this.loaderRes, containerEnemy,
-                    stage, renderer);
+                this.player = new Player(this.loaderRes, containerPlayer);
+                this.enemy  = new Bot   (this.loaderRes, containerEnemy);
 
                 let whoFirst = Math.floor(Math.random() * (2) + 1);
                 this.game(whoFirst);

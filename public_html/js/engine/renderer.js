@@ -29,7 +29,7 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
                 this.renderer = pixi.autoDetectRenderer($(this.viewEl).width() / 1.2, $(this.viewEl).height(), { transparent: true });
                 document.getElementById(this.domID).appendChild(this.renderer.view);
 
-                Backbone.trigger("AllRendered", this.renderer, this.stage);
+                Backbone.trigger("AllRendered", this.stage);
 
                 Backbone.on("CardMoveToCeil", function (moveFunc, card) {
                     this.moveFunc = moveFunc;
@@ -62,9 +62,9 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
             value: function animate() {
                 var self = this;
                 console.log("animate");
-                //if (this.moveFunc) {
-                this.moveFunc(this.card);
-                //}
+                if (this.moveFunc) {
+                    this.moveFunc(this.card);
+                }
                 this.renderer.render(this.stage);
                 this.intervalID = requestAnimationFrame(function (timeStamp) {
                     self.animate();

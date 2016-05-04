@@ -29,7 +29,7 @@ define([
                     this.renderer = pixi.autoDetectRenderer($(this.viewEl).width()/1.2, $(this.viewEl).height(), {transparent: true});
                     document.getElementById(this.domID).appendChild(this.renderer.view);
 
-                    Backbone.trigger("AllRendered", this.renderer, this.stage);
+                    Backbone.trigger("AllRendered", this.stage);
 
                     Backbone.on("CardMoveToCeil", function(moveFunc, card){
                         this.moveFunc = moveFunc;

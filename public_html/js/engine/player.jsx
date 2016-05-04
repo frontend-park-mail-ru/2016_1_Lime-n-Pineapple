@@ -7,8 +7,8 @@ define([
     ],  function ($, Backbone, pixi, AbstractPlayer) {
         class Player extends AbstractPlayer{
 
-            constructor(loaderRes, container, stage, renderer){
-                super(loaderRes, container, stage, renderer);
+            constructor(loaderRes, container){
+                super(loaderRes, container);
 
                 super.createDeck();
 

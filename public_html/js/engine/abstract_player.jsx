@@ -12,15 +12,13 @@ define([
 
         class AbstractPlayer {
 
-            constructor(loaderRes, container, stage, renderer){
+            constructor(loaderRes, container){
                 _.extend(this, Backbone.Events);
                 this.cardCollection = new CardCollection(loaderRes, oneLineHeight);
                 this.playersCardDeck = container.playersCardsDeck;
                 this.playersCardContainerInfightng = container.playersCardContainerInfighting;
                 this.playerCardContainerDistant = container.playersCardContainerDistant;
                 console.log(this.cardCollection);
-                this.renderer = renderer;
-                this.stage = stage;
 
                 this.on("Act", function(){
                     this.trigger("PlayerAct");

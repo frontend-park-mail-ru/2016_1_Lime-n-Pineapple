@@ -33,9 +33,9 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './player', './b
 
             this.loaderRes = loaderRes;
 
-            Backbone.on("AllRendered", function (renderer, stage) {
+            Backbone.on("AllRendered", function (stage) {
                 Backbone.trigger("SetContainerPosition", this.container, stage);
-                this.engineWork(renderer, stage);
+                this.engineWork();
             }, this);
 
             Backbone.trigger("GameRender");
@@ -43,7 +43,7 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './player', './b
 
         _createClass(Engine, [{
             key: 'engineWork',
-            value: function engineWork(renderer, stage) {
+            value: function engineWork() {
                 var containerPlayer = {
                     "playersCardsDeck": this.container.playersCardsDeck,
                     "playersCardContainerDistant": this.container.playersCardContainerDistant,
@@ -56,8 +56,8 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './player', './b
                     "playersCardContainerDistant": this.container.enemyCardContainerDistant
                 };
 
-                this.player = new Player(this.loaderRes, containerPlayer, stage, renderer);
-                this.enemy = new Bot(this.loaderRes, containerEnemy, stage, renderer);
+                this.player = new Player(this.loaderRes, containerPlayer);
+                this.enemy = new Bot(this.loaderRes, containerEnemy);
 
                 var whoFirst = Math.floor(Math.random() * 2 + 1);
                 this.game(whoFirst);

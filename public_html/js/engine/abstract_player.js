@@ -10,7 +10,7 @@ define(['jquery', 'backbone', 'pixi', './card_collection'], function ($, Backbon
     var width = $(window).width();
 
     var AbstractPlayer = function () {
-        function AbstractPlayer(loaderRes, container, stage, renderer) {
+        function AbstractPlayer(loaderRes, container) {
             _classCallCheck(this, AbstractPlayer);
 
             _.extend(this, Backbone.Events);
@@ -19,8 +19,6 @@ define(['jquery', 'backbone', 'pixi', './card_collection'], function ($, Backbon
             this.playersCardContainerInfightng = container.playersCardContainerInfighting;
             this.playerCardContainerDistant = container.playersCardContainerDistant;
             console.log(this.cardCollection);
-            this.renderer = renderer;
-            this.stage = stage;
 
             this.on("Act", function () {
                 this.trigger("PlayerAct");

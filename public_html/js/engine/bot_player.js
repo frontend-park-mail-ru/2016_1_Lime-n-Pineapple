@@ -14,36 +14,35 @@ define(['jquery', 'backbone', 'pixi', './abstract_player'], function ($, Backbon
     var Bot = function (_AbstractPlayer) {
         _inherits(Bot, _AbstractPlayer);
 
-        function Bot(loaderRes, oneLineHeight, container, containerDistant, containerInfighting, stage, renderer) {
+        function Bot(loaderRes, container) {
             _classCallCheck(this, Bot);
 
-            var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Bot).call(this, loaderRes, oneLineHeight, stage, renderer));
+            var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Bot).call(this, loaderRes, container));
 
             _this.createDesc(container);
             Backbone.on("AIprocess", function () {
                 this.act();
             }, _this);
-            _this.containerDistant = containerDistant;
-            _this.containerInfighting = containerInfighting;
             return _this;
         }
 
         _createClass(Bot, [{
             key: 'act',
             value: function act() {
-                _get(Object.getPrototypeOf(Bot.prototype), 'act', this).call(this);
-                if (this.container.children.length) {
-                    var card = this.container.getChildAt(Math.floor(Math.random() * this.container.children.length));
-                    this.container.removeChild(card);
-                    var r = Math.floor(Math.random() * 2 + 1);
-                    if (r === 1) {
-                        this.containerDistant.addChild(card);
-                        Backbone.trigger("RemoveGapsInDeckForAI", this.containerDistant);
-                    } else {
-                        this.containerInfighting.addChild(card);
-                        Backbone.trigger("RemoveGapsInDeckForAI", this.containerInfighting);
-                    }
-                }
+                //super.act();
+                //if (this.container.children.length) {
+                //    var card = this.container.getChildAt((Math.floor(Math.random() * (this.container.children.length))));
+                //    this.container.removeChild(card);
+                //    let r = Math.floor(Math.random() * (2) + 1);
+                //    if (r === 1){
+                //        this.containerDistant.addChild(card);
+                //        Backbone.trigger("RemoveGapsInDeckForAI", this.containerDistant);
+                //    }
+                //    else{
+                //        this.containerInfighting.addChild(card);
+                //        Backbone.trigger("RemoveGapsInDeckForAI", this.containerInfighting);
+                //    }
+                //}
             }
         }, {
             key: 'createDesc',

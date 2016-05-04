@@ -14,10 +14,10 @@ define(['jquery', 'backbone', 'pixi', './abstract_player'], function ($, Backbon
     var Player = function (_AbstractPlayer) {
         _inherits(Player, _AbstractPlayer);
 
-        function Player(loaderRes, container, stage, renderer) {
+        function Player(loaderRes, container) {
             _classCallCheck(this, Player);
 
-            var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Player).call(this, loaderRes, container, stage, renderer));
+            var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Player).call(this, loaderRes, container));
 
             _get(Object.getPrototypeOf(Player.prototype), 'createDeck', _this).call(_this);
 
