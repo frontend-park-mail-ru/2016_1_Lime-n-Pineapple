@@ -31,10 +31,9 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
 
                 Backbone.trigger("AllRendered", this.stage);
 
-                Backbone.on("CardMoveToCeil", function (moveFunc, card) {
-                    this.moveFunc = moveFunc;
-                    this.card = card;
-                }, this);
+                Backbone.on("render::renderAnimation", function (viewFunc, card) {
+                    this.renderAnimation(viewFunc, card);
+                }.bind(this));
 
                 this.on("CardMoved", function () {
                     delete this.card;
@@ -58,16 +57,22 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
         }
 
         _createClass(Renderer, [{
+            key: 'renderAnimation',
+            value: function renderAnimation(viewFunc, card) {
+                cancelAnimationFrame(this.intervalID);
+                this.animate(viewFunc, card);
+            }
+        }, {
             key: 'animate',
-            value: function animate() {
+            value: function animate(viewFunc, card) {
                 var self = this;
-                console.log("animate");
-                if (this.moveFunc) {
-                    this.moveFunc(this.card);
+                if (viewFunc !== undefined) {
+                    //viewFunc(card);
                 }
+                console.log("animate");
                 this.renderer.render(this.stage);
                 this.intervalID = requestAnimationFrame(function (timeStamp) {
-                    self.animate();
+                    self.animate(viewFunc, card);
                 });
             }
         }]);

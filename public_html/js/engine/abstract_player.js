@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(['jquery', 'backbone', 'pixi', './card_collection'], function ($, Backbone, pixi, CardCollection) {
+define(['jquery', 'backbone', 'pixi', './card_collection', './InfoCardModel'], function ($, Backbone, pixi, CardCollection, InfoCardModel) {
 
     var oneLineHeight = $(window).height() / 6;
     var width = $(window).width();
@@ -15,13 +15,19 @@ define(['jquery', 'backbone', 'pixi', './card_collection'], function ($, Backbon
 
             _.extend(this, Backbone.Events);
             this.cardCollection = new CardCollection(loaderRes, oneLineHeight);
-            this.playersCardDeck = container.playersCardsDeck;
-            this.playersCardContainerInfightng = container.playersCardContainerInfighting;
+            if (container.playersCardDeck !== undefined) {
+                this.playersCardDeck = container.playersCardsDeck;
+            }
+            this.playersCardContainerMelee = container.playersCardContainerMelee;
             this.playerCardContainerDistant = container.playersCardContainerDistant;
             console.log(this.cardCollection);
 
             this.on("Act", function () {
                 this.trigger("PlayerAct");
+            }, this).on("MustCreateInfoCard", function (card) {
+                this.infoCard = new InfoCardModel(card);
+            }, this).on("MustDestroyInfoCard", function () {
+                delete this.infoCard;
             }, this);
         }
 
@@ -34,7 +40,9 @@ define(['jquery', 'backbone', 'pixi', './card_collection'], function ($, Backbon
             key: 'createDeck',
             value: function createDeck() {
                 console.log("[AbstractPlayer], createDesc");
-                this.playersCardDeck.trigger("CreatePlayersDeck", this.cardCollection);
+                if (this.playersCardDeck !== undefined) {
+                    this.playersCardDeck.trigger("CreatePlayersDeck", this.cardCollection);
+                }
             }
         }]);
 

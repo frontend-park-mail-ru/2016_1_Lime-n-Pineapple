@@ -39,7 +39,7 @@ define(['jquery', 'backbone', 'pixi', './abstract_player'], function ($, Backbon
                 //        Backbone.trigger("RemoveGapsInDeckForAI", this.containerDistant);
                 //    }
                 //    else{
-                //        this.containerInfighting.addChild(card);
+                //        this.containerInfig   hting.addChild(card);
                 //        Backbone.trigger("RemoveGapsInDeckForAI", this.containerInfighting);
                 //    }
                 //}

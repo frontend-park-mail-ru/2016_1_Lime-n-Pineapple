@@ -11,22 +11,22 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './player', './b
 
             var playerCardsDeckView = new CardContainerView(),
                 playerCardsDeck = new PlayerCardsDeck(playerCardsDeckView),
-                playersCardContainerInfightingView = new CardContainerView(true, true),
-                playersCardContainerInfighting = new CardContainerModel(playersCardContainerInfightingView),
+                playersCardContainerMeleeView = new CardContainerView(true, true),
+                playersCardContainerMelee = new CardContainerModel(playersCardContainerMeleeView),
                 playersCardContainerDistantView = new CardContainerView(true, true),
                 playersCardContainerDistant = new CardContainerModel(playersCardContainerDistantView),
                 enemyCardsDeckView = new CardContainerView(),
                 enemyCardsDeck = new PlayerCardsDeck(enemyCardsDeckView),
-                enemyCardContainerInfightingView = new CardContainerView(true, true),
-                enemyCardContainerInfighting = new CardContainerModel(enemyCardContainerInfightingView),
+                enemyCardContainerMeleeView = new CardContainerView(true, true),
+                enemyCardContainerMelee = new CardContainerModel(enemyCardContainerMeleeView),
                 enemyCardContainerDistantView = new CardContainerView(true, true),
                 enemyCardContainerDistant = new CardContainerModel(enemyCardContainerDistantView);
 
             this.container = {
                 "playersCardsDeck": playerCardsDeck,
                 "playersCardContainerDistant": playersCardContainerDistant,
-                "playersCardContainerInfighting": playersCardContainerInfighting,
-                "enemyCardContainerInfighting": enemyCardContainerInfighting,
+                "playersCardContainerMelee": playersCardContainerMelee,
+                "enemyCardContainerMelee": enemyCardContainerMelee,
                 "enemyCardContainerDistant": enemyCardContainerDistant,
                 "enemyCardsDeck": enemyCardsDeck
             };
@@ -47,12 +47,12 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './player', './b
                 var containerPlayer = {
                     "playersCardsDeck": this.container.playersCardsDeck,
                     "playersCardContainerDistant": this.container.playersCardContainerDistant,
-                    "playersCardContainerInfighting": this.container.playersCardContainerInfighting
+                    "playersCardContainerMelee": this.container.playersCardContainerMelee
                 };
 
                 var containerEnemy = {
                     "playersCardsDeck": this.container.enemyCardsDeck,
-                    "playersCardContainerInfighting": this.container.enemyCardContainerInfighting,
+                    "playersCardContainerMelee": this.container.enemyCardContainerMelee,
                     "playersCardContainerDistant": this.container.enemyCardContainerDistant
                 };
 

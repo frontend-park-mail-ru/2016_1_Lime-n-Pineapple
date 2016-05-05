@@ -4,17 +4,20 @@ define([
         'backbone',
         'pixi',
         './abstract_player'
+
     ],  function ($, Backbone, pixi, AbstractPlayer) {
         class Player extends AbstractPlayer{
 
             constructor(loaderRes, container){
                 super(loaderRes, container);
 
+
                 super.createDeck();
 
                 this.on("PlayerAct", function(){
                     this.act();
                 }, this);
+
 
                 Backbone
                     .on("CardAreThrown CardBackIntoDesc", function(){
@@ -40,7 +43,7 @@ define([
 
             setTouchEventCard(){
                 for (let i = 0; i < this.cardCollection.length; i+=1){
-                    this.cardCollection[i].trigger("SetTouchEventCard");
+                    this.cardCollection[i].trigger("SetTouchEventCard", this);
                 }
             }
 

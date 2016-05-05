@@ -3,8 +3,9 @@ define([
         'jquery',
         'backbone',
         'pixi',
-        './card_collection'
-],  function ($, Backbone, pixi, CardCollection) {
+        './card_collection',
+        './InfoCardModel'
+],  function ($, Backbone, pixi, CardCollection, InfoCardModel) {
 
         let oneLineHeight = $(window).height()/6;
         let width = $(window).width();
@@ -15,14 +16,23 @@ define([
             constructor(loaderRes, container){
                 _.extend(this, Backbone.Events);
                 this.cardCollection = new CardCollection(loaderRes, oneLineHeight);
-                this.playersCardDeck = container.playersCardsDeck;
-                this.playersCardContainerInfightng = container.playersCardContainerInfighting;
+                if (container.playersCardDeck !== undefined) {
+                    this.playersCardDeck = container.playersCardsDeck;
+                }
+                this.playersCardContainerMelee = container.playersCardContainerMelee;
                 this.playerCardContainerDistant = container.playersCardContainerDistant;
                 console.log(this.cardCollection);
 
-                this.on("Act", function(){
-                    this.trigger("PlayerAct");
-                }, this);
+                this
+                    .on("Act", function(){
+                        this.trigger("PlayerAct");
+                    }, this)
+                    .on("MustCreateInfoCard", function (card) {
+                        this.infoCard = new InfoCardModel(card);
+                    }, this)
+                    .on("MustDestroyInfoCard", function(){
+                        delete this.infoCard;
+                    }, this);
             }
 
             act(){
@@ -31,7 +41,9 @@ define([
 
             createDeck() {
                 console.log("[AbstractPlayer], createDesc");
-                this.playersCardDeck.trigger("CreatePlayersDeck", this.cardCollection);
+                if (this.playersCardDeck !== undefined) {
+                    this.playersCardDeck.trigger("CreatePlayersDeck", this.cardCollection);
+                }
             }
 
         }

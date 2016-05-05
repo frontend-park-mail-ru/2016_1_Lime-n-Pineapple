@@ -16,20 +16,23 @@ define(['backbone', 'underscore', 'pixi', './CardView'], function (Backbone, _, 
                 this.setPositionIntoDeck(index, containerView);
             }, this);
 
-            this.on("SetTouchEventCard", function () {
+            this.on("SetTouchEventCard", function (player) {
                 this.setTouchEventCard();
+                this.playerOwner = player;
+            }, this).on("CardViewPressed", function () {
+                this.playerOwner.trigger("MustCreateInfoCard", this);
             }, this);
         }
 
         _createClass(Card, [{
             key: 'setPositionIntoDeck',
             value: function setPositionIntoDeck(index, containerView) {
-                this.cardView.trigger("SetPositionInDeck", index, containerView);
+                this.cardView.setPositionIntoDeck(index, containerView);
             }
         }, {
             key: 'setTouchEventCard',
             value: function setTouchEventCard() {
-                this.cardView.trigger("SetTouchEventCard");
+                this.cardView.setTouchEventCard(this);
             }
         }]);
 

@@ -31,10 +31,10 @@ define([
 
                     Backbone.trigger("AllRendered", this.stage);
 
-                    Backbone.on("CardMoveToCeil", function(moveFunc, card){
-                        this.moveFunc = moveFunc;
-                        this.card = card;
-                    }, this);
+                    Backbone
+                        .on("render::renderAnimation", function (viewFunc, card) {
+                            this.renderAnimation(viewFunc, card);
+                        }.bind(this));
 
                     this.on("CardMoved", function(){
                         delete this.card;
@@ -59,15 +59,21 @@ define([
                     }, this);
             }
 
-            animate() {
+            renderAnimation(viewFunc, card){
+                cancelAnimationFrame(this.intervalID);
+                this.animate(viewFunc, card);
+
+            }
+
+            animate(viewFunc, card) {
                 let self = this;
-                console.log("animate");
-                if (this.moveFunc) {
-                    this.moveFunc(this.card);
+                if (viewFunc !== undefined){
+                    //viewFunc(card);
                 }
+                console.log("animate");
                 this.renderer.render(this.stage);
                 this.intervalID = requestAnimationFrame(function(timeStamp){
-                    self.animate();
+                    self.animate(viewFunc, card);
                 });
             }
 

@@ -52,7 +52,7 @@ define(['jquery', 'backbone', 'pixi', './abstract_player'], function ($, Backbon
             key: 'setTouchEventCard',
             value: function setTouchEventCard() {
                 for (var i = 0; i < this.cardCollection.length; i += 1) {
-                    this.cardCollection[i].trigger("SetTouchEventCard");
+                    this.cardCollection[i].trigger("SetTouchEventCard", this);
                 }
             }
         }]);

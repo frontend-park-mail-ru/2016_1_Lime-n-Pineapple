@@ -15,17 +15,21 @@ define([
                     this.setPositionIntoDeck(index, containerView);
                 }, this);
 
-                this.on("SetTouchEventCard", function () {
+                this.on("SetTouchEventCard", function (player) {
                     this.setTouchEventCard();
-                }, this);
+                    this.playerOwner = player;
+                }, this)
+                    .on("CardViewPressed", function(){
+                        this.playerOwner.trigger("MustCreateInfoCard", this);
+                    }, this);
             }
 
             setPositionIntoDeck(index, containerView){
-                this.cardView.trigger("SetPositionInDeck", index, containerView);
+                this.cardView.setPositionIntoDeck(index, containerView);
             }
 
             setTouchEventCard(){
-                this.cardView.trigger("SetTouchEventCard");
+                this.cardView.setTouchEventCard(this);
             }
         }
         return Card;
