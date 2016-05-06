@@ -16,7 +16,7 @@ define([
         constructor(cardContainerView) {
             super(cardContainerView);
 
-            this.on("CreatePlayersDeck", function(cardCollection){
+            this.on("PlayersCardsDeck::CreatePlayersDeck", function(cardCollection){
                 this.cardCollection = cardCollection;
                 this.createCardDeck();
             }, this);
@@ -27,7 +27,7 @@ define([
 
         createCardDeck(){
             console.log("[PlayerCardsDeck] createCardDeck");
-            this.cardCollection.trigger("CreatePlayersDeck", this.containerView);
+            this.cardCollection.trigger("CardCollection::CreatePlayersDeck", this.containerView);
         }
 
     }

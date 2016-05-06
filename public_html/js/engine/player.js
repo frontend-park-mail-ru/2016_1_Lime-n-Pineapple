@@ -21,7 +21,7 @@ define(['jquery', 'backbone', 'pixi', './abstract_player'], function ($, Backbon
 
             _get(Object.getPrototypeOf(Player.prototype), 'createDeck', _this).call(_this);
 
-            _this.on("PlayerAct", function () {
+            _this.on("Player::PlayerAct", function () {
                 this.act();
             }, _this);
 
@@ -52,7 +52,7 @@ define(['jquery', 'backbone', 'pixi', './abstract_player'], function ($, Backbon
             key: 'setTouchEventCard',
             value: function setTouchEventCard() {
                 for (var i = 0; i < this.cardCollection.length; i += 1) {
-                    this.cardCollection[i].trigger("SetTouchEventCard", this);
+                    this.cardCollection[i].trigger("CardModel::SetTouchEventCard", this);
                 }
             }
         }]);

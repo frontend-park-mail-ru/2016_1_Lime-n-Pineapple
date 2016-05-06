@@ -12,7 +12,7 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './CardModel'], 
             this.cardCollection = [];
             _.extend(this.cardCollection, Backbone.Events);
 
-            this.cardCollection.on("CreatePlayersDeck", function (containerView) {
+            this.cardCollection.on("CardCollection::CreatePlayersDeck", function (containerView) {
                 console.log("CardCollection on");
                 this.setPosition(containerView);
             }, this);
@@ -27,7 +27,7 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './CardModel'], 
             key: 'setPosition',
             value: function setPosition(containerView) {
                 for (var i = 0; i < this.cardCollection.length; i += 1) {
-                    this.cardCollection[i].trigger("SetPositionInDeck", i, containerView);
+                    this.cardCollection[i].trigger("CardModel::SetPositionInDeck", i, containerView);
                 }
             }
         }]);

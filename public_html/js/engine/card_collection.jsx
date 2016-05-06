@@ -13,7 +13,7 @@ define([
                 this.cardCollection = [];
                 _.extend(this.cardCollection, Backbone.Events);
 
-                this.cardCollection.on("CreatePlayersDeck", function(containerView){
+                this.cardCollection.on("CardCollection::CreatePlayersDeck", function(containerView){
                     console.log("CardCollection on");
                    this.setPosition(containerView);
                 }, this);
@@ -26,7 +26,7 @@ define([
 
             setPosition(containerView){
                 for (let i = 0; i < this.cardCollection.length; i+=1) {
-                    this.cardCollection[i].trigger("SetPositionInDeck", i, containerView);
+                    this.cardCollection[i].trigger("CardModel::SetPositionInDeck", i, containerView);
                 }
 
             }

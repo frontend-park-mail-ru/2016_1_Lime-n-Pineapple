@@ -13,7 +13,7 @@ define([
 
                 super.createDeck();
 
-                this.on("PlayerAct", function(){
+                this.on("Player::PlayerAct", function(){
                     this.act();
                 }, this);
 
@@ -42,7 +42,7 @@ define([
 
             setTouchEventCard(){
                 for (let i = 0; i < this.cardCollection.length; i+=1){
-                    this.cardCollection[i].trigger("SetTouchEventCard", this);
+                    this.cardCollection[i].trigger("CardModel::SetTouchEventCard", this);
                 }
             }
 

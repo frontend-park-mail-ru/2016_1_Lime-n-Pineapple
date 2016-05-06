@@ -35,7 +35,7 @@ define([
                 this.containerView.trigger("RemoveGapsInContainer");
             }, this);
 
-            Backbone.on("SetContainerPosition", function(arrContainer, stage){
+            this.on("AbstractCardContainer::SetContainerPosition", function(arrContainer, stage){
                 AbstractCardContainerModel.setContainerPosition(arrContainer, stage, oneLineHeight);
             });
 

@@ -21,7 +21,7 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardC
 
             var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PlayerCardsDeck).call(this, cardContainerView));
 
-            _this.on("CreatePlayersDeck", function (cardCollection) {
+            _this.on("PlayersCardsDeck::CreatePlayersDeck", function (cardCollection) {
                 this.cardCollection = cardCollection;
                 this.createCardDeck();
             }, _this);
@@ -33,7 +33,7 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardC
             key: 'createCardDeck',
             value: function createCardDeck() {
                 console.log("[PlayerCardsDeck] createCardDeck");
-                this.cardCollection.trigger("CreatePlayersDeck", this.containerView);
+                this.cardCollection.trigger("CardCollection::CreatePlayersDeck", this.containerView);
             }
         }]);
 

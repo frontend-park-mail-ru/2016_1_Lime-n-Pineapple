@@ -12,17 +12,15 @@ define(['backbone', 'underscore', 'pixi', './CardView'], function (Backbone, _, 
             _.extend(this, Backbone.Events);
             this.cardView = new CardView(loaderRes, oneLineHeight);
 
-            this.on("SetPositionInDeck", function (index, containerView) {
+            this.on("CardModel::SetPositionInDeck", function (index, containerView) {
                 this.setPositionIntoDeck(index, containerView);
-            }, this);
-
-            this.on("SetTouchEventCard", function (player) {
+            }, this).on("CardModel::SetTouchEventCard", function (player) {
                 this.setTouchEventCard();
                 this.playerOwner = player;
-            }, this).on("CardViewPressed", function () {
-                this.playerOwner.trigger("MustCreateInfoCard", this);
-            }, this).on("InfoCardBackToDeck", function () {
-                this.playerOwner.trigger("InfoCardBackToDeck", this);
+            }, this).on("CardModel::CardViewPressed", function () {
+                this.playerOwner.trigger("AbstractPlayer::MustCreateInfoCard", this);
+            }, this).on("CardModel::InfoCardBackToDeck", function () {
+                this.playerOwner.trigger("AbstractPlayer::InfoCardBackToDeck", this);
             }, this);
         }
 

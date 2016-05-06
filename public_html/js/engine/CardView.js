@@ -24,14 +24,14 @@ define(['backbone', 'underscore', 'pixi'], function (Backbone, _, pixi) {
                 switch (event.data.originalEvent.which) {
                     case 1:
                         if (this.sprite.alpha === 0.1) {
-                            cardModel.trigger("InfoCardBackToDeck");
+                            cardModel.trigger("CardModel::InfoCardBackToDeck");
                         } else {
                             this.sprite.alpha = 0.1;
-                            this.on("AlphaVisible", function () {
+                            this.on("CardView::AlphaVisible", function () {
                                 this.sprite.alpha = 1;
                                 this.off("AlphaVisible");
                             }, this);
-                            cardModel.trigger("CardViewPressed");
+                            cardModel.trigger("CardModel::CardViewPressed");
                         }
                         break;
                 }

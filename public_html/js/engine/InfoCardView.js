@@ -44,21 +44,27 @@ define(['backbone', 'underscore', 'pixi'], function (Backbone, _, pixi) {
                 this.infoCard.deltaY = this.infoCard.mustY - this.infoCard.y;
                 this.infoCard.rateX = this.infoCard.deltaX / this.frames;
                 this.infoCard.rateY = this.infoCard.deltaY / this.frames;
+                this.goToBack = true;
             }
         }, {
             key: 'backToDeck',
             value: function backToDeck(card) {
-                this.infoCard.width = card.sprite.width;
-                this.infoCard.height = card.sprite.height;
-                this.infoCard.mustX = card.sprite.x;
-                this.infoCard.mustY = card.sprite.parent.y;
-                this.calcDeltaAndRate();
-                Backbone.trigger("render::renderAnimation", this.moveCard.bind(this), this.frames);
+                if (this.goToBack) {
+                    console.log("INFOCARDVIEW backToDeck");
+                    this.infoCard.width = card.sprite.width;
+                    this.infoCard.height = card.sprite.height;
+                    this.infoCard.mustX = card.sprite.x;
+                    this.infoCard.mustY = card.sprite.parent.y;
+                    this.calcDeltaAndRate();
+                    this.goToBack = false;
+                    Backbone.trigger("render::renderAnimation", this.moveCard.bind(this), this.frames);
+                }
                 this.on("CardOnPosition", function () {
                     if (this.infoCard.parent) {
                         this.infoCard.parent.removeChild(this.infoCard);
                         this.trigger("InfoCardInDeck", card);
                         this.off("CardOnPosition");
+                        this.goToBack = true;
                     }
                 }, this);
             }

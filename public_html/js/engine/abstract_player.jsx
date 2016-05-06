@@ -23,29 +23,29 @@ define([
                 this.playerCardContainerDistant = container.playersCardContainerDistant;
 
                 this
-                    .on("Act", function(){
-                        this.trigger("PlayerAct");
+                    .on("AbstractPlayer::Act", function(){
+                        this.trigger("Player::PlayerAct");
                     }, this)
-                    .on("MustCreateInfoCard", function (card) {
+                    .on("AbstractPlayer::MustCreateInfoCard", function (card) {
                         if (this.infoCard === undefined) {
                             this.infoCard = new InfoCardModel(card, this);
                             this.infoCard.card = card;
                         }
                         else {
-                            this.infoCard.trigger("BackToDeckPrevious", this.infoCard.card);
-                            this.on("PreviousInfoCardBackToDeck", function () {
-                                this.off("PreviousInfoCardBackToDeck");
-                                this.trigger("MustCreateInfoCard", card);
-                            });
+                            this.infoCard.trigger("InfoCardModel::BackToDeckPrevious", this.infoCard.card);
+                            this.on("AbstractPlayer::PreviousInfoCardBackToDeck", function () {
+                                this.off("AbstractPlayer::PreviousInfoCardBackToDeck");
+                                this.trigger("AbstractPlayer::MustCreateInfoCard", card);
+                            }, this);
 
                         }
                     }, this)
-                    .on("MustDestroyInfoCard", function(){
+                    .on("AbstractPlayer::MustDestroyInfoCard", function(){
                         delete this.infoCard;
-                        this.trigger("PreviousInfoCardBackToDeck");
+                        this.trigger("AbstractPlayer::PreviousInfoCardBackToDeck");
                     }, this)
-                    .on("InfoCardBackToDeck", function(card){
-                        this.infoCard.trigger("BackToDeck", card);
+                    .on("AbstractPlayer::InfoCardBackToDeck", function(card){
+                        this.infoCard.trigger("InfoCardModel::BackToDeck", card);
                     }, this);
             }
 
@@ -56,7 +56,7 @@ define([
             createDeck() {
                 console.log("[AbstractPlayer], createDesc");
                 if (this.playersCardsDeck !== undefined) {
-                    this.playersCardsDeck.trigger("CreatePlayersDeck", this.cardCollection);
+                    this.playersCardsDeck.trigger("PlayersCardsDeck::CreatePlayersDeck", this.cardCollection);
                 }
             }
 

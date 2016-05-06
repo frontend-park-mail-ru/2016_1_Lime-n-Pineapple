@@ -21,24 +21,24 @@ define(['jquery', 'backbone', 'pixi', './card_collection', './InfoCardModel'], f
             this.playersCardContainerMelee = container.playersCardContainerMelee;
             this.playerCardContainerDistant = container.playersCardContainerDistant;
 
-            this.on("Act", function () {
-                this.trigger("PlayerAct");
-            }, this).on("MustCreateInfoCard", function (card) {
+            this.on("AbstractPlayer::Act", function () {
+                this.trigger("Player::PlayerAct");
+            }, this).on("AbstractPlayer::MustCreateInfoCard", function (card) {
                 if (this.infoCard === undefined) {
                     this.infoCard = new InfoCardModel(card, this);
                     this.infoCard.card = card;
                 } else {
-                    this.infoCard.trigger("BackToDeckPrevious", this.infoCard.card);
-                    this.on("PreviousInfoCardBackToDeck", function () {
-                        this.off("PreviousInfoCardBackToDeck");
-                        this.trigger("MustCreateInfoCard", card);
-                    });
+                    this.infoCard.trigger("InfoCardModel::BackToDeckPrevious", this.infoCard.card);
+                    this.on("AbstractPlayer::PreviousInfoCardBackToDeck", function () {
+                        this.off("AbstractPlayer::PreviousInfoCardBackToDeck");
+                        this.trigger("AbstractPlayer::MustCreateInfoCard", card);
+                    }, this);
                 }
-            }, this).on("MustDestroyInfoCard", function () {
+            }, this).on("AbstractPlayer::MustDestroyInfoCard", function () {
                 delete this.infoCard;
-                this.trigger("PreviousInfoCardBackToDeck");
-            }, this).on("InfoCardBackToDeck", function (card) {
-                this.infoCard.trigger("BackToDeck", card);
+                this.trigger("AbstractPlayer::PreviousInfoCardBackToDeck");
+            }, this).on("AbstractPlayer::InfoCardBackToDeck", function (card) {
+                this.infoCard.trigger("InfoCardModel::BackToDeck", card);
             }, this);
         }
 
@@ -52,7 +52,7 @@ define(['jquery', 'backbone', 'pixi', './card_collection', './InfoCardModel'], f
             value: function createDeck() {
                 console.log("[AbstractPlayer], createDesc");
                 if (this.playersCardsDeck !== undefined) {
-                    this.playersCardsDeck.trigger("CreatePlayersDeck", this.cardCollection);
+                    this.playersCardsDeck.trigger("PlayersCardsDeck::CreatePlayersDeck", this.cardCollection);
                 }
             }
         }]);

@@ -41,7 +41,7 @@ define([
                 this.loaderRes = loaderRes;
 
                 Backbone.on("AllRendered", function(stage){
-                    Backbone.trigger("SetContainerPosition", this.container, stage);
+                    this.container.playersCardsDeck.trigger("AbstractCardContainer::SetContainerPosition", this.container, stage);
                     this.engineWork();
                 }, this);
 
@@ -70,10 +70,10 @@ define([
 
             game(whoFirst){
                 if (whoFirst === 1 || whoFirst === 2){
-                    this.player.trigger("Act");
+                    this.player.trigger("AbstractPlayer::Act");
                 }
                 else if (whoFirst === 2){
-                    this.enemy.trigger("Act");
+                    this.enemy.trigger("AbstractPlayer::Act");
                 }
             }
         }

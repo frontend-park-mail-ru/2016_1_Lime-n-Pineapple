@@ -11,15 +11,15 @@ define([
                 this.playerOwner = playerOwner;
                 _.extend(this, Backbone.Events);
                 this.infoCardView = new InfoCardView(card.cardView.sprite);
-                this.on("BackToDeck BackToDeckPrevious", function(card){
+                this.on("InfoCardModel::BackToDeck InfoCardModel::BackToDeckPrevious", function(card){
                     this.infoCardView.backToDeck(card.cardView);
                 }, this);
 
                 this.infoCardView.on("InfoCardInDeck", function(card){
                     console.log("CARD.TRIGGER(ALPHA)");
                     console.log(card);
-                    card.trigger("AlphaVisible");
-                    this.playerOwner.trigger("MustDestroyInfoCard");
+                    card.trigger("CardView::AlphaVisible");
+                    this.playerOwner.trigger("AbstractPlayer::MustDestroyInfoCard");
                 }, this);
 
             }
