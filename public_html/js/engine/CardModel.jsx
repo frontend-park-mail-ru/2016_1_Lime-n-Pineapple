@@ -15,12 +15,16 @@ define([
                     this.setPositionIntoDeck(index, containerView);
                 }, this);
 
-                this.on("SetTouchEventCard", function (player) {
-                    this.setTouchEventCard();
-                    this.playerOwner = player;
-                }, this)
+                this
+                    .on("SetTouchEventCard", function (player) {
+                        this.setTouchEventCard();
+                        this.playerOwner = player;
+                    }, this)
                     .on("CardViewPressed", function(){
                         this.playerOwner.trigger("MustCreateInfoCard", this);
+                    }, this)
+                    .on("InfoCardBackToDeck", function(){
+                        this.playerOwner.trigger("InfoCardBackToDeck", this);
                     }, this);
             }
 

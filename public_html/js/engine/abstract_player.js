@@ -15,19 +15,30 @@ define(['jquery', 'backbone', 'pixi', './card_collection', './InfoCardModel'], f
 
             _.extend(this, Backbone.Events);
             this.cardCollection = new CardCollection(loaderRes, oneLineHeight);
-            if (container.playersCardDeck !== undefined) {
-                this.playersCardDeck = container.playersCardsDeck;
+            if (container.playersCardsDeck !== undefined) {
+                this.playersCardsDeck = container.playersCardsDeck;
             }
             this.playersCardContainerMelee = container.playersCardContainerMelee;
             this.playerCardContainerDistant = container.playersCardContainerDistant;
-            console.log(this.cardCollection);
 
             this.on("Act", function () {
                 this.trigger("PlayerAct");
             }, this).on("MustCreateInfoCard", function (card) {
-                this.infoCard = new InfoCardModel(card);
+                if (this.infoCard === undefined) {
+                    this.infoCard = new InfoCardModel(card, this);
+                    this.infoCard.card = card;
+                } else {
+                    this.infoCard.trigger("BackToDeckPrevious", this.infoCard.card);
+                    this.on("PreviousInfoCardBackToDeck", function () {
+                        this.off("PreviousInfoCardBackToDeck");
+                        this.trigger("MustCreateInfoCard", card);
+                    });
+                }
             }, this).on("MustDestroyInfoCard", function () {
                 delete this.infoCard;
+                this.trigger("PreviousInfoCardBackToDeck");
+            }, this).on("InfoCardBackToDeck", function (card) {
+                this.infoCard.trigger("BackToDeck", card);
             }, this);
         }
 
@@ -40,8 +51,8 @@ define(['jquery', 'backbone', 'pixi', './card_collection', './InfoCardModel'], f
             key: 'createDeck',
             value: function createDeck() {
                 console.log("[AbstractPlayer], createDesc");
-                if (this.playersCardDeck !== undefined) {
-                    this.playersCardDeck.trigger("CreatePlayersDeck", this.cardCollection);
+                if (this.playersCardsDeck !== undefined) {
+                    this.playersCardsDeck.trigger("CreatePlayersDeck", this.cardCollection);
                 }
             }
         }]);

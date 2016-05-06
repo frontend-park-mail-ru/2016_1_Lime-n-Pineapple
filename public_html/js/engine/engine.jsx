@@ -32,8 +32,8 @@ define([
                 this.container = {
                     "playersCardsDeck"                  :   playerCardsDeck,
                     "playersCardContainerDistant"       :   playersCardContainerDistant,
-                    "playersCardContainerMelee"    :   playersCardContainerMelee,
-                    "enemyCardContainerMelee"      :   enemyCardContainerMelee,
+                    "playersCardContainerMelee"         :   playersCardContainerMelee,
+                    "enemyCardContainerMelee"           :   enemyCardContainerMelee,
                     "enemyCardContainerDistant"         :   enemyCardContainerDistant,
                     "enemyCardsDeck"                    :   enemyCardsDeck
                 };
@@ -52,15 +52,14 @@ define([
                 let containerPlayer = {
                     "playersCardsDeck"                  :   this.container.playersCardsDeck,
                     "playersCardContainerDistant"       :   this.container.playersCardContainerDistant,
-                    "playersCardContainerMelee"    :   this.container.playersCardContainerMelee
+                    "playersCardContainerMelee"         :   this.container.playersCardContainerMelee
                 };
 
                 let containerEnemy = {
                     "playersCardsDeck"                  :   this.container.enemyCardsDeck,
-                    "playersCardContainerMelee"    :   this.container.enemyCardContainerMelee,
+                    "playersCardContainerMelee"         :   this.container.enemyCardContainerMelee,
                     "playersCardContainerDistant"       :   this.container.enemyCardContainerDistant
                 };
-
                 this.player = new Player(this.loaderRes, containerPlayer);
                 this.enemy  = new Bot   (this.loaderRes, containerEnemy);
 

@@ -29,15 +29,13 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
                 this.renderer = pixi.autoDetectRenderer($(this.viewEl).width() / 1.2, $(this.viewEl).height(), { transparent: true });
                 document.getElementById(this.domID).appendChild(this.renderer.view);
 
+                this.stage.parent = this.renderer;
+
                 Backbone.trigger("AllRendered", this.stage);
 
-                Backbone.on("render::renderAnimation", function (viewFunc, card) {
-                    this.renderAnimation(viewFunc, card);
-                }.bind(this));
-
-                this.on("CardMoved", function () {
-                    delete this.card;
-                    delete this.moveFunc;
+                Backbone.on("render::renderAnimation", function (viewFunc, frames) {
+                    this.viewFunc = viewFunc;
+                    this.frames = frames;
                 }, this);
 
                 this.intervalID = requestAnimationFrame(function (timeStamp) {
@@ -57,22 +55,17 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
         }
 
         _createClass(Renderer, [{
-            key: 'renderAnimation',
-            value: function renderAnimation(viewFunc, card) {
-                cancelAnimationFrame(this.intervalID);
-                this.animate(viewFunc, card);
-            }
-        }, {
             key: 'animate',
-            value: function animate(viewFunc, card) {
+            value: function animate() {
                 var self = this;
-                if (viewFunc !== undefined) {
-                    //viewFunc(card);
+                if (this.frames > 0) {
+                    this.frames -= 1;
+                    this.viewFunc();
                 }
                 console.log("animate");
                 this.renderer.render(this.stage);
                 this.intervalID = requestAnimationFrame(function (timeStamp) {
-                    self.animate(viewFunc, card);
+                    self.animate();
                 });
             }
         }]);

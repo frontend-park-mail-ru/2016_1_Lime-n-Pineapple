@@ -55,7 +55,6 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './player', './b
                     "playersCardContainerMelee": this.container.enemyCardContainerMelee,
                     "playersCardContainerDistant": this.container.enemyCardContainerDistant
                 };
-
                 this.player = new Player(this.loaderRes, containerPlayer);
                 this.enemy = new Bot(this.loaderRes, containerEnemy);
 

@@ -26,7 +26,8 @@ define([
         }
 
         createCardDeck(){
-            this.cardCollection.trigger("SetPositionInDeck", this.containerView);
+            console.log("[PlayerCardsDeck] createCardDeck");
+            this.cardCollection.trigger("CreatePlayersDeck", this.containerView);
         }
 
     }

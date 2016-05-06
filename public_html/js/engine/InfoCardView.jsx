@@ -2,41 +2,59 @@
 define([
         'backbone',
         'underscore',
-        'pixi',
-        './CardsScenario'
+        'pixi'
     ],
-    function (Backbone, _, pixi, CardScenario) {
-        class InfoCardView extends CardScenario{
+    function (Backbone, _, pixi) {
+        class InfoCardView{
+
             constructor(card) {
-                super();
+                _.extend(this, Backbone.Events);
+                let fps = 60, second = 1000, duration = 150;
+                this.frames = fps * (duration/second);
                 this.infoCard = new pixi.Sprite(card.texture);
-                this.infoCard.width = card.sprite.width * 2;
-                this.infoCard.height = card.sprite.height * 2;
+                this.infoCard.width = card.width * 2;
+                this.infoCard.height = card.height * 2;
                 this.infoCard.anchor.set(0.5);
-                card.sprite.parent.parent.trigger("AddChildToStage", this.infoCard);
-                this.infoCard.x = card.sprite.x;
-                this.infoCard.y = card.sprite.parent.y;
-                this.infoCard.mustX = card.sprite.parent.parent.width + this.infoCard.width / 2;
+                card.parent.parent.trigger("AddChildToStage", this.infoCard);
+                this.infoCard.x = card.x;
+                this.infoCard.y = card.parent.y;
+                //this.infoCard.mustX = card.parent.parent.parent.width - this.infoCard.width / 2;
+                this.infoCard.mustX = card.width * 9 + 10;
                 this.infoCard.mustY = this.infoCard.height / 2;
-                this.infoCard.deltaX = this.infoCard.mustX - this.infoCard.x;
-                this.infoCard.deltaY = this.infoCard.mustY - this.infoCard.y;
-                this.infoCard.rateX = this.infoCard.deltaX/10;
-                this.infoCard.rateY = this.infoCard.deltaY/10;
-
-                Backbone.trigger("render::renderAnimation", this.moveCard.bind(this), this.infoCard);
-                //this.moveCard(this.infoCard);
-
-                //_.extend(this, Backbone.Events);
-
+                this.calcDeltaAndRate();
+                Backbone.trigger("render::renderAnimation", this.moveCard.bind(this), this.frames);
             }
 
-            //moveCard(card){
-            //    card.x+=card.rateX;
-            //    card.y+=card.rateY;
-            //    if (Math.abs(card.x - card.mustX) < 10 && Math.abs(card.y - card.mustY) < 10){
-            //        this.trigger("CardMoved");
-            //    }
-            //}
+            moveCard(){
+                this.infoCard.x+=this.infoCard.rateX;
+                this.infoCard.y+=this.infoCard.rateY;
+                if (Math.abs(this.infoCard.x - this.infoCard.mustX) < 10 && Math.abs(this.infoCard.y - this.infoCard.mustY) < 10){
+                    this.trigger("CardOnPosition");
+                }
+            }
+
+            calcDeltaAndRate(){
+                this.infoCard.deltaX = this.infoCard.mustX - this.infoCard.x;
+                this.infoCard.deltaY = this.infoCard.mustY - this.infoCard.y;
+                this.infoCard.rateX = this.infoCard.deltaX/this.frames;
+                this.infoCard.rateY = this.infoCard.deltaY/this.frames;
+            }
+
+            backToDeck(card){
+                this.infoCard.width = card.sprite.width;
+                this.infoCard.height = card.sprite.height;
+                this.infoCard.mustX = card.sprite.x;
+                this.infoCard.mustY = card.sprite.parent.y;
+                this.calcDeltaAndRate();
+                Backbone.trigger("render::renderAnimation", this.moveCard.bind(this), this.frames);
+                this.on("CardOnPosition", function(){
+                    if (this.infoCard.parent){
+                        this.infoCard.parent.removeChild(this.infoCard);
+                        this.trigger("InfoCardInDeck", card);
+                        this.off("CardOnPosition");
+                    }
+                }, this);
+            }
 
         }
         return InfoCardView;

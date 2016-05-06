@@ -11,7 +11,6 @@ define([
             constructor(loaderRes, container){
                 super(loaderRes, container);
 
-
                 super.createDeck();
 
                 this.on("PlayerAct", function(){

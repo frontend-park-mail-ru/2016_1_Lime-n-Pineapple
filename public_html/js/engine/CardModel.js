@@ -21,6 +21,8 @@ define(['backbone', 'underscore', 'pixi', './CardView'], function (Backbone, _, 
                 this.playerOwner = player;
             }, this).on("CardViewPressed", function () {
                 this.playerOwner.trigger("MustCreateInfoCard", this);
+            }, this).on("InfoCardBackToDeck", function () {
+                this.playerOwner.trigger("InfoCardBackToDeck", this);
             }, this);
         }
 

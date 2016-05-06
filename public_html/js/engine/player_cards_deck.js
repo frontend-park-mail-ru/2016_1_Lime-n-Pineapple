@@ -32,7 +32,8 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardC
         _createClass(PlayerCardsDeck, [{
             key: 'createCardDeck',
             value: function createCardDeck() {
-                this.cardCollection.trigger("SetPositionInDeck", this.containerView);
+                console.log("[PlayerCardsDeck] createCardDeck");
+                this.cardCollection.trigger("CreatePlayersDeck", this.containerView);
             }
         }]);
 
