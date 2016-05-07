@@ -13,17 +13,20 @@ define([
 
         class CardContainerView{
 
-            constructor(interactive, buttonMode) {
+            constructor(interactive, buttonMode, visible = true) {
 
-                _.extend(this, Backbone.Events)
+                _.extend(this, Backbone.Events);
 
                 this.containerView = new pixi.Container();
                 this.containerView.interactive = interactive;
                 this.containerView.buttonMode = buttonMode;
+                this.containerView.visible = visible;
+
 
                 if (interactive && buttonMode){
                     this.containerView.hitArea = new pixi.Rectangle(0, 0, width / 1.5, oneLineHeight);
                 }
+                console.log(this.containerView.width);
 
                 this.on("RemoveGapsInContainer", function(){
                     this.removeGapsInDeck();
@@ -32,6 +35,7 @@ define([
                 this.on("AddChild", function(sprite){
                     this.containerView.addChild(sprite);
                 }, this);
+
 
 
             }

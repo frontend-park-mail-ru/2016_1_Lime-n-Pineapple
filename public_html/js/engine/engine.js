@@ -9,13 +9,13 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './player', './b
         function Engine(loaderRes) {
             _classCallCheck(this, Engine);
 
-            var playerCardsDeckView = new CardContainerView(),
+            var playerCardsDeckView = new CardContainerView(true, true),
                 playerCardsDeck = new PlayerCardsDeck(playerCardsDeckView),
                 playersCardContainerMeleeView = new CardContainerView(true, true),
                 playersCardContainerMelee = new CardContainerModel(playersCardContainerMeleeView),
                 playersCardContainerDistantView = new CardContainerView(true, true),
                 playersCardContainerDistant = new CardContainerModel(playersCardContainerDistantView),
-                enemyCardsDeckView = new CardContainerView(),
+                enemyCardsDeckView = new CardContainerView(false, false, false),
                 enemyCardsDeck = new PlayerCardsDeck(enemyCardsDeckView),
                 enemyCardContainerMeleeView = new CardContainerView(true, true),
                 enemyCardContainerMelee = new CardContainerModel(enemyCardContainerMeleeView),

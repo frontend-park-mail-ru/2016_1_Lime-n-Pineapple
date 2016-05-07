@@ -7,7 +7,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _, Backbone, Settings, pixi) {
 
     var oneLineHeight = $(window).height() / 6;
-    var width = $(window).width();
 
     var AbstractCardContainerModel = function () {
         function AbstractCardContainerModel(cardContainerView) {
@@ -16,6 +15,7 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
             _.extend(this, Backbone.Events);
 
             this.containerView = cardContainerView;
+            this.graphics = new pixi.Graphics();
 
             //this.setContainerPosition();
 
@@ -34,12 +34,39 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
             this.on("AbstractCardContainer::SetContainerPosition", function (arrContainer, stage) {
                 AbstractCardContainerModel.setContainerPosition(arrContainer, stage, oneLineHeight);
             });
+
+            this.containerView.containerView.on('mouseover', function (event) {
+                console.log("mouseoverContainer");
+                this.cardWidth = 0;
+                this.graphics.visible = true;
+                if (!this.graphics.parent) {
+                    Backbone.trigger("PlayerCardsDeck::GetCardsWidth", this.getCardsWidth.bind(this));
+                    this.containerView.containerView.addChild(this.graphics);
+                    this.graphics.beginFill(0xffae80, 0.15);
+
+                    this.graphics.lineStyle(3, 0xff8e4d, 0.3);
+                    this.graphics.moveTo(3, 0);
+                    this.graphics.lineTo(3, oneLineHeight);
+                    this.graphics.lineTo(this.cardWidth * 8 + 14, oneLineHeight);
+                    this.graphics.lineTo(this.cardWidth * 8 + 14, 0);
+                    this.graphics.lineTo(3, 0);
+                }
+            }, this);
+            this.containerView.containerView.on('mouseout', function (event) {
+                //this.containerView.containerView.removeChild(this.graphics);
+                this.graphics.visible = false;
+            }, this);
         }
 
-        // nice work
+        _createClass(AbstractCardContainerModel, [{
+            key: 'getCardsWidth',
+            value: function getCardsWidth(width) {
+                this.cardWidth = width;
+            }
 
+            // nice work
 
-        _createClass(AbstractCardContainerModel, null, [{
+        }], [{
             key: 'setContainerPosition',
             value: function setContainerPosition(arrContainer, stage, oneLineHeight) {
                 var i = 4;

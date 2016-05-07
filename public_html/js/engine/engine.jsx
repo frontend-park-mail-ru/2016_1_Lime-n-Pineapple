@@ -15,19 +15,21 @@ define([
         class Engine {
 
             constructor(loaderRes) {
-                let playerCardsDeckView = new CardContainerView(),
+                let playerCardsDeckView = new CardContainerView(true, true),
                     playerCardsDeck = new PlayerCardsDeck(playerCardsDeckView),
                     playersCardContainerMeleeView = new CardContainerView(true, true),
                     playersCardContainerMelee = new CardContainerModel(playersCardContainerMeleeView),
                     playersCardContainerDistantView = new CardContainerView(true, true),
                     playersCardContainerDistant = new CardContainerModel(playersCardContainerDistantView),
 
-                    enemyCardsDeckView = new CardContainerView(),
+                    enemyCardsDeckView = new CardContainerView(false, false, false),
                     enemyCardsDeck = new PlayerCardsDeck(enemyCardsDeckView),
                     enemyCardContainerMeleeView = new CardContainerView(true, true),
                     enemyCardContainerMelee = new CardContainerModel(enemyCardContainerMeleeView),
                     enemyCardContainerDistantView = new CardContainerView(true, true),
                     enemyCardContainerDistant = new CardContainerModel(enemyCardContainerDistantView);
+
+
 
                 this.container = {
                     "playersCardsDeck"                  :   playerCardsDeck,

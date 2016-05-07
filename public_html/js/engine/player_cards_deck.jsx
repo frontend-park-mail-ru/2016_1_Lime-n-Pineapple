@@ -20,7 +20,11 @@ define([
                 this.cardCollection = cardCollection;
                 this.createCardDeck();
             }, this);
-
+            Backbone.on("PlayerCardsDeck::GetCardsWidth", function(getWidth){
+                console.log("FDSFSD");
+                getWidth(this.containerView.containerView.getChildAt(0).width);
+                //console.log(wid);
+            }, this);
 
 
         }

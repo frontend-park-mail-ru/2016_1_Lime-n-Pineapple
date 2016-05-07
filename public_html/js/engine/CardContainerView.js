@@ -11,6 +11,8 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
 
     var CardContainerView = function () {
         function CardContainerView(interactive, buttonMode) {
+            var visible = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
+
             _classCallCheck(this, CardContainerView);
 
             _.extend(this, Backbone.Events);
@@ -18,10 +20,12 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
             this.containerView = new pixi.Container();
             this.containerView.interactive = interactive;
             this.containerView.buttonMode = buttonMode;
+            this.containerView.visible = visible;
 
             if (interactive && buttonMode) {
                 this.containerView.hitArea = new pixi.Rectangle(0, 0, width / 1.5, oneLineHeight);
             }
+            console.log(this.containerView.width);
 
             this.on("RemoveGapsInContainer", function () {
                 this.removeGapsInDeck();

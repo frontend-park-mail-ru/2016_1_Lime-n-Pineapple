@@ -19,11 +19,17 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardC
         function PlayerCardsDeck(cardContainerView) {
             _classCallCheck(this, PlayerCardsDeck);
 
-            var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PlayerCardsDeck).call(this, cardContainerView));
+            var
+            //console.log(wid);
+            _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PlayerCardsDeck).call(this, cardContainerView));
 
             _this.on("PlayersCardsDeck::CreatePlayersDeck", function (cardCollection) {
                 this.cardCollection = cardCollection;
                 this.createCardDeck();
+            }, _this);
+            Backbone.on("PlayerCardsDeck::GetCardsWidth", function (getWidth) {
+                console.log("FDSFSD");
+                getWidth(this.containerView.containerView.getChildAt(0).width);
             }, _this);
 
             return _this;

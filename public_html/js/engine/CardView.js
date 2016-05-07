@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(['backbone', 'underscore', 'pixi'], function (Backbone, _, pixi) {
+define(['backbone', 'underscore', 'pixi', 'jquery'], function (Backbone, _, pixi, $) {
     var Card = function () {
         function Card(loaderRes, oneLineHeight) {
             _classCallCheck(this, Card);
@@ -37,19 +37,37 @@ define(['backbone', 'underscore', 'pixi'], function (Backbone, _, pixi) {
                 }
             }
         }, {
+            key: 'onMouseOver',
+            value: function onMouseOver(event, cardModel) {
+                var filter = new pixi.filters.ColorMatrixFilter();
+                this.sprite.filters = [filter];
+                filter.brightness(1.5);
+                this.sprite.y -= 10;
+            }
+        }, {
+            key: 'onMouseOut',
+            value: function onMouseOut(event, cardModel) {
+                this.sprite.y += 10;
+                this.sprite.filters = null;
+            }
+        }, {
             key: 'setTouchEventCard',
             value: function setTouchEventCard(cardModel) {
+                //_.extend(this.sprite, $.Events);
+
                 this.sprite.on('click', function (event) {
                     this.onClickCard(event, cardModel);
-                }, this).on('touchstart', function (event) {
-                    this.onClickCard(event, cardModel);
+                }, this).on('mouseover', function (event) {
+                    this.onMouseOver(event, cardModel);
+                }, this).on('mouseout', function (event) {
+                    this.onMouseOut(event, cardModel);
                 }, this);
             }
         }, {
             key: 'setPositionIntoDeck',
             value: function setPositionIntoDeck(index, containerView) {
                 this.sprite.x = this.sprite.width * index + 2 * index + this.sprite.width / 2;
-                this.sprite.y = this.sprite.y + this.sprite.height / 2;
+                this.sprite.y = this.sprite.y + this.sprite.height / 2 + 10;
                 this.sprite.anchor.set(0.5);
                 containerView.trigger("AddChild", this.sprite);
             }
