@@ -24,7 +24,7 @@ define([
 
 
                 if (interactive && buttonMode){
-                    this.containerView.hitArea = new pixi.Rectangle(0, 0, width / 1.5, oneLineHeight);
+                    this.containerView.hitArea = new pixi.Rectangle(0, 0, width, oneLineHeight);
                 }
                 console.log(this.containerView.width);
 
