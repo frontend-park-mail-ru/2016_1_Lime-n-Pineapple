@@ -6,19 +6,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './CardModel'], function ($, _, Backbone, Settings, pixi, Card) {
     var CardCollection = function () {
-        function CardCollection(loaderRes, oneLineHeight) {
+        function CardCollection(loaderRes) {
             _classCallCheck(this, CardCollection);
 
             this.cardCollection = [];
             _.extend(this.cardCollection, Backbone.Events);
 
             this.cardCollection.on("CardCollection::CreatePlayersDeck", function (containerView) {
-                console.log("CardCollection on");
                 this.setPosition(containerView);
             }, this);
 
             for (var i = 0; i < 8; i += 1) {
-                this.cardCollection.push(new Card(loaderRes, oneLineHeight));
+                this.cardCollection.push(new Card(loaderRes));
             }
             return this.cardCollection;
         }
@@ -27,7 +26,7 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './CardModel'], 
             key: 'setPosition',
             value: function setPosition(containerView) {
                 for (var i = 0; i < this.cardCollection.length; i += 1) {
-                    this.cardCollection[i].trigger("CardModel::SetPositionInDeck", i, containerView);
+                    this.cardCollection[i].trigger("CardModel::SetPositionInContainer", i, containerView);
                 }
             }
         }]);

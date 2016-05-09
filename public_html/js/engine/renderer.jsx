@@ -22,11 +22,11 @@ define([
                     this.stage = new pixi.Container();
                     _.extend(this.stage, Backbone.Events);
 
-                    this.stage.on("AddChildToStage", function(sprite){
+                    Backbone.on("AddChildToStage", function(sprite){
                         this.stage.addChild(sprite);
                     }, this);
 
-                    this.renderer = pixi.autoDetectRenderer($(this.viewEl).width()/1.2, $(this.viewEl).height(), {transparent: true});
+                    this.renderer = pixi.autoDetectRenderer($(this.viewEl).width(), $(this.viewEl).height(), {transparent: true});
                     document.getElementById(this.domID).appendChild(this.renderer.view);
 
                     this.stage.parent = this.renderer;

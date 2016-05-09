@@ -4,10 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _, Backbone, Settings, pixi) {
-
-    var oneLineHeight = $(window).height() / 6;
-
+define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './Settings'], function ($, _, Backbone, Settings, pixi, SETTINGS) {
     var AbstractCardContainerModel = function () {
         function AbstractCardContainerModel(cardContainerView) {
             _classCallCheck(this, AbstractCardContainerModel);
@@ -15,70 +12,57 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
             _.extend(this, Backbone.Events);
 
             this.containerView = cardContainerView;
-            this.graphics = new pixi.Graphics();
-
             this.on("CardPressed", function () {
                 this.containerView.on("mousedown", function () {}, this);
-            }, this);
-
-            this.on("CardAreThrown CardBackIntoDesc", function () {
+            }, this).on("CardAreThrown CardBackIntoDesc", function () {
                 this.containerView.off("mousedown");
-            }, this);
-
-            this.on("RemoveGapsInDeck", function () {
+            }, this).on("RemoveGapsInDeck", function () {
                 this.containerView.trigger("RemoveGapsInContainer");
-            }, this);
+            }, this).on("AbstractCardContainer::SetContainerPosition", function (stage, index, positionX) {
+                this.setContainerPosition(stage, index, positionX);
+            }).on("AbstractCardContainerModel::AddChild", function (child, x, y) {
+                this.addChildToContainer(child, x, y);
+            }, this).on("AbstractCardContainerModel::GraphicsVisible", function (value) {
+                var eventsRecovery = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 
-            this.on("AbstractCardContainer::SetContainerPosition", function (arrContainer, stage) {
-                AbstractCardContainerModel.setContainerPosition(arrContainer, stage, oneLineHeight);
+                this.containerView.edgingVisible(value);
+                if (eventsRecovery) {
+                    this.containerView.edgingEventsSetter();
+                }
+            }, this).on("AbstractCardContainerModel::SetClickListener", function (card) {
+                this.containerView.setClickEventsListener(card);
             });
 
-            this.containerView.containerView.on('mouseover', function (event) {
-                this.cardWidth = 0;
-                this.graphics.visible = true;
-                if (!this.graphics.parent) {
-                    Backbone.trigger("PlayerCardsDeck::GetCardsWidth", this.getCardsWidth.bind(this));
-                    this.containerView.containerView.addChild(this.graphics);
-                    this.containerView.containerView.swapChildren(this.containerView.containerView.getChildAt(0), this.graphics);
-                    this.width = this.cardWidth * 8 + 14;
-                    if (this.containerView.containerView.visible) {
-                        delete this.containerView.containerView.hitArea;
-                        this.containerView.containerView.hitArea = new pixi.Rectangle(0, 0, this.width, oneLineHeight);
-                    }
-                    this.graphics.beginFill(0xffae80, 0.15);
+            //this.containerView.containerView.on('click', function (event) {
+            //
+            //}, this);
 
-                    this.graphics.lineStyle(3, 0xff8e4d, 0.3);
-                    this.graphics.moveTo(3, 0);
-                    this.graphics.lineTo(3, oneLineHeight);
-                    this.graphics.lineTo(this.width, oneLineHeight);
-                    this.graphics.lineTo(this.width, 0);
-                    this.graphics.lineTo(3, 0);
+            $(this).one("AbstractCardContainer::CreateGraphics", function (event, width, height, worldVisible, x, y) {
+                console.log("AbstractCardContainer::CreateGraphics");
+                console.log(width, height, x, y);
+                this.containerView.createHitArea(width, height);
+                if (x && y) {
+                    this.containerView.createGraphicsEdging(width, height, worldVisible, x, y);
+                } else {
+                    this.containerView.createGraphicsEdging(width, height, worldVisible);
                 }
-            }, this);
-            this.containerView.containerView.on('mouseout', function (event) {
-                this.graphics.visible = false;
-            }, this);
+            }.bind(this));
         }
 
         _createClass(AbstractCardContainerModel, [{
-            key: 'getCardsWidth',
-            value: function getCardsWidth(width) {
-                this.cardWidth = width;
+            key: 'addChildToContainer',
+            value: function addChildToContainer(child, x, y) {
+                this.containerView.addChildToContainer(child, x, y);
             }
 
             // nice work
 
-        }], [{
+        }, {
             key: 'setContainerPosition',
-            value: function setContainerPosition(arrContainer, stage, oneLineHeight) {
-                var i = 4;
-                _.forEach(arrContainer, function (value, key) {
-                    stage.addChild(arrContainer[key].containerView.containerView);
-                    arrContainer[key].containerView.containerView.y = 0;
-                    arrContainer[key].containerView.containerView.x = 0;
-                    arrContainer[key].containerView.containerView.y = i * oneLineHeight;
-                    i -= 1;
-                });
+            value: function setContainerPosition(stage, index, positionX) {
+                stage.addChild(this.containerView.containerView);
+                this.containerView.containerView.x = positionX;
+                this.containerView.containerView.y = index * SETTINGS.oneLineHeight;
             }
         }]);
 

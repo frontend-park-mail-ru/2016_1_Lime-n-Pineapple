@@ -9,29 +9,21 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardContainerModel'], function ($, _, Backbone, Settings, pixi, AbstractCardContainerModel) {
-
-    var oneLineHeight = $(window).height() / 6;
-    var width = $(window).width();
-
     var PlayerCardsDeck = function (_AbstractCardContaine) {
         _inherits(PlayerCardsDeck, _AbstractCardContaine);
 
         function PlayerCardsDeck(cardContainerView) {
             _classCallCheck(this, PlayerCardsDeck);
 
-            var
-            //console.log(wid);
-            _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PlayerCardsDeck).call(this, cardContainerView));
+            var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PlayerCardsDeck).call(this, cardContainerView));
 
             _this.on("PlayersCardsDeck::CreatePlayersDeck", function (cardCollection) {
                 this.cardCollection = cardCollection;
                 this.createCardDeck();
             }, _this);
-            Backbone.on("PlayerCardsDeck::GetCardsWidth", function (getWidth) {
-                console.log("FDSFSD");
-                getWidth(this.containerView.containerView.getChildAt(0).width);
+            Backbone.on("PlayerCardsDeck::GetDeckWidth", function (getWidth) {
+                getWidth(this.containerView.containerView.width);
             }, _this);
-
             return _this;
         }
 

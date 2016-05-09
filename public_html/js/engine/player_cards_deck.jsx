@@ -8,9 +8,6 @@ define([
     './AbstractCardContainerModel'
 ], function ($, _, Backbone, Settings, pixi, AbstractCardContainerModel) {
 
-    let oneLineHeight = $(window).height() / 6;
-    let width = $(window).width();
-
     class PlayerCardsDeck extends AbstractCardContainerModel{
 
         constructor(cardContainerView) {
@@ -20,13 +17,9 @@ define([
                 this.cardCollection = cardCollection;
                 this.createCardDeck();
             }, this);
-            Backbone.on("PlayerCardsDeck::GetCardsWidth", function(getWidth){
-                console.log("FDSFSD");
-                getWidth(this.containerView.containerView.getChildAt(0).width);
-                //console.log(wid);
+            Backbone.on("PlayerCardsDeck::GetDeckWidth", function(getWidth){
+                getWidth(this.containerView.containerView.width);
             }, this);
-
-
         }
 
         createCardDeck(){

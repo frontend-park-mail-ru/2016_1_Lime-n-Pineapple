@@ -1,23 +1,24 @@
 "use strict";
 define([
-    'backbone',
-    'underscore',
-    'pixi',
-    './CardView',
-    './AbstractCardModel'
+        'backbone',
+        'underscore',
+        'pixi',
+        './CardView',
+        './AbstractCardModel'
     ],
     function (Backbone, _, pixi, CardView, AbstractCardModel) {
-        class Card extends AbstractCardModel{
+        class CardBoss extends AbstractCardModel{
             constructor(loaderRes) {
                 let card = loaderRes[(Math.floor(Math.random() * (3)))];
                 super(card.url);
-                this.name = card.name;
                 this.url = card.url;
+                this.name = card.name;
                 this.power = card.power;
-                this.disposableContainers = card.disposableContainers;
+                this.disposableContainer = card.disposableContainer;
             }
+
         }
-        return Card;
+        return CardBoss;
     }
 );
 

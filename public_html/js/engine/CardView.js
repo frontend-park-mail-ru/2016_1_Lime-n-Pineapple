@@ -4,17 +4,17 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(['backbone', 'underscore', 'pixi', 'jquery'], function (Backbone, _, pixi, $) {
+define(['backbone', 'underscore', 'pixi', 'jquery', './Settings'], function (Backbone, _, pixi, $, SETTINGS) {
     var Card = function () {
-        function Card(loaderRes, oneLineHeight) {
+        function Card(url) {
             _classCallCheck(this, Card);
 
-            this.texture = new pixi.Texture.fromImage(loaderRes['card' + (Math.floor(Math.random() * (8 - 1 + 1)) + 1)].url);
+            this.texture = new pixi.Texture.fromImage(url);
             this.sprite = new pixi.Sprite(this.texture);
             this.sprite.interactive = true;
             this.sprite.buttonMode = true;
-            this.sprite.width = this.sprite.width * oneLineHeight * 1.2 / this.sprite.height;
-            this.sprite.height = oneLineHeight;
+            this.sprite.width = SETTINGS.cardWidth;
+            this.sprite.height = SETTINGS.oneLineHeight;
             _.extend(this, Backbone.Events);
         }
 
@@ -64,10 +64,10 @@ define(['backbone', 'underscore', 'pixi', 'jquery'], function (Backbone, _, pixi
                 }, this);
             }
         }, {
-            key: 'setPositionIntoDeck',
-            value: function setPositionIntoDeck(index, containerView) {
-                this.sprite.x = this.sprite.width * index + 2 * index + this.sprite.width / 2;
-                this.sprite.y = this.sprite.y + this.sprite.height / 2 + 10;
+            key: 'setPositionIntoContainer',
+            value: function setPositionIntoContainer(index, containerView) {
+                this.sprite.x = this.sprite.width * index + 3 + this.sprite.width / 2;
+                this.sprite.y = this.sprite.y + this.sprite.height / 2;
                 this.sprite.anchor.set(0.5);
                 containerView.trigger("AddChild", this.sprite);
             }

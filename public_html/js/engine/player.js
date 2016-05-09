@@ -46,14 +46,15 @@ define(['jquery', 'backbone', 'pixi', './abstract_player'], function ($, Backbon
             key: 'act',
             value: function act() {
                 console.log("PLAYERACT");
-                this.setTouchEventCard();
+                for (var i = 0; i < this.cardCollection.length; i += 1) {
+                    this.setTouchEventCard(this.cardCollection[i]);
+                }
+                this.setTouchEventCard(this.bossCard);
             }
         }, {
             key: 'setTouchEventCard',
-            value: function setTouchEventCard() {
-                for (var i = 0; i < this.cardCollection.length; i += 1) {
-                    this.cardCollection[i].trigger("CardModel::SetTouchEventCard", this);
-                }
+            value: function setTouchEventCard(card) {
+                card.trigger("CardModel::SetTouchEventCard", this);
             }
         }]);
 

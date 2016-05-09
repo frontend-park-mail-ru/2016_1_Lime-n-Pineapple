@@ -3,20 +3,19 @@ define([
     'backbone',
     'underscore',
     'pixi',
-    'jquery'
+    'jquery',
+    './Settings'
 ],
-    function (Backbone, _, pixi, $) {
+    function (Backbone, _, pixi, $, SETTINGS) {
         class Card{
-            constructor(loaderRes, oneLineHeight) {
-                this.texture = new pixi.Texture.fromImage(loaderRes['card' + (Math.floor(Math.random() * (8 - 1 + 1)) + 1)].url);
+            constructor(url) {
+                this.texture = new pixi.Texture.fromImage(url);
                 this.sprite = new pixi.Sprite(this.texture);
                 this.sprite.interactive = true;
                 this.sprite.buttonMode = true;
-                this.sprite.width = this.sprite.width * oneLineHeight * 1.2 / this.sprite.height;
-                this.sprite.height = oneLineHeight;
+                this.sprite.width = SETTINGS.cardWidth;
+                this.sprite.height = SETTINGS.oneLineHeight;
                 _.extend(this, Backbone.Events);
-
-
             }
 
             onClickCard(event, cardModel){
@@ -67,11 +66,11 @@ define([
 
             }
             
-            setPositionIntoDeck(index, containerView){
+            setPositionIntoContainer(index, containerView){
                 this.sprite.x = this.sprite.width *
-                    index + 2 * index + this.sprite.width / 2;
+                    index + 3 + this.sprite.width / 2;
                 this.sprite.y = this.sprite.y +
-                    this.sprite.height / 2 + 10;
+                    this.sprite.height / 2;
                 this.sprite.anchor.set(0.5);
                 containerView.trigger("AddChild", this.sprite);
             }

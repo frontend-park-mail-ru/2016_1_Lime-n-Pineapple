@@ -7,10 +7,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardContainerModel'], function ($, _, Backbone, Settings, pixi, AbstractCardContainerModel) {
-
-    var oneLineHeight = $(window).height() / 6;
-    var width = $(window).width();
-
     var CardContainerModel = function (_AbstractCardContaine) {
         _inherits(CardContainerModel, _AbstractCardContaine);
 
@@ -18,17 +14,6 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardC
             _classCallCheck(this, CardContainerModel);
 
             return _possibleConstructorReturn(this, Object.getPrototypeOf(CardContainerModel).call(this, cardContainerView));
-            //Backbone.on("CardMustAddToContainer", function (actionCard, container) {
-            //    actionCard.x = container.children.length * actionCard.width + 2 + actionCard.width / 2;
-            //    actionCard.y = actionCard.height / 2;
-            //    container.addChild(actionCard);
-            //
-            //    console.log(container.x, container.y, container.height);
-            //    actionCard.alpha = 1;
-            //    container.visible = true;
-            //    console.log(actionCard.x, actionCard.y);
-            //    console.log(container);
-            //}, this);
         }
 
         //onClickBattleField(event, container, actionCard, infoCard) {

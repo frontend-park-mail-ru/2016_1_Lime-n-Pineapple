@@ -37,13 +37,14 @@ define([
 
             act(){
                 console.log("PLAYERACT");
-                this.setTouchEventCard();
+                for (let i = 0; i < this.cardCollection.length; i+=1){
+                    this.setTouchEventCard(this.cardCollection[i]);
+                }
+                this.setTouchEventCard(this.bossCard);
             }
 
-            setTouchEventCard(){
-                for (let i = 0; i < this.cardCollection.length; i+=1){
-                    this.cardCollection[i].trigger("CardModel::SetTouchEventCard", this);
-                }
+            setTouchEventCard(card){
+                card.trigger("CardModel::SetTouchEventCard", this);
             }
 
 
