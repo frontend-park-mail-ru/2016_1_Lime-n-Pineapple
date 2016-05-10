@@ -7,10 +7,9 @@ define([
     './Settings'
 ],
     function (Backbone, _, pixi, $, SETTINGS) {
-        class Card{
+        class CardView{
             constructor(url) {
-                this.texture = new pixi.Texture.fromImage(url);
-                this.sprite = new pixi.Sprite(this.texture);
+                this.sprite = new pixi.Sprite(new pixi.Texture.fromImage(url));
                 this.sprite.interactive = true;
                 this.sprite.buttonMode = true;
                 this.sprite.width = SETTINGS.cardWidth;
@@ -18,54 +17,51 @@ define([
                 _.extend(this, Backbone.Events);
             }
 
-            onClickCard(event, cardModel){
-                switch (event.data.originalEvent.which) {
-                    case 1:
-                        if (this.sprite.alpha === 0.1){
-                            cardModel.trigger("CardModel::InfoCardBackToDeck");
-                        }
-                        else {
-                            this.sprite.alpha = 0.1;
-                            this.on("CardView::AlphaVisible", function(){
-                                this.sprite.alpha = 1;
-                                this.off("AlphaVisible");
-                            }, this);
-                            cardModel.trigger("CardModel::CardViewPressed");
-                        }
-                        break;
+            onClickCard(cardModel){
+                if (this.sprite.alpha === 0.1){
+                    cardModel.trigger("CardModel::InfoCardBackToDeck");
+                }
+                else {
+                    this.sprite.alpha = 0.1;
+                    this.on("CardView::AlphaVisible", function(){
+                        this.sprite.alpha = 1;
+                        this.off("AlphaVisible");
+                    }, this);
+                    cardModel.trigger("CardModel::CardViewPressed");
                 }
             }
 
-            onMouseOver(event, cardModel){
+            onMouseOver(){
                 let filter = new pixi.filters.ColorMatrixFilter();
                 this.sprite.filters = [filter];
                 filter.brightness(1.5);
                 this.sprite.y-=10;
             }
 
-            onMouseOut(event, cardModel){
+            onMouseOut(){
                 this.sprite.y+=10;
                 this.sprite.filters = null;
             }
 
 
             setTouchEventCard(cardModel){
-                //_.extend(this.sprite, $.Events);
-
                 this.sprite
-                    .on('click', function(event) {
-                        this.onClickCard(event, cardModel);
+                    .on('click', function() {
+                        this.onClickCard(cardModel);
                     }, this)
-                    .on('mouseover', function(event){
-                        this.onMouseOver(event, cardModel);
+                    .on('mouseover', function(){
+                        this.onMouseOver();
                     }, this)
-                    .on('mouseout', function(event){
-                        this.onMouseOut(event, cardModel);
+                    .on('mouseout', function(){
+                        this.onMouseOut();
                     }, this);
-
-
             }
-            
+
+            setPosition(x, y){
+                this.sprite.x = x;
+                this.sprite.y = y;
+            }
+
             setPositionIntoContainer(index, containerView){
                 this.sprite.x = this.sprite.width *
                     index + 3 + this.sprite.width / 2;
@@ -75,7 +71,7 @@ define([
                 containerView.trigger("AddChild", this.sprite);
             }
         }
-        return Card;
+        return CardView;
     }
 );
 

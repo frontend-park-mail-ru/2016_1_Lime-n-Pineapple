@@ -67,28 +67,28 @@ define([
                     };
                     let i = 4;
                     _.forEach(this.battlesContainer, function(value, key, iter){
-                        iter[key].trigger("AbstractCardContainer::SetContainerPosition", stage, i, SETTINGS.battleContainerPositionX);
-                        $(iter[key]).trigger("AbstractCardContainer::CreateGraphics", [SETTINGS.deckWidth, SETTINGS.oneLineHeight]);
+                        iter[key].trigger("AbstractCardContainerModel::SetContainerPosition", stage, SETTINGS.battleContainerPositionX, i * SETTINGS.oneLineHeight);
+                        $(iter[key]).trigger("AbstractCardContainerModel::CreateGraphics", [SETTINGS.deckWidth, SETTINGS.oneLineHeight]);
                         i-=1;
                     }, this);
-                    this.container.playersContainerBoss.trigger("AbstractCardContainer::SetContainerPosition", stage, 3, 10);
-                    $(this.container.playersContainerBoss).trigger("AbstractCardContainer::CreateGraphics", [SETTINGS.battleContainerPositionX - 10,
+                    this.container.playersContainerBoss.trigger("AbstractCardContainerModel::SetContainerPosition", stage, 10, 3 * SETTINGS.oneLineHeight);
+                    $(this.container.playersContainerBoss).trigger("AbstractCardContainerModel::CreateGraphics", [SETTINGS.battleContainerPositionX - 10,
                         SETTINGS.oneLineHeight, false]);
-                    this.container.playersContainerBossCard.trigger("AbstractCardContainer::SetContainerPosition", this.container.playersContainerBoss.containerView.containerView,
+                    this.container.playersContainerBossCard.trigger("AbstractCardContainerModel::SetContainerPosition", this.container.playersContainerBoss.containerView.containerView,
                         0, 0);
-                    $(this.container.playersContainerBossCard).trigger("AbstractCardContainer::CreateGraphics", [SETTINGS.cardWidth,
+                    $(this.container.playersContainerBossCard).trigger("AbstractCardContainerModel::CreateGraphics", [SETTINGS.cardWidth,
                         SETTINGS.oneLineHeight]);
 
-                    this.container.enemyContainerBoss.trigger("AbstractCardContainer::SetContainerPosition", stage, 0, 10);
-                    $(this.container.enemyContainerBoss).trigger("AbstractCardContainer::CreateGraphics", [SETTINGS.battleContainerPositionX - 10,
+                    this.container.enemyContainerBoss.trigger("AbstractCardContainerModel::SetContainerPosition", stage, 10, 0);
+                    $(this.container.enemyContainerBoss).trigger("AbstractCardContainerModel::CreateGraphics", [SETTINGS.battleContainerPositionX - 10,
                         SETTINGS.oneLineHeight, false]);
-                    this.container.enemyContainerBossCard.trigger("AbstractCardContainer::SetContainerPosition", this.container.enemyContainerBoss.containerView.containerView,
+                    this.container.enemyContainerBossCard.trigger("AbstractCardContainerModel::SetContainerPosition", this.container.enemyContainerBoss.containerView.containerView,
                         0, 0);
-                    $(this.container.enemyContainerBossCard).trigger("AbstractCardContainer::CreateGraphics", [SETTINGS.cardWidth,
+                    $(this.container.enemyContainerBossCard).trigger("AbstractCardContainerModel::CreateGraphics", [SETTINGS.cardWidth,
                         SETTINGS.oneLineHeight]);
 
-                    this.container.playersInfoCardContainer.trigger("AbstractCardContainer::SetContainerPosition", stage,
-                        2, SETTINGS.infoCardContainerPositionX);
+                    this.container.playersInfoCardContainer.trigger("AbstractCardContainerModel::SetContainerPosition", stage,
+                        SETTINGS.infoCardContainerPositionX, 2 * SETTINGS.oneLineHeight);
 
 
 
@@ -108,7 +108,6 @@ define([
                     "playersInfoCardContainer"          :   this.container.playersInfoCardContainer,
                     "enemyCardContainerMelee"           :   this.container.enemyCardContainerMelee,
                     "enemyCardContainerDistant"         :   this.container.enemyCardContainerDistant
-
                 };
 
                 let containerEnemy = {

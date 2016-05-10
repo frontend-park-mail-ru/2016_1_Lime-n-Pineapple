@@ -11,7 +11,7 @@ define(['jquery', 'backbone', 'underscore', 'pixi', './card_collection', './Info
 
             _.extend(this, Backbone.Events);
             this.loaderRes = loaderRes;
-            this.cardCollection = new CardCollection(loaderRes);
+            this.cardCollection = new CardCollection(loaderRes, 8);
             if (container.playersCardsDeck !== undefined) {
                 this.playersCardsDeck = container.playersCardsDeck;
             }
@@ -22,60 +22,88 @@ define(['jquery', 'backbone', 'underscore', 'pixi', './card_collection', './Info
             this.playersInfoCardContainer = container.playersInfoCardContainer;
             this.enemyCardContainerMelee = container.enemyCardContainerMelee;
             this.enemyCardContainerDistant = container.enemyCardContainerDistant;
+            this.battleContainers = [this.playersCardContainerMelee, this.playersCardContainerDistant, this.enemyCardContainerMelee, this.enemyCardContainerDistant];
+            this.touchedCards = [];
+            this.infoCard = new InfoCardModel(this.playersInfoCardContainer.containerView, this);
             this.createBossCard();
 
             this.on("AbstractPlayer::Act", function () {
                 this.trigger("Player::PlayerAct");
             }, this).on("AbstractPlayer::MustCreateInfoCard", function (card) {
-                if (this.infoCard === undefined) {
-                    this.infoCard = new InfoCardModel(card, this.playersInfoCardContainer.containerView, this);
-                    _.forEach(card.disposableContainers, function (value, key) {
-                        if (key === "melee") {
-                            this.playersCardContainerMelee.trigger("AbstractCardContainerModel::GraphicsVisible", value);
-                            if (value) {
-                                this.playersCardContainerMelee.trigger("AbstractCardContainerModel::SetClickListener", card);
-                            }
-                        }
-                        if (key === "distant") {
-                            this.playersCardContainerDistant.trigger("AbstractCardContainerModel::GraphicsVisible", value);
-                            if (value) {
-                                this.playersCardContainerDistant.trigger("AbstractCardContainerModel::SetClickListener", card);
-                            }
-                        }
-                        if (key === "enemyMelee") {
-                            this.enemyCardContainerMelee.trigger("AbstractCardContainerModel::GraphicsVisible", value);
-                            if (value) {
-                                this.enemyCardContainerMelee.trigger("AbstractCardContainerModel::SetClickListener", card);
-                            }
-                        }
-                        if (key === "enemyDistant") {
-                            this.enemyCardContainerDistant.trigger("AbstractCardContainerModel::GraphicsVisible", value);
-                            if (value) {
-                                this.enemyCardContainerDistant.trigger("AbstractCardContainerModel::SetClickListener", card);
-                            }
-                        }
-                    }, this);
-                    this.infoCard.card = card;
+                var _this = this;
+
+                this.touchedCards.push(card);
+                if (this.infoCard.isHide) {
+                    this.infoCard.trigger("InfoCardModel::ShowInfoCard", card);
+                    this.definitionCardsClasses(card);
+                    delete this.nowActiveContainer;
+                    this.touchedCards.push(card);
                 } else {
-                    this.infoCard.trigger("InfoCardModel::BackToDeckPrevious", this.infoCard.card);
-                    $(this).one("AbstractPlayer::PreviousInfoCardBackToDeck", function (event) {
-                        console.log("AbstractPlayer::PreviousInfoCardBackToDeck");
-                        this.trigger("AbstractPlayer::MustCreateInfoCard", card);
-                    }.bind(this));
+                    (function () {
+                        _this.infoCard.trigger("InfoCardModel::BackToDeck", _this.touchedCards[_this.touchedCards.length - 2]);
+                        var newCard = _this.touchedCards[_this.touchedCards.length - 1];
+                        $(_this.touchedCards[_this.touchedCards.length - 2]).one("AbstractPlayer::PreviousInfoCardInDeck", function () {
+                            this.trigger("AbstractPlayer::MustCreateInfoCard", newCard);
+                        }.bind(_this));
+                    })();
                 }
-            }, this).on("AbstractPlayer::MustDestroyInfoCard", function () {
-                delete this.infoCard;
-                $(this).trigger("AbstractPlayer::PreviousInfoCardBackToDeck");
             }, this).on("AbstractPlayer::InfoCardBackToDeck", function (card) {
                 this.infoCard.trigger("InfoCardModel::BackToDeck", card);
-                this.playersCardContainerMelee.trigger("AbstractCardContainerModel::GraphicsVisible", false, true);
-                this.playersCardContainerDistant.trigger("AbstractCardContainerModel::GraphicsVisible", false, true);
-                this.enemyCardContainerMelee.trigger("AbstractCardContainerModel::GraphicsVisible", false, true);
-                this.enemyCardContainerDistant.trigger("AbstractCardContainerModel::GraphicsVisible", false, true);
+                this.setGraphicsVisible(false);
+                this.setGraphicsListener(true);
+            }, this).on("AbstractPlayer::GraphicsVisibleAndEventsOnForContainer", function () {
+                this.setGraphicsVisible(false);
+                this.setGraphicsListener(true);
+            }, this).on("AbstractPlayer::RemoveGapsInDeck", function () {
+                this.playersCardsDeck.trigger("PlayersCardsDeck::RemoveGapsInDeck");
+            }, this).on("AbstractPlayer::DeleteCardFromCardCollection", function (card) {
+                this.playersCardsDeck.trigger("PlayersCardsDeck::DeleteCardFromCardCollection", card);
             }, this);
         }
 
         _createClass(AbstractPlayer, [{
+            key: 'setGraphicsVisible',
+            value: function setGraphicsVisible(bool) {
+                for (var i = 0; i < this.battleContainers.length; i += 1) {
+                    this.battleContainers[i].trigger("AbstractCardContainerModel::GraphicsVisible", bool);
+                }
+            }
+        }, {
+            key: 'setGraphicsListener',
+            value: function setGraphicsListener(bool) {
+                for (var i = 0; i < this.battleContainers.length; i += 1) {
+                    this.battleContainers[i].trigger("AbstractCardContainerModel::SetGraphicsListener", bool);
+                }
+            }
+        }, {
+            key: 'definitionCardsClasses',
+            value: function definitionCardsClasses(card) {
+                this.nowActiveContainer = [];
+                this.playersCardContainerMelee.trigger("AbstractCardContainerModel::GraphicsVisible", card.disposableContainers.melee);
+                if (card.disposableContainers.melee) {
+                    this.playersCardContainerMelee.trigger("AbstractCardContainerModel::SetClickListener", card, this.infoCard);
+                    this.nowActiveContainer.push(this.playersCardContainerMelee);
+                }
+
+                this.playersCardContainerDistant.trigger("AbstractCardContainerModel::GraphicsVisible", card.disposableContainers.distant);
+                if (card.disposableContainers.distant) {
+                    this.playersCardContainerDistant.trigger("AbstractCardContainerModel::SetClickListener", card, this.infoCard);
+                    this.nowActiveContainer.push(this.playersCardContainerDistant);
+                }
+
+                this.enemyCardContainerMelee.trigger("AbstractCardContainerModel::GraphicsVisible", card.disposableContainers.enemyMelee);
+                if (card.disposableContainers.enemyMelee) {
+                    this.enemyCardContainerMelee.trigger("AbstractCardContainerModel::SetClickListener", card, this.infoCard);
+                    this.nowActiveContainer.push(this.enemyCardContainerMelee);
+                }
+
+                this.enemyCardContainerDistant.trigger("AbstractCardContainerModel::GraphicsVisible", card.disposableContainers.enemyDistant);
+                if (card.disposableContainers.enemyDistant) {
+                    this.enemyCardContainerDistant.trigger("AbstractCardContainerModel::SetClickListener", card, this.infoCard);
+                    this.nowActiveContainer.push(this.enemyCardContainerDistant);
+                }
+            }
+        }, {
             key: 'act',
             value: function act() {
                 console.log("[AbstractPlayer] constructor");
@@ -84,12 +112,12 @@ define(['jquery', 'backbone', 'underscore', 'pixi', './card_collection', './Info
             key: 'createBossCard',
             value: function createBossCard() {
                 this.bossCard = new CardBossModel(this.loaderRes);
-                this.bossCard.trigger("CardModel::SetPositionInContainer", 0, this.playersContainerBossCard.containerView);
+                this.playersContainerBossCard.trigger("AbstractCardContainerModel::SetPositionInContainer", this.bossCard.cardView.sprite);
+                this.playersContainerBossCard.trigger("AbstractCardContainerModel::SetCardToCardCollection", this.bossCard);
             }
         }, {
             key: 'createDeck',
             value: function createDeck() {
-                console.log("[AbstractPlayer], createDesc");
                 if (this.playersCardsDeck !== undefined) {
                     this.playersCardsDeck.trigger("PlayersCardsDeck::CreatePlayersDeck", this.cardCollection);
                 }

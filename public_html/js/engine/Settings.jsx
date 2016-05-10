@@ -9,6 +9,8 @@ define(['jquery'],
                 this.battleContainerPositionX = $(window).width() / 5;
                 this.infoCardContainerPositionX = this.battleContainerPositionX + this.deckWidth + this.cardWidth + 3;
                 this.infoCardContainerPositionY = this.oneLineHeight * 2;
+                this.fps = 60;
+                this.second = 1000;
             }
         };
         SETTINGS.constructor();

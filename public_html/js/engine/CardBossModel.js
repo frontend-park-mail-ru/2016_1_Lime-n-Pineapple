@@ -20,7 +20,7 @@ define(['backbone', 'underscore', 'pixi', './CardView', './AbstractCardModel'], 
             _this.url = card.url;
             _this.name = card.name;
             _this.power = card.power;
-            _this.disposableContainer = card.disposableContainer;
+            _this.disposableContainers = card.disposableContainers;
             return _this;
         }
 

@@ -9,34 +9,41 @@ define([
     function (Backbone, _, $, pixi, SETTING) {
         class InfoCardView{
 
-            constructor(container, card) {
+            constructor(container) {
                 _.extend(this, Backbone.Events);
-                let fps = 60, second = 1000, duration = 150;
-                this.frames = fps * (duration/second);
-                this.infoCard = new pixi.Sprite(card.texture);
-                this.infoCard.width = card.width * 2;
-                this.infoCard.height = card.height * 2;
-                this.infoCard.anchor.set(0.5);
-                Backbone.trigger("AddChildToStage", this.infoCard);
+                let duration =1150;
+                this.frames = SETTING.fps * (duration/SETTING.second);
+                this.sprite = new pixi.Sprite();
                 this.container = container;
-                let cardX = card.x, cardY= card.y;
-                while(card.parent.parent !== undefined) {
-                    this.infoCard.x += card.parent.x;
-                    this.infoCard.y += card.parent.y;
-                    card = card.parent;
-                }
-                this.infoCard.x += cardX;
-                this.infoCard.y += cardY;
-                this.infoCard.mustX = container.containerView.x;
-                this.infoCard.mustY = container.containerView.y;
+            }
+
+            showInfoCard(card){
+                this.sprite.texture = card.texture;
+                this.calcSize(card.width * 2, card.height * 2);
+                this.zeroMustPosition();
+                this.zeroSpritePosition();
+                Backbone.trigger("AddChildToStage", this.sprite);
+                this.calcStartPositionForInfoCard(card);
+                this.calcMustPosition(this.container.containerView.parent, this.container.containerView.x, this.container.containerView.y );
                 this.calcDeltaAndRate();
                 Backbone.trigger("render::renderAnimation", this.moveCard.bind(this), this.frames);
             }
 
+            calcStartPositionForInfoCard(card){
+                let cardX = card.x, cardY= card.y;
+                while(card.parent.parent !== undefined) {
+                    this.sprite.x += card.parent.x;
+                    this.sprite.y += card.parent.y;
+                    card = card.parent;
+                }
+                this.sprite.x += cardX;
+                this.sprite.y += cardY;
+            }
+
             moveCard(){
-                this.infoCard.x+=this.infoCard.rateX;
-                this.infoCard.y+=this.infoCard.rateY;
-                if (Math.abs(this.infoCard.x - this.infoCard.mustX) < 10 && Math.abs(this.infoCard.y - this.infoCard.mustY) < 10){
+                this.sprite.x+=this.sprite.rateX;
+                this.sprite.y+=this.sprite.rateY;
+                if (Math.abs(this.sprite.x - this.sprite.mustX) < 10 && Math.abs(this.sprite.y - this.sprite.mustY) < 10){
                     if (!this.goToBack) {
                         $(this).trigger("CardOnPosition");
                     }
@@ -48,43 +55,76 @@ define([
                 }
             }
 
+            calcSize(width, height){
+                this.sprite.width = width;
+                this.sprite.height = height;
+                this.sprite.anchor.set(0.5);
+            }
+
+            calcMustPosition(object, cardPositionInContainerX, cardPositionInContainerY){
+                let par = object;
+                while(par.parent){
+                    this.sprite.mustX += par.x;
+                    this.sprite.mustY += par.y;
+                    par = par.parent;
+                }
+                this.sprite.mustX += cardPositionInContainerX;
+                this.sprite.mustY +=cardPositionInContainerY;
+            }
+
+            moveToBattleField(cardModel, containerModel, playerOwner){
+                this.zeroMustPosition();
+                this.calcSize(cardModel.cardView.sprite.width, cardModel.cardView.sprite.height);
+                this.calcMustPosition(containerModel.containerView.containerView,
+                    containerModel.cardCollection.length * cardModel.cardView.sprite.width + cardModel.cardView.sprite.width/2,
+                    cardModel.cardView.sprite.y);
+                this.calcDeltaAndRate();
+                this.goToBack = false;
+                Backbone.trigger("render::renderAnimation", this.moveCard.bind(this), this.frames);
+                $(this).one("CardOnPosition", function () {
+                    containerModel.trigger("AbstractCardContainerModel::AddChildToBattle", cardModel);
+                    if (this.sprite.parent) {
+                        this.sprite.parent.removeChild(this.sprite);
+                    }
+                    this.trigger("InfoCardInContainer", cardModel);
+                    playerOwner.trigger("AbstractPlayer::GraphicsVisibleAndEventsOnForContainer");
+                    playerOwner.trigger("AbstractPlayer::RemoveGapsInDeck");
+                }.bind(this));
+            }
+
+            zeroSpritePosition(){
+                this.sprite.x = 0;
+                this.sprite.y = 0;
+            }
+
             zeroMustPosition(){
-                this.infoCard.mustX = 0;
-                this.infoCard.mustY = 0;
+                this.sprite.mustX = 0;
+                this.sprite.mustY = 0;
             }
 
             calcDeltaAndRate(){
-                this.infoCard.deltaX = this.infoCard.mustX - this.infoCard.x;
-                this.infoCard.deltaY = this.infoCard.mustY - this.infoCard.y;
-                this.infoCard.rateX = this.infoCard.deltaX/this.frames;
-                this.infoCard.rateY = this.infoCard.deltaY/this.frames;
+                this.sprite.deltaX = this.sprite.mustX - this.sprite.x;
+                this.sprite.deltaY = this.sprite.mustY - this.sprite.y;
+                this.sprite.rateX = this.sprite.deltaX/this.frames;
+                this.sprite.rateY = this.sprite.deltaY/this.frames;
                 this.goToBack = true;
             }
 
 
-            backToDeck(card){
+            backToDeck(cardModel){
+                let card = cardModel.cardView;
                 if (this.goToBack) {
                     this.zeroMustPosition();
-                    console.log("INFOCARDVIEW backToDeck");
-                    this.infoCard.width = card.sprite.width;
-                    this.infoCard.height = card.sprite.height;
-                    let par = card.sprite;
-
-                    while(par.parent.parent){
-                        this.infoCard.mustX += par.parent.x;
-                        this.infoCard.mustY += par.parent.y;
-                        par = par.parent;
-                    }
-                    this.infoCard.mustX +=  card.sprite.x;
-                    this.infoCard.mustY += card.sprite.y;
+                    this.calcSize(card.sprite.width, card.sprite.height);
+                    this.calcMustPosition(card.sprite.parent, card.sprite.x, card.sprite.y);
                     this.calcDeltaAndRate();
                     this.goToBack = false;
                     Backbone.trigger("render::renderAnimation", this.moveCard.bind(this), this.frames);
                 }
                 $(this).one("CardOnPosition", function (event) {
-                    if (this.infoCard.parent){
-                        this.infoCard.parent.removeChild(this.infoCard);
-                        this.trigger("InfoCardInDeck", card);
+                    if (this.sprite.parent){
+                        this.sprite.parent.removeChild(this.sprite);
+                        this.trigger("InfoCardInContainer", cardModel);
                         this.goToBack = true;
                     }
                 }.bind(this));

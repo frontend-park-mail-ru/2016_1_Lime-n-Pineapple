@@ -25,32 +25,16 @@ define(['jquery', 'backbone', 'pixi', './abstract_player'], function ($, Backbon
                 this.act();
             }, _this);
 
-            Backbone.on("CardAreThrown CardBackIntoDesc", function () {
-                this._cardBackOrThrown();
-            }, _this).on("InfoCardAreCreated", function (infoCard) {
-                this.infoCard = infoCard;
-            }, _this);
+            for (var i = 0; i < _this.cardCollection.length; i += 1) {
+                _this.setTouchEventCard(_this.cardCollection[i]);
+            }
+            _this.setTouchEventCard(_this.bossCard);
             return _this;
         }
 
         _createClass(Player, [{
-            key: '_cardBackOrThrown',
-            value: function _cardBackOrThrown() {
-                this.stage.removeChild(this.infoCard);
-                delete this.infoCard;
-                for (var i = 0; i < this.container.children.length; i += 1) {
-                    this.container.children[i].interactive = true;
-                }
-            }
-        }, {
             key: 'act',
-            value: function act() {
-                console.log("PLAYERACT");
-                for (var i = 0; i < this.cardCollection.length; i += 1) {
-                    this.setTouchEventCard(this.cardCollection[i]);
-                }
-                this.setTouchEventCard(this.bossCard);
-            }
+            value: function act() {}
         }, {
             key: 'setTouchEventCard',
             value: function setTouchEventCard(card) {

@@ -19,8 +19,13 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardC
 
             _this.on("PlayersCardsDeck::CreatePlayersDeck", function (cardCollection) {
                 this.cardCollection = cardCollection;
-                this.createCardDeck();
-            }, _this);
+                this.createPlayersDeck();
+            }, _this).on("PlayersCardsDeck::RemoveGapsInDeck", function () {
+                this.containerView.removeGapsInDeck(this.cardCollection);
+            }, _this).on("PlayersCardsDeck::DeleteCardFromCardCollection", function (card) {
+                this.deleteCardFromCardCollection(card);
+            });
+
             Backbone.on("PlayerCardsDeck::GetDeckWidth", function (getWidth) {
                 getWidth(this.containerView.containerView.width);
             }, _this);
@@ -28,10 +33,9 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardC
         }
 
         _createClass(PlayerCardsDeck, [{
-            key: 'createCardDeck',
-            value: function createCardDeck() {
-                console.log("[PlayerCardsDeck] createCardDeck");
-                this.cardCollection.trigger("CardCollection::CreatePlayersDeck", this.containerView);
+            key: 'createPlayersDeck',
+            value: function createPlayersDeck() {
+                this.containerView.createPlayersDeck(this.cardCollection);
             }
         }]);
 

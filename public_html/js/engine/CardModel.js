@@ -10,13 +10,14 @@ define(['backbone', 'underscore', 'pixi', './CardView', './AbstractCardModel'], 
     var Card = function (_AbstractCardModel) {
         _inherits(Card, _AbstractCardModel);
 
-        function Card(loaderRes) {
+        function Card(loaderRes, id) {
             _classCallCheck(this, Card);
 
             var card = loaderRes[Math.floor(Math.random() * 3)];
 
             var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Card).call(this, card.url));
 
+            _this.id = id;
             _this.name = card.name;
             _this.url = card.url;
             _this.power = card.power;

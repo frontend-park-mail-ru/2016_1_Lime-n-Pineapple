@@ -26,6 +26,7 @@ define([
                         this.stage.addChild(sprite);
                     }, this);
 
+
                     this.renderer = pixi.autoDetectRenderer($(this.viewEl).width(), $(this.viewEl).height(), {transparent: true});
                     document.getElementById(this.domID).appendChild(this.renderer.view);
 

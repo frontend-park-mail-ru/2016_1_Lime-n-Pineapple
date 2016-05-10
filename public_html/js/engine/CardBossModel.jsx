@@ -14,7 +14,7 @@ define([
                 this.url = card.url;
                 this.name = card.name;
                 this.power = card.power;
-                this.disposableContainer = card.disposableContainer;
+                this.disposableContainers = card.disposableContainers;
             }
 
         }

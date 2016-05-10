@@ -13,18 +13,25 @@ define([
         constructor(cardContainerView) {
             super(cardContainerView);
 
-            this.on("PlayersCardsDeck::CreatePlayersDeck", function(cardCollection){
-                this.cardCollection = cardCollection;
-                this.createCardDeck();
-            }, this);
+            this
+                .on("PlayersCardsDeck::CreatePlayersDeck", function(cardCollection){
+                    this.cardCollection = cardCollection;
+                    this.createPlayersDeck();
+                }, this)
+                .on("PlayersCardsDeck::RemoveGapsInDeck", function () {
+                    this.containerView.removeGapsInDeck(this.cardCollection);
+                }, this)
+                .on("PlayersCardsDeck::DeleteCardFromCardCollection", function (card) {
+                    this.deleteCardFromCardCollection(card);
+                });
+
             Backbone.on("PlayerCardsDeck::GetDeckWidth", function(getWidth){
                 getWidth(this.containerView.containerView.width);
             }, this);
         }
 
-        createCardDeck(){
-            console.log("[PlayerCardsDeck] createCardDeck");
-            this.cardCollection.trigger("CardCollection::CreatePlayersDeck", this.containerView);
+        createPlayersDeck(){
+            this.containerView.createPlayersDeck(this.cardCollection);
         }
 
     }

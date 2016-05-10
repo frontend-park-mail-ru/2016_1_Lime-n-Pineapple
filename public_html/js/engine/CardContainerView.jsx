@@ -34,9 +34,9 @@ define([
 
             }
 
-            setClickEventsListener(card){
+            setClickEventsListener(card, infoCard, containerModel){
                 this.containerView.on('click', function () {
-                    this.onClickContainer(card);
+                    this.onClickContainer(card, infoCard, containerModel);
                 }, this);
             }
 
@@ -44,8 +44,8 @@ define([
                 this.containerView.off('click');
             }
 
-            onClickContainer(card) {
-                
+            onClickContainer(card, infoCard, containerModel) {
+                infoCard.trigger("InfoCardModel::AddToBattlesContainer", card, containerModel);
             }
 
             edgingVisible(value){
@@ -54,13 +54,19 @@ define([
                 this.containerView.off('mouseout');
             }
 
-            edgingEventsSetter(){
-                this.containerView.on('mouseover', function () {
-                    this.visible = true;
-                }, this.graphics[0]);
-                this.containerView.on('mouseout', function () {
-                    this.visible = false;
-                }, this.graphics[0]);
+            edgingEventsSetter(graph, isListen){
+                if (isListen) {
+                    this.containerView.on('mouseover', function () {
+                        this.visible = true;
+                    }, graph);
+                    this.containerView.on('mouseout', function () {
+                        this.visible = false;
+                    }, graph);
+                }
+                else{
+                    this.containerView.off('mouseover');
+                    this.containerView.off('mouseout');
+                }
             }
 
 
@@ -71,36 +77,59 @@ define([
                 child.y = y;
             }
 
-            removeGapsInDeck() {
+            removeGapsInDeck(cardCollection) {
                 let wid;
-                if (this.containerView.children.length) {
-                    wid = this.containerView.getChildAt(0).width;
+                if (cardCollection.length) {
+                    wid = cardCollection[0].cardView.sprite.width;
                 }
-                for (let i = 0; i < this.containerView.children.length; i += 1) {
-                    this.containerView.getChildAt(i).x = wid * i + 2 + wid / 2;
+                for (let i = 0; i < cardCollection.length; i += 1) {
+                    cardCollection[i].cardView.sprite.x = wid * i + 2 + wid / 2;
                 }
             }
 
             createHitArea(width, height){
-                if (this.containerView.interactive && this.containerView.buttonMode) {
-                    this.containerView.hitArea = new pixi.Rectangle(0, 0, width, height);
-                }
+                this.containerView.hitArea = new pixi.Rectangle(0, 0, width, height);
             }
 
             createGraphicsEdging(width, height, worldVisible = true, x = 3, y = 0){
-                let graphic = new pixi.Graphics();
-                this.graphics.push(graphic);
-                this.containerView.addChild(graphic);
-                graphic.beginFill(0xffae80, 0.15);
-                graphic.lineStyle(3, 0xff8e4d, 0.3);
-                graphic.drawRect(x, y, width, height);
-                graphic.visible = false;
-                graphic.myWorldVisible = worldVisible;
-                if (graphic.myWorldVisible) {
-                    this.edgingEventsSetter();
+                let graph = new pixi.Graphics();
+                this.graphics.push(graph);
+                this.containerView.addChild(graph);
+                graph.beginFill(0xffae80, 0.15);
+                graph.lineStyle(3, 0xff8e4d, 0.3);
+                graph.drawRect(x, y, width, height);
+                graph.visible = false;
+                graph.myWorldVisible = worldVisible;
+                if (graph.myWorldVisible) {
+                    this.edgingEventsSetter(graph, true);
                 }
             }
 
+            setContainerPosition(container, x, y){
+                container.addChild(this.containerView);
+                this.containerView.x = x;
+                this.containerView.y = y;
+            }
+
+            createPlayersDeck(cardCollection){
+                let sprite;
+                for (let i = 0; i < cardCollection.length; i+=1) {
+                    sprite = cardCollection[i].cardView.sprite;
+                    sprite.x = sprite.width *
+                        i + 3 + sprite.width / 2;
+                    sprite.y = sprite.y +
+                        sprite.height / 2;
+                    sprite.anchor.set(0.5);
+                    this.containerView.addChild(sprite);
+                }
+            }
+
+            setPositionInContainer(object, x, y){
+                object.x = x;
+                object.y = y;
+                object.anchor.set(0.5);
+                this.containerView.addChild(object);
+            }
 
         }
     return CardContainerView;

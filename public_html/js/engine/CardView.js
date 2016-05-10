@@ -5,12 +5,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 define(['backbone', 'underscore', 'pixi', 'jquery', './Settings'], function (Backbone, _, pixi, $, SETTINGS) {
-    var Card = function () {
-        function Card(url) {
-            _classCallCheck(this, Card);
+    var CardView = function () {
+        function CardView(url) {
+            _classCallCheck(this, CardView);
 
-            this.texture = new pixi.Texture.fromImage(url);
-            this.sprite = new pixi.Sprite(this.texture);
+            this.sprite = new pixi.Sprite(new pixi.Texture.fromImage(url));
             this.sprite.interactive = true;
             this.sprite.buttonMode = true;
             this.sprite.width = SETTINGS.cardWidth;
@@ -18,27 +17,23 @@ define(['backbone', 'underscore', 'pixi', 'jquery', './Settings'], function (Bac
             _.extend(this, Backbone.Events);
         }
 
-        _createClass(Card, [{
+        _createClass(CardView, [{
             key: 'onClickCard',
-            value: function onClickCard(event, cardModel) {
-                switch (event.data.originalEvent.which) {
-                    case 1:
-                        if (this.sprite.alpha === 0.1) {
-                            cardModel.trigger("CardModel::InfoCardBackToDeck");
-                        } else {
-                            this.sprite.alpha = 0.1;
-                            this.on("CardView::AlphaVisible", function () {
-                                this.sprite.alpha = 1;
-                                this.off("AlphaVisible");
-                            }, this);
-                            cardModel.trigger("CardModel::CardViewPressed");
-                        }
-                        break;
+            value: function onClickCard(cardModel) {
+                if (this.sprite.alpha === 0.1) {
+                    cardModel.trigger("CardModel::InfoCardBackToDeck");
+                } else {
+                    this.sprite.alpha = 0.1;
+                    this.on("CardView::AlphaVisible", function () {
+                        this.sprite.alpha = 1;
+                        this.off("AlphaVisible");
+                    }, this);
+                    cardModel.trigger("CardModel::CardViewPressed");
                 }
             }
         }, {
             key: 'onMouseOver',
-            value: function onMouseOver(event, cardModel) {
+            value: function onMouseOver() {
                 var filter = new pixi.filters.ColorMatrixFilter();
                 this.sprite.filters = [filter];
                 filter.brightness(1.5);
@@ -46,22 +41,26 @@ define(['backbone', 'underscore', 'pixi', 'jquery', './Settings'], function (Bac
             }
         }, {
             key: 'onMouseOut',
-            value: function onMouseOut(event, cardModel) {
+            value: function onMouseOut() {
                 this.sprite.y += 10;
                 this.sprite.filters = null;
             }
         }, {
             key: 'setTouchEventCard',
             value: function setTouchEventCard(cardModel) {
-                //_.extend(this.sprite, $.Events);
-
-                this.sprite.on('click', function (event) {
-                    this.onClickCard(event, cardModel);
-                }, this).on('mouseover', function (event) {
-                    this.onMouseOver(event, cardModel);
-                }, this).on('mouseout', function (event) {
-                    this.onMouseOut(event, cardModel);
+                this.sprite.on('click', function () {
+                    this.onClickCard(cardModel);
+                }, this).on('mouseover', function () {
+                    this.onMouseOver();
+                }, this).on('mouseout', function () {
+                    this.onMouseOut();
                 }, this);
+            }
+        }, {
+            key: 'setPosition',
+            value: function setPosition(x, y) {
+                this.sprite.x = x;
+                this.sprite.y = y;
             }
         }, {
             key: 'setPositionIntoContainer',
@@ -73,8 +72,8 @@ define(['backbone', 'underscore', 'pixi', 'jquery', './Settings'], function (Bac
             }
         }]);
 
-        return Card;
+        return CardView;
     }();
 
-    return Card;
+    return CardView;
 });

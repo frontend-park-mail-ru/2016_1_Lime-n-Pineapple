@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(['backbone', 'underscore', 'pixi', './CardView'], function (Backbone, _, pixi, CardView) {
+define(['backbone', 'underscore', 'pixi', './CardView', './Settings'], function (Backbone, _, pixi, CardView, SETTINGS) {
     var Card = function () {
         function Card(loaderRes) {
             _classCallCheck(this, Card);

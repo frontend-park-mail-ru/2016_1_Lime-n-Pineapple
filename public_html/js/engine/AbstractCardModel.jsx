@@ -3,9 +3,10 @@ define([
         'backbone',
         'underscore',
         'pixi',
-        './CardView'
+        './CardView',
+        './Settings'
     ],
-    function (Backbone, _, pixi, CardView) {
+    function (Backbone, _, pixi, CardView, SETTINGS) {
         class Card{
             constructor(loaderRes) {
                 _.extend(this, Backbone.Events);
@@ -25,6 +26,7 @@ define([
                     .on("CardModel::SetPositionInContainer", function(index, containerView){
                         this.setPositionIntoContainer(index, containerView);
                     }, this);
+
             }
 
             setPositionIntoContainer(index, containerView){

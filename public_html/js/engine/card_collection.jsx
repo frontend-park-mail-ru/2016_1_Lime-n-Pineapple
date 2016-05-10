@@ -9,28 +9,26 @@ define([
 ], function ($, _, Backbone, Settings, pixi, Card) {
         class CardCollection {
 
-            constructor(loaderRes) {
+            constructor(loaderRes, size) {
                 this.cardCollection = [];
                 _.extend(this.cardCollection, Backbone.Events);
 
-                this.cardCollection.on("CardCollection::CreatePlayersDeck", function(containerView){
-                   this.setPosition(containerView);
-                }, this);
-
-                for (let i = 0; i < 8; i+=1) {
-                    this.cardCollection.push(new Card(loaderRes));
+                for (let i = 0; i < size; i+=1) {
+                    this.cardCollection.push(new Card(loaderRes, i));
                 }
+
+                //this.cardCollection.on("CardCollection::CreatePlayersDeck", function(containerView){
+                //    this.setPosition(containerView);
+                //}, this);
+
                 return this.cardCollection;
             }
-
-            setPosition(containerView){
-                for (let i = 0; i < this.cardCollection.length; i+=1) {
-                    this.cardCollection[i].trigger("CardModel::SetPositionInContainer", i, containerView);
-                }
-
-            }
-
-
+            //setPosition(containerView){
+            //    for (let i = 0; i < this.cardCollection.length; i+=1) {
+            //        this.cardCollection[i].trigger("CardModel::SetPositionInContainer", i, containerView);
+            //    }
+            //
+            //}
         }
         return CardCollection;
     }
