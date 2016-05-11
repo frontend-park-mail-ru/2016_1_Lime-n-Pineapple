@@ -21,7 +21,7 @@ define([
                 this.sprite.off('click');
 
                 this.sprite.on('click', function() {
-                        this.onClickBattleCard(cardModel);
+                    this.onClickBattleCard(cardModel);
                 }, this);
             }
 
@@ -34,11 +34,6 @@ define([
                 this.battlesInfoCard.x = this.battlesInfoCard.width/2;
                 this.battlesInfoCard.y = this.battlesInfoCard.height/2;
                 this.battlesInfoCard.anchor.set(0.5);
-                this.battlesInfoCard.on('click', function(){
-                    if (this.battlesInfoCard.parent){
-                        this.battlesInfoCard.parent.removeChild(this.battlesInfoCard);
-                    }
-                }.bind(this));
                 $(playerOwner).trigger("AbstractPlayer::BattlesInfoCardCreated");
             }
 
@@ -47,7 +42,6 @@ define([
             }
 
             onClickBattleCard(cardModel){
-                console.log("onClickBattleCard");
                 cardModel.trigger("AbstractCardModel::ShowInfoBattleCard");
             }
 

@@ -83,6 +83,19 @@ define([
                             this.trigger("AbstractPlayer::InfoCardBackToDeck", this.touchedCards[this.touchedCards.length - 1]);
                         }
                         $(this).one("AbstractPlayer::BattlesInfoCardCreated", function () {
+                            cardModel.trigger("CardModel::CleanClickEventCard");
+                            $(this).one("SendStage", function (event, stage) {
+                                let count = 0;
+                                stage.on('click', function () {
+                                    count+=1;
+                                    if (count === 2) {
+                                        this.playersBattleInfoCardContainer.containerView.containerView.removeChild(cardModel.cardView.battlesInfoCard);
+                                        cardModel.trigger("AbstractCardModel::ChangeClickListener");
+                                        stage.off('click');
+                                    }
+                                }.bind(this));
+                            }.bind(this));
+                            Backbone.trigger("GetStage", this)
                             this.playersBattleInfoCardContainer.containerView.containerView.addChild(cardModel.cardView.battlesInfoCard);
                         }.bind(this));
                         cardModel.trigger("AbstractCardModel::CreateBattlesInfoCard");

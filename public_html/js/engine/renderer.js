@@ -20,14 +20,16 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
                 console.log("[renderer], GameRender event");
 
                 this.stage = new pixi.Container();
-                _.extend(this.stage, Backbone.Events);
+
+                this.stage.hitArea = new pixi.Rectangle(0, 0, $(window).width(), $(window).height());
 
                 Backbone.on("AddChildToStage", function (sprite) {
                     this.stage.addChild(sprite);
                 }, this);
 
+                this.stage.interactive = true;
+
                 Backbone.on("GetStage", function (object) {
-                    console.log(this.stage);
                     $(object).trigger("SendStage", [this.stage]);
                 }, this);
 

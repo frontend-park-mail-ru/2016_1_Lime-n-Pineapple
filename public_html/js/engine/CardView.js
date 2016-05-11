@@ -37,11 +37,6 @@ define(['backbone', 'underscore', 'pixi', 'jquery', './Settings'], function (Bac
                 this.battlesInfoCard.x = this.battlesInfoCard.width / 2;
                 this.battlesInfoCard.y = this.battlesInfoCard.height / 2;
                 this.battlesInfoCard.anchor.set(0.5);
-                this.battlesInfoCard.on('click', function () {
-                    if (this.battlesInfoCard.parent) {
-                        this.battlesInfoCard.parent.removeChild(this.battlesInfoCard);
-                    }
-                }.bind(this));
                 $(playerOwner).trigger("AbstractPlayer::BattlesInfoCardCreated");
             }
         }, {
@@ -52,7 +47,6 @@ define(['backbone', 'underscore', 'pixi', 'jquery', './Settings'], function (Bac
         }, {
             key: 'onClickBattleCard',
             value: function onClickBattleCard(cardModel) {
-                console.log("onClickBattleCard");
                 cardModel.trigger("AbstractCardModel::ShowInfoBattleCard");
             }
         }, {
