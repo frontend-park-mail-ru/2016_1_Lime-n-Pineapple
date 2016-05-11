@@ -26,6 +26,11 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _,
                     this.stage.addChild(sprite);
                 }, this);
 
+                Backbone.on("GetStage", function (object) {
+                    console.log(this.stage);
+                    $(object).trigger("SendStage", [this.stage]);
+                }, this);
+
                 this.renderer = pixi.autoDetectRenderer($(this.viewEl).width(), $(this.viewEl).height(), { transparent: true });
                 document.getElementById(this.domID).appendChild(this.renderer.view);
 

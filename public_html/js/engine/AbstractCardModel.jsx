@@ -3,10 +3,9 @@ define([
         'backbone',
         'underscore',
         'pixi',
-        './CardView',
-        './Settings'
+        './CardView'
     ],
-    function (Backbone, _, pixi, CardView, SETTINGS) {
+    function (Backbone, _, pixi, CardView) {
         class Card{
             constructor(loaderRes) {
                 _.extend(this, Backbone.Events);
@@ -14,7 +13,7 @@ define([
 
                 this
                     .on("CardModel::SetTouchEventCard", function (player) {
-                        this.setTouchEventCard();
+                        this.cardView.setTouchEventCard(this);
                         this.playerOwner = player;
                     }, this)
                     .on("CardModel::CardViewPressed", function(){
@@ -23,18 +22,22 @@ define([
                     .on("CardModel::InfoCardBackToDeck", function(){
                         this.playerOwner.trigger("AbstractPlayer::InfoCardBackToDeck", this);
                     }, this)
-                    .on("CardModel::SetPositionInContainer", function(index, containerView){
-                        this.setPositionIntoContainer(index, containerView);
+                    .on("AbstractCardModel::ShowInfoBattleCard", function () {
+                        this.playerOwner.trigger("AbstractPlayer::ShowBattlesInfoCard", this);
+                    }, this)
+                    .on("AbstractCardModel::ChangeClickListener", function () {
+                        this.cardView.changeClickListenerToBattleFieldListener(this);
+                    }, this)
+                    .on("CardModel::CleanClickEventCard", function () {
+                        this.cardView.cleanClickEventCard();
+                    }, this)
+                    .on("CardModel::SetClickEventCard", function () {
+                        this.cardView.setClickEventCard(this);
+                    }, this)
+                    .on("AbstractCardModel::CreateBattlesInfoCard", function () {
+                        this.cardView.createBattlesInfoCard(this.playerOwner);
                     }, this);
 
-            }
-
-            setPositionIntoContainer(index, containerView){
-                this.cardView.setPositionIntoContainer(index, containerView);
-            }
-
-            setTouchEventCard(){
-                this.cardView.setTouchEventCard(this);
             }
         }
         return Card;

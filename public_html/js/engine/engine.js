@@ -31,7 +31,9 @@ define(['jquery', 'underscore', 'backbone', 'pixi', './player', './bot_player', 
                 enemyContainerBossCard = new CardContainerModel(enemyContainerBossCardView);
 
             var playersInfoCardContainerView = new CardContainerView(false, false),
-                playersInfoCardContainer = new CardContainerModel(playersInfoCardContainerView);
+                playersInfoCardContainer = new CardContainerModel(playersInfoCardContainerView),
+                playersBattleInfoCardContainerView = new CardContainerView(true, true),
+                playersBattleInfoCardContainer = new CardContainerModel(playersBattleInfoCardContainerView);
 
             this.container = {
                 "playersCardsDeck": playerCardsDeck,
@@ -44,7 +46,8 @@ define(['jquery', 'underscore', 'backbone', 'pixi', './player', './bot_player', 
                 "enemyContainerBoss": enemyContainerBoss,
                 "playersContainerBossCard": playersContainerBossCard,
                 "enemyContainerBossCard": enemyContainerBossCard,
-                "playersInfoCardContainer": playersInfoCardContainer
+                "playersInfoCardContainer": playersInfoCardContainer,
+                "playersBattleInfoCardContainer": playersBattleInfoCardContainer
             };
 
             this.loaderRes = loaderRes;
@@ -76,6 +79,8 @@ define(['jquery', 'underscore', 'backbone', 'pixi', './player', './bot_player', 
 
                 this.container.playersInfoCardContainer.trigger("AbstractCardContainerModel::SetContainerPosition", stage, SETTINGS.infoCardContainerPositionX, 2 * SETTINGS.oneLineHeight);
 
+                this.container.playersBattleInfoCardContainer.trigger("AbstractCardContainerModel::SetContainerPosition", stage, SETTINGS.infoBattleCardContainerPositionX, SETTINGS.infoBattleCardContainerPositionY);
+
                 this.engineWork();
             }, this);
 
@@ -93,7 +98,8 @@ define(['jquery', 'underscore', 'backbone', 'pixi', './player', './bot_player', 
                     "playersContainerBossCard": this.container.playersContainerBossCard,
                     "playersInfoCardContainer": this.container.playersInfoCardContainer,
                     "enemyCardContainerMelee": this.container.enemyCardContainerMelee,
-                    "enemyCardContainerDistant": this.container.enemyCardContainerDistant
+                    "enemyCardContainerDistant": this.container.enemyCardContainerDistant,
+                    "playersBattleInfoCardContainer": this.container.playersBattleInfoCardContainer
                 };
 
                 var containerEnemy = {
@@ -104,7 +110,8 @@ define(['jquery', 'underscore', 'backbone', 'pixi', './player', './bot_player', 
                     "playersContainerBossCard": this.container.enemyContainerBossCard,
                     "playersInfoCardContainer": this.container.playersInfoCardContainer,
                     "enemyCardContainerDistant": this.container.playersCardContainerDistant,
-                    "enemyCardContainerMelee": this.container.playersCardContainerMelee
+                    "enemyCardContainerMelee": this.container.playersCardContainerMelee,
+                    "playersBattleInfoCardContainer": this.container.playersBattleInfoCardContainer
                 };
 
                 this.player = new Player(this.loaderRes, containerPlayer);

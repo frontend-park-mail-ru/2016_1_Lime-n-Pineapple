@@ -31,9 +31,9 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './Settings'], f
 
         _createClass(CardContainerView, [{
             key: 'setClickEventsListener',
-            value: function setClickEventsListener(card, infoCard, containerModel) {
+            value: function setClickEventsListener(player, containerModel) {
                 this.containerView.on('click', function () {
-                    this.onClickContainer(card, infoCard, containerModel);
+                    this.onClickContainer(player, containerModel);
                 }, this);
             }
         }, {
@@ -43,8 +43,8 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './Settings'], f
             }
         }, {
             key: 'onClickContainer',
-            value: function onClickContainer(card, infoCard, containerModel) {
-                infoCard.trigger("InfoCardModel::AddToBattlesContainer", card, containerModel);
+            value: function onClickContainer(player, containerModel) {
+                player.trigger("AbstractPlayer::AddInfoCardToBattlesContainer", containerModel);
             }
         }, {
             key: 'edgingVisible',

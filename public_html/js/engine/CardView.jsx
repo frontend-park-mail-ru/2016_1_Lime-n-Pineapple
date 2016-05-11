@@ -17,6 +17,40 @@ define([
                 _.extend(this, Backbone.Events);
             }
 
+            changeClickListenerToBattleFieldListener(cardModel){
+                this.sprite.off('click');
+
+                this.sprite.on('click', function() {
+                        this.onClickBattleCard(cardModel);
+                }, this);
+            }
+
+            createBattlesInfoCard(playerOwner){
+                this.battlesInfoCard = new pixi.Sprite(this.sprite.texture);
+                this.battlesInfoCard.interactive = true;
+                this.battlesInfoCard.buttonMode = true;
+                this.battlesInfoCard.width = SETTINGS.cardWidth * 3;
+                this.battlesInfoCard.height =  SETTINGS.oneLineHeight * 3;
+                this.battlesInfoCard.x = this.battlesInfoCard.width/2;
+                this.battlesInfoCard.y = this.battlesInfoCard.height/2;
+                this.battlesInfoCard.anchor.set(0.5);
+                this.battlesInfoCard.on('click', function(){
+                    if (this.battlesInfoCard.parent){
+                        this.battlesInfoCard.parent.removeChild(this.battlesInfoCard);
+                    }
+                }.bind(this));
+                $(playerOwner).trigger("AbstractPlayer::BattlesInfoCardCreated");
+            }
+
+            deleteBattlesInfoCard(){
+                delete this.battlesInfoCard;
+            }
+
+            onClickBattleCard(cardModel){
+                console.log("onClickBattleCard");
+                cardModel.trigger("AbstractCardModel::ShowInfoBattleCard");
+            }
+
             onClickCard(cardModel){
                 if (this.sprite.alpha === 0.1){
                     cardModel.trigger("CardModel::InfoCardBackToDeck");
@@ -25,10 +59,20 @@ define([
                     this.sprite.alpha = 0.1;
                     this.on("CardView::AlphaVisible", function(){
                         this.sprite.alpha = 1;
-                        this.off("AlphaVisible");
+                        this.off("CardView::AlphaVisible");
                     }, this);
                     cardModel.trigger("CardModel::CardViewPressed");
                 }
+            }
+
+            cleanClickEventCard(){
+                this.sprite.off('click');
+            }
+
+            setClickEventCard(cardModel){
+                this.sprite.on('click', function () {
+                    this.onClickCard(cardModel);
+                }, this);
             }
 
             onMouseOver(){

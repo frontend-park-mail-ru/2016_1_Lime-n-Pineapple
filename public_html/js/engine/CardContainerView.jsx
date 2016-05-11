@@ -34,9 +34,9 @@ define([
 
             }
 
-            setClickEventsListener(card, infoCard, containerModel){
+            setClickEventsListener(player, containerModel){
                 this.containerView.on('click', function () {
-                    this.onClickContainer(card, infoCard, containerModel);
+                    this.onClickContainer(player, containerModel);
                 }, this);
             }
 
@@ -44,8 +44,8 @@ define([
                 this.containerView.off('click');
             }
 
-            onClickContainer(card, infoCard, containerModel) {
-                infoCard.trigger("InfoCardModel::AddToBattlesContainer", card, containerModel);
+            onClickContainer(player, containerModel) {
+                player.trigger("AbstractPlayer::AddInfoCardToBattlesContainer", containerModel);
             }
 
             edgingVisible(value){
