@@ -1,4 +1,7 @@
+'use strict';
+
 //noinspection JSUnresolvedVariable
+
 module.exports = function (grunt) {
 
     //noinspection JSUnresolvedFunction
@@ -10,9 +13,9 @@ module.exports = function (grunt) {
             options: {
                 stdout: true,
                 stderr: true
-            //},
-            //server: {
-            //    command: 'node server.js'
+                //},
+                //server: {
+                //    command: 'node server.js'
             }
         },
         fest: {
@@ -24,82 +27,30 @@ module.exports = function (grunt) {
                     dest: 'public_html/js/tmpl' // результирующая директория
                 }],
                 options: {
-                    template: function (data) { /* задаем формат функции-шаблона */
+                    template: function template(data) {
+                        /* задаем формат функции-шаблона */
 
-                        return grunt.template.process(
-                            'define(function () { return <%= contents %> ; });', /* присваиваем функцию-шаблон переменной */
-                            {data: data}
-                        );
+                        return grunt.template.process('define(function () { return <%= contents %> ; });', /* присваиваем функцию-шаблон переменной */
+                        { data: data });
                     }
                 }
             }
         },
-        //babel: {
-        //    options: {
-        //        sourceMap: false,
-        //        presets: ['es2015'],
-        //        plugins: [
-        //            ["transform-es2015-arrow-functions", { "spec": true }]
-        //        ]
-        //    },
-        //    dist: {
-        //        files: [{
-        //            "expand": true,
-        //            "cwd": "public_html/js",
-        //            "src": "**/*.jsx",
-        //            "ext": ".js"
-        //        }]
-        //    }
-        //},
-        //compass: {
-        //    dev: {
-        //        src: 'public_html/scss',
-        //        dest: 'public_html/css',
-        //        linecomments: true,
-        //        forcecompile: true,
-        //        debugsass: true
-        //
-        //    },
-        //    prod: {
-        //        src: 'public_html/scss',
-        //        dest: 'public_html/css',
-        //        outputstyle: 'compressed',
-        //        linecomments: false,
-        //        forcecompile: true,
-        //        debugsass: false
-        //
-        //    }
-        //},
-        watch: {//наблюдает за измененинями
+
+        watch: { //наблюдает за измененинями
             fest: {
                 files: ['templates/**/*.xml'],
                 tasks: ['fest'],
                 options: {
                     interrupt: true,
                     atBegin: true,
-                    spawn: false,
+                    spawn: false
                 }
 
             },
-            //compass: {
-            //    files: [ 'public_html/scss/*.scss' ],
-            //    tasks: [ 'compass:dev', 'compass:prod' ]
-            //},
-            //babel: {
-            //    files: ['public_html/js/**/*.jsx'],
-            //    tasks: ['babel'],
-            //    options: {
-            //        interrupt: true,
-            //        atBegin: true,
-            //        spawn: false
-            //    }
-            //},
 
             server: {
-                files: [
-                    'public_html/js/**/*.js',
-                    'public_html/css/**/*.css'
-                ],
+                files: ['public_html/js/**/*.js', 'public_html/css/**/*.css'],
                 options: {
                     interrupt: true,
                     livereload: true //подгрузка изменений в реальном времени
@@ -120,5 +71,4 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
     grunt.registerTask('test', ['qunit:all']);
     grunt.registerTask('default', ['concurrent']);
-
 };

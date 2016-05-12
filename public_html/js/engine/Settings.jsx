@@ -3,8 +3,8 @@ define(['jquery'],
     function ($) {
         var SETTINGS = {
             constructor: function(){
-                this.oneLineHeight = $(window).height()/6;
-                this.cardWidth = this.oneLineHeight/1.3;
+                this.oneLineHeight = Math.ceil($(window).height()/6);
+                this.cardWidth = Math.ceil(this.oneLineHeight/1.3);
                 this.deckWidth = this.cardWidth * 8;
                 this.battleContainerPositionX = $(window).width() / 5;
                 this.infoCardContainerPositionX = this.battleContainerPositionX + this.deckWidth + this.cardWidth + 3;
@@ -13,6 +13,7 @@ define(['jquery'],
                 this.infoBattleCardContainerPositionY = 0;
                 this.fps = 60;
                 this.second = 1000;
+                this.indentOfTheGraphics = 3;
             }
         };
         SETTINGS.constructor();

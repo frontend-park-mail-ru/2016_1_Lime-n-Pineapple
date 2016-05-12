@@ -14,7 +14,7 @@ define([
             constructor(loaderRes, container){
                 _.extend(this, Backbone.Events);
                 this.loaderRes = loaderRes;
-                this.cardCollection = new CardCollection(loaderRes, 8);
+                this.cardCollection = new CardCollection(loaderRes,19);
                 if (container.playersCardsDeck !== undefined) {
                     this.playersCardsDeck = container.playersCardsDeck;
                 }

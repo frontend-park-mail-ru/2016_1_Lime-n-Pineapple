@@ -78,13 +78,7 @@ define([
             }
 
             removeGapsInDeck(cardCollection) {
-                let wid;
-                if (cardCollection.length) {
-                    wid = cardCollection[0].cardView.sprite.width;
-                }
-                for (let i = 0; i < cardCollection.length; i += 1) {
-                    cardCollection[i].cardView.sprite.x = wid * i + 2 + wid / 2;
-                }
+                this.createPlayersDeck(cardCollection);
             }
 
             createHitArea(width, height){
@@ -97,7 +91,7 @@ define([
                 this.containerView.addChild(graph);
                 graph.beginFill(0xffae80, 0.15);
                 graph.lineStyle(3, 0xff8e4d, 0.3);
-                graph.drawRect(x, y, width, height);
+                graph.drawRect(x, y, width + 2 * SETTING.indentOfTheGraphics, height);
                 graph.visible = false;
                 graph.myWorldVisible = worldVisible;
                 if (graph.myWorldVisible) {
@@ -111,16 +105,49 @@ define([
                 this.containerView.y = y;
             }
 
-            createPlayersDeck(cardCollection){
+            negativeClimb(cardCollection, climb){
+                let sprite;
+                sprite = cardCollection[0].cardView.sprite;
+                sprite.x = sprite.width / 2 + SETTING.indentOfTheGraphics;
+                sprite.y = sprite.height / 2;
+                sprite.anchor.set(0.5);
+                this.containerView.addChild(sprite);
+                for (let i = 1; i < cardCollection.length; i+=1) {
+                    sprite = cardCollection[i].cardView.sprite;
+                    sprite.x = (sprite.width + climb + SETTING.indentOfTheGraphics) *
+                        i + sprite.width / 2;
+
+                    sprite.y = sprite.height / 2;
+                    sprite.anchor.set(0.5);
+                    this.containerView.addChild(sprite);
+                }
+
+            }
+
+            positiveClimb(cardCollection, climb){
                 let sprite;
                 for (let i = 0; i < cardCollection.length; i+=1) {
                     sprite = cardCollection[i].cardView.sprite;
-                    sprite.x = sprite.width *
-                        i + 3 + sprite.width / 2;
-                    sprite.y = sprite.y +
-                        sprite.height / 2;
+                    sprite.x = (sprite.width + SETTING.indentOfTheGraphics) *
+                        i + sprite.width / 2 + climb;
+                    sprite.y = sprite.height / 2;
                     sprite.anchor.set(0.5);
                     this.containerView.addChild(sprite);
+                }
+            }
+
+            createPlayersDeck(cardCollection){
+                let lengthOfCardCollection = SETTING.cardWidth * cardCollection.length,
+                    climb = 0;
+                if (SETTING.deckWidth >= lengthOfCardCollection){
+                    climb = (SETTING.deckWidth - lengthOfCardCollection)/ 2;
+                    this.positiveClimb(cardCollection, climb);
+                }
+                else {
+                    climb = SETTING.cardWidth - (SETTING.deckWidth - SETTING.cardWidth - SETTING.indentOfTheGraphics * (cardCollection.length - 3))/(cardCollection.length - 1);
+                    climb=-climb;
+                    this.negativeClimb(cardCollection, climb);
+
                 }
             }
 
