@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(['jquery', 'underscore', 'backbone', 'pixi', './player', './bot_player', './CardContainerModel', './CardContainerView', './player_cards_deck', './Settings'], function ($, _, Backbone, pixi, Player, Bot, CardContainerModel, CardContainerView, PlayerCardsDeck, SETTINGS) {
+define(['jquery', 'underscore', 'backbone', 'pixi', './player', './bot_player', './CardContainerModel', './CardContainerView', './player_cards_deck', './Settings', './EventsConfig'], function ($, _, Backbone, pixi, Player, Bot, CardContainerModel, CardContainerView, PlayerCardsDeck, SETTINGS, Events) {
     var Engine = function () {
         function Engine(loaderRes) {
             _classCallCheck(this, Engine);
@@ -124,9 +124,9 @@ define(['jquery', 'underscore', 'backbone', 'pixi', './player', './bot_player', 
             key: 'game',
             value: function game(whoFirst) {
                 if (whoFirst === 1 || whoFirst === 2) {
-                    this.player.trigger("AbstractPlayer::Act");
+                    this.player.trigger(Events.Game.AbstractPlayer.Act);
                 } else if (whoFirst === 2) {
-                    this.enemy.trigger("AbstractPlayer::Act");
+                    this.enemy.trigger(Events.Game.AbstractPlayer.Act);
                 }
             }
         }]);

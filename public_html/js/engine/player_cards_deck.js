@@ -8,7 +8,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardContainerModel'], function ($, _, Backbone, Settings, pixi, AbstractCardContainerModel) {
+define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardContainerModel', './EventsConfig'], function ($, _, Backbone, Settings, pixi, AbstractCardContainerModel, Events) {
     var PlayerCardsDeck = function (_AbstractCardContaine) {
         _inherits(PlayerCardsDeck, _AbstractCardContaine);
 
@@ -17,12 +17,12 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardC
 
             var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PlayerCardsDeck).call(this, cardContainerView));
 
-            _this.on("PlayersCardsDeck::CreatePlayersDeck", function (cardCollection) {
+            _this.on(Events.Game.PlayersCardsDeck.CreatePlayersDeck, function (cardCollection) {
                 this.cardCollection = cardCollection;
                 this.createPlayersDeck();
-            }, _this).on("PlayersCardsDeck::RemoveGapsInDeck", function () {
+            }, _this).on(Events.Game.PlayersCardsDeck.RemoveGapsInDeck, function () {
                 this.containerView.removeGapsInDeck(this.cardCollection);
-            }, _this).on("PlayersCardsDeck::DeleteCardFromCardCollection", function (card) {
+            }, _this).on(Events.Game.PlayersCardsDeck.DeleteCardFromCardCollection, function (card) {
                 this.deleteCardFromCardCollection(card);
             });
 

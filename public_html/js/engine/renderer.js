@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(['jquery', 'underscore', 'backbone', 'settings', 'pixi'], function ($, _, Backbone, Settings, pixi) {
+define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './EventsConfig'], function ($, _, Backbone, Settings, pixi, Events) {
     var Renderer = function () {
         function Renderer(viewEl, viewDomID) {
             _classCallCheck(this, Renderer);

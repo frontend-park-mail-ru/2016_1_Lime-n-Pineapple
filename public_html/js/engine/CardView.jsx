@@ -1,12 +1,13 @@
 "use strict";
 define([
-    'backbone',
-    'underscore',
-    'pixi',
-    'jquery',
-    './Settings'
+        'backbone',
+        'underscore',
+        'pixi',
+        'jquery',
+        './Settings',
+        './EventsConfig'
 ],
-    function (Backbone, _, pixi, $, SETTINGS) {
+    function (Backbone, _, pixi, $, SETTINGS, Events) {
         class CardView{
             constructor(url) {
                 this.sprite = new pixi.Sprite(new pixi.Texture.fromImage(url));
@@ -34,7 +35,7 @@ define([
                 this.battlesInfoCard.x = this.battlesInfoCard.width/2;
                 this.battlesInfoCard.y = this.battlesInfoCard.height/2;
                 this.battlesInfoCard.anchor.set(0.5);
-                $(playerOwner).trigger("AbstractPlayer::BattlesInfoCardCreated");
+                $(playerOwner).trigger(Events.Game.AbstractPlayer.BattlesInfoCardCreated);
             }
 
             deleteBattlesInfoCard(){

@@ -5,8 +5,9 @@ define([
     'backbone',
     'settings',
     'pixi',
-    './AbstractCardContainerModel'
-], function ($, _, Backbone, Settings, pixi, AbstractCardContainerModel) {
+    './AbstractCardContainerModel',
+    './EventsConfig'
+], function ($, _, Backbone, Settings, pixi, AbstractCardContainerModel, Events) {
 
     class PlayerCardsDeck extends AbstractCardContainerModel{
 
@@ -14,14 +15,14 @@ define([
             super(cardContainerView);
 
             this
-                .on("PlayersCardsDeck::CreatePlayersDeck", function(cardCollection){
+                .on(Events.Game.PlayersCardsDeck.CreatePlayersDeck, function(cardCollection){
                     this.cardCollection = cardCollection;
                     this.createPlayersDeck();
                 }, this)
-                .on("PlayersCardsDeck::RemoveGapsInDeck", function () {
+                .on(Events.Game.PlayersCardsDeck.RemoveGapsInDeck, function () {
                     this.containerView.removeGapsInDeck(this.cardCollection);
                 }, this)
-                .on("PlayersCardsDeck::DeleteCardFromCardCollection", function (card) {
+                .on(Events.Game.PlayersCardsDeck.DeleteCardFromCardCollection, function (card) {
                     this.deleteCardFromCardCollection(card);
                 });
 

@@ -5,8 +5,9 @@ define([
     'backbone',
     'settings',
     'pixi',
-    './Settings'
-], function ($, _, Backbone, Settings, pixi, SETTINGS) {
+    './Settings',
+    './EventsConfig'
+], function ($, _, Backbone, Settings, pixi, SETTINGS, Events) {
 
     class AbstractCardContainerModel{
 
@@ -18,7 +19,7 @@ define([
                 .on("AbstractCardContainerModel::SetContainerPosition", function(container, positionX, positionY){
                     this.setContainerPosition(container, positionX, positionY );
                 })
-                .on("AbstractCardContainerModel::SetPositionInContainer", function(object, x, y){
+                .on(Events.Game.AbstractCardContainerModel.SetPositionInContainer, function(object, x, y){
                     if (x && y) {
                         this.containerView.setPositionInContainer(object, x, y);
                     }
@@ -30,7 +31,7 @@ define([
                     }
                 }, this)
 
-                .on("AbstractCardContainerModel::SetCardToCardCollection", function (card) {
+                .on(Events.Game.AbstractCardContainerModel.SetCardToCardCollection, function (card) {
                     this.cardCollection.push(card);
                 })
 
@@ -38,18 +39,18 @@ define([
                     this.addChildToContainer(childModel, x, y);
                 }, this)
 
-                .on("AbstractCardContainerModel::GraphicsVisible", function (value) {
+                .on(Events.Game.AbstractCardContainerModel.GraphicsVisible, function (value) {
                     this.containerView.edgingVisible(value);
                 }, this)
 
-                .on("AbstractCardContainerModel::SetGraphicsListener", function (isListen) {
+                .on(Events.Game.AbstractCardContainerModel.SetGraphicsListener, function (isListen) {
                     this.containerView.edgingEventsSetter(this.containerView.graphics[0], isListen);
                 }, this)
 
-                .on("AbstractCardContainerModel::SetClickListener", function (player) {
+                .on(Events.Game.AbstractCardContainerModel.SetClickListener, function (player) {
                     this.containerView.setClickEventsListener(player, this);
                 })
-                .on("AbstractCardContainerModel::CleanClickListener", function () {
+                .on(Events.Game.AbstractCardContainerModel.CleanClickListener, function () {
                     this.containerView.cleanClickEventsListener();
                 }, this);
 
@@ -72,7 +73,8 @@ define([
             else {
                 x = this.cardCollection.length * (3 + child.sprite.width) + child.sprite.width/2 + 3;
                 y = child.sprite.height/2;
-                this.addChildToContainer(childModel, x, y);
+                console.log(x, y);
+                this.containerView.addChildToContainer(childModel.cardView.sprite, x, y);
             }
             this.cardCollection.push(childModel);
 

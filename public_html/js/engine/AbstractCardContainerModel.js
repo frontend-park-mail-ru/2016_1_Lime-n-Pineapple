@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './Settings'], function ($, _, Backbone, Settings, pixi, SETTINGS) {
+define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './Settings', './EventsConfig'], function ($, _, Backbone, Settings, pixi, SETTINGS, Events) {
     var AbstractCardContainerModel = function () {
         function AbstractCardContainerModel(cardContainerView) {
             _classCallCheck(this, AbstractCardContainerModel);
@@ -14,7 +14,7 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './Settings'], f
             this.containerView = cardContainerView;
             this.on("AbstractCardContainerModel::SetContainerPosition", function (container, positionX, positionY) {
                 this.setContainerPosition(container, positionX, positionY);
-            }).on("AbstractCardContainerModel::SetPositionInContainer", function (object, x, y) {
+            }).on(Events.Game.AbstractCardContainerModel.SetPositionInContainer, function (object, x, y) {
                 if (x && y) {
                     this.containerView.setPositionInContainer(object, x, y);
                 } else {
@@ -24,20 +24,20 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './Settings'], f
                     pY = object.height / 2;
                     this.containerView.setPositionInContainer(object, pX, pY);
                 }
-            }, this).on("AbstractCardContainerModel::SetCardToCardCollection", function (card) {
+            }, this).on(Events.Game.AbstractCardContainerModel.SetCardToCardCollection, function (card) {
                 this.cardCollection.push(card);
             }).on("AbstractCardContainerModel::AddChildToBattle", function (childModel) {
                 var x = arguments.length <= 1 || arguments[1] === undefined ? undefined : arguments[1];
                 var y = arguments.length <= 2 || arguments[2] === undefined ? undefined : arguments[2];
 
                 this.addChildToContainer(childModel, x, y);
-            }, this).on("AbstractCardContainerModel::GraphicsVisible", function (value) {
+            }, this).on(Events.Game.AbstractCardContainerModel.GraphicsVisible, function (value) {
                 this.containerView.edgingVisible(value);
-            }, this).on("AbstractCardContainerModel::SetGraphicsListener", function (isListen) {
+            }, this).on(Events.Game.AbstractCardContainerModel.SetGraphicsListener, function (isListen) {
                 this.containerView.edgingEventsSetter(this.containerView.graphics[0], isListen);
-            }, this).on("AbstractCardContainerModel::SetClickListener", function (player) {
+            }, this).on(Events.Game.AbstractCardContainerModel.SetClickListener, function (player) {
                 this.containerView.setClickEventsListener(player, this);
-            }).on("AbstractCardContainerModel::CleanClickListener", function () {
+            }).on(Events.Game.AbstractCardContainerModel.CleanClickListener, function () {
                 this.containerView.cleanClickEventsListener();
             }, this);
 
@@ -60,7 +60,8 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './Settings'], f
                 } else {
                     x = this.cardCollection.length * (3 + child.sprite.width) + child.sprite.width / 2 + 3;
                     y = child.sprite.height / 2;
-                    this.addChildToContainer(childModel, x, y);
+                    console.log(x, y);
+                    this.containerView.addChildToContainer(childModel.cardView.sprite, x, y);
                 }
                 this.cardCollection.push(childModel);
             }

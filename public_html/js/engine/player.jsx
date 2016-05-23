@@ -3,16 +3,17 @@ define([
         'jquery',
         'backbone',
         'pixi',
-        './abstract_player'
+        './abstract_player',
+        './EventsConfig'
 
-    ],  function ($, Backbone, pixi, AbstractPlayer) {
+    ],  function ($, Backbone, pixi, AbstractPlayer, Events) {
         class Player extends AbstractPlayer{
 
             constructor(loaderRes, container){
                 super(loaderRes, container);
                 super.createDeck();
 
-                this.on("Player::PlayerAct", function(){
+                this.on(Events.Game.Player.PlayerAct, function(){
                     this.act();
                 }, this);
 

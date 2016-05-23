@@ -10,7 +10,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-define(['jquery', 'backbone', 'pixi', './abstract_player'], function ($, Backbone, pixi, AbstractPlayer) {
+define(['jquery', 'backbone', 'pixi', './abstract_player', './EventsConfig'], function ($, Backbone, pixi, AbstractPlayer, Events) {
     var Bot = function (_AbstractPlayer) {
         _inherits(Bot, _AbstractPlayer);
 
@@ -29,20 +29,18 @@ define(['jquery', 'backbone', 'pixi', './abstract_player'], function ($, Backbon
         _createClass(Bot, [{
             key: 'act',
             value: function act() {
-                //super.act();
-                //if (this.container.children.length) {
-                //    var card = this.container.getChildAt((Math.floor(Math.random() * (this.container.children.length))));
-                //    this.container.removeChild(card);
-                //    let r = Math.floor(Math.random() * (2) + 1);
-                //    if (r === 1){
-                //        this.containerDistant.addChild(card);
-                //        Backbone.trigger("RemoveGapsInDeckForAI", this.containerDistant);
-                //    }
-                //    else{
-                //        this.containerInfig   hting.addChild(card);
-                //        Backbone.trigger("RemoveGapsInDeckForAI", this.containerInfighting);
-                //    }
-                //}
+                if (this.container.children.length) {
+                    var card = this.container.getChildAt(Math.floor(Math.random() * this.container.children.length));
+                    this.container.removeChild(card);
+                    var r = Math.floor(Math.random() * 2 + 1);
+                    if (r === 1) {
+                        this.containerDistant.addChild(card);
+                        Backbone.trigger("RemoveGapsInDeckForAI", this.containerDistant);
+                    } else {
+                        this.containerInfighting.addChild(card);
+                        Backbone.trigger("RemoveGapsInDeckForAI", this.containerInfighting);
+                    }
+                }
             }
         }, {
             key: 'createDesc',

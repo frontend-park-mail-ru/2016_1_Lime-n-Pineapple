@@ -4,8 +4,9 @@ define([
         'underscore',
         'backbone',
         'settings',
-        'pixi'
-    ], function ($, _, Backbone, Settings, pixi) {
+        'pixi',
+        './EventsConfig'
+    ], function ($, _, Backbone, Settings, pixi, Events) {
         class Renderer {
             constructor(viewEl, viewDomID) {
 

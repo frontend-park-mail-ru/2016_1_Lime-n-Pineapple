@@ -10,13 +10,36 @@ define([
             constructor(el, domID) {
                 this.loader = new pixi.loaders.Loader();
 
+                //let socket = new WebSocket("ws://echo.websocket.org/");
+                //socket.onopen = function () {
+                //    console.log("Соединение открылось");
+                //    socket.send(JSON.stringify(ololo));
+                //};
+                //socket.onclose = function () {
+                //    console.log ("Соединение закрылось");
+                //};
+                //socket.onmessage = function (event) {
+                //    console.log ("Пришло сообщение с содержанием:", event.data);
+                //};
+
+                // 0 - system
+                // 1 - Backbone
+                // 2 - Game
+                // 3 - Room
+                //let msg = {
+                //    'type' : 2,
+                //    'data'  : {
+                //        'user': 'lalka',
+                //        'action': 1,
+                //        ''
+                //    }
+                //};
+
+
                 console.log("[loader.jsx], constructor");
 
                 this.loader.add("cards", '/js/engine/cards.json');
-                //for(let i = 1; i < 10; i+=1){
-                //    this.loader.add("card" + i, 'static/resources/card' + i + ".png");
-                //}
-                //this.res = $.parseJSON('[{"name":"card1","url":"static/resources/card1.png","melee":true,"distant":true,"power":4},{"name":"card2","url":"static/resources/card2.png","melee":false,"distant":true,"power":3},{"name":"card3","url":"static/resources/card3.png","melee":true,"distant":false,"power":2}]');
+
                 this.loader.load(function(loader, res){
                     console.log("[loader.jsx], load");
                     this.renderer = new Renderer(el, domID);

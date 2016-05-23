@@ -2,7 +2,7 @@
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(['backbone', 'underscore', 'jquery', 'pixi', './InfoCardView'], function (Backbone, _, $, pixi, InfoCardView) {
+define(['backbone', 'underscore', 'jquery', 'pixi', './InfoCardView', './EventsConfig'], function (Backbone, _, $, pixi, InfoCardView, Events) {
     var InfoCard = function InfoCard(container, playerOwner) {
         _classCallCheck(this, InfoCard);
 
@@ -11,27 +11,27 @@ define(['backbone', 'underscore', 'jquery', 'pixi', './InfoCardView'], function 
         this.isHide = true;
         this.infoCardView = new InfoCardView(container, this.playerOwner);
 
-        this.on("InfoCardModel::BackToDeck", function (cardModel) {
+        this.on(Events.Game.InfoCardModel.BackToDeck, function (cardModel) {
             this.infoCardView.backToDeck(cardModel);
-        }, this).on("InfoCardModel::AddToBattlesContainer", function (cardModel, containerModel) {
+        }, this).on(Events.Game.InfoCardModel.AddToBattlesContainer, function (cardModel, containerModel) {
             this.infoCardView.moveToBattleField(cardModel, containerModel, this.playerOwner);
-            playerOwner.trigger("AbstractPlayer::DeleteCardFromCardCollection", cardModel);
-        }, this).on("InfoCardModel::ShowInfoCard", function (cardModel) {
+            playerOwner.trigger(Events.Game.AbstractPlayer.DeleteCardFromCardCollection, cardModel);
+        }, this).on(Events.Game.InfoCardModel.ShowInfoCard, function (cardModel) {
             this.isHide = false;
             this.infoCardView.showInfoCard(cardModel, this);
         }, this).on("InfoCardInOwnContainer", function (cardModel) {
             console.log("InfoCardInOwnContainer");
-            this.playerOwner.trigger("AbstractPlayer::InfoCardInOwnContainer", cardModel);
+            this.playerOwner.trigger(Events.Game.AbstractPlayer.InfoCardInOwnContainer, cardModel);
         }, this);
 
         this.infoCardView.on("InfoCardInContainer", function (cardModel) {
             this.isHide = true;
-            this.playerOwner.trigger("AbstractPlayer::InfoCardInContainer");
-            $(cardModel).trigger("AbstractPlayer::PreviousInfoCardInDeck");
+            this.playerOwner.trigger(Events.Game.AbstractPlayer.InfoCardInContainer);
+            $(cardModel).trigger(Events.Game.AbstractPlayer.PreviousInfoCardInDeck);
             cardModel.cardView.trigger("CardView::AlphaVisible");
             cardModel.trigger("CardModel::SetClickEventCard");
         }, this).on("InfoCardInBattleContainer", function (cardModel) {
-            this.playerOwner.trigger("AbstractPlayer::InfoCardAddedToBattle");
+            this.playerOwner.trigger(Events.Game.AbstractPlayer.InfoCardAddedToBattle);
             cardModel.cardView.trigger("CardView::AlphaVisible");
         });
     };

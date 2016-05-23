@@ -9,8 +9,9 @@ define([
         './CardContainerModel',
         './CardContainerView',
         './player_cards_deck',
-        './Settings'
-    ], function ($, _, Backbone, pixi, Player, Bot, CardContainerModel, CardContainerView, PlayerCardsDeck, SETTINGS) {
+        './Settings',
+        './EventsConfig'
+    ], function ($, _, Backbone, pixi, Player, Bot, CardContainerModel, CardContainerView, PlayerCardsDeck, SETTINGS, Events) {
 
         class Engine {
 
@@ -134,15 +135,14 @@ define([
 
                 let whoFirst = Math.floor(Math.random() * (2) + 1);
                 this.game(whoFirst);
-
             }
 
             game(whoFirst){
                 if (whoFirst === 1 || whoFirst === 2){
-                    this.player.trigger("AbstractPlayer::Act");
+                    this.player.trigger(Events.Game.AbstractPlayer.Act);
                 }
                 else if (whoFirst === 2){
-                    this.enemy.trigger("AbstractPlayer::Act");
+                    this.enemy.trigger(Events.Game.AbstractPlayer.Act);
                 }
             }
         }

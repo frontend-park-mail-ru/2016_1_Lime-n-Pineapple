@@ -5,9 +5,10 @@ define([
     'backbone',
     'settings',
     'pixi',
-    './Settings'
+    './Settings',
+    './EventsConfig'
 ],
-    function ($, _, Backbone, Settings, pixi, SETTING) {
+    function ($, _, Backbone, Settings, pixi, SETTING, Events) {
 
 
 
@@ -45,7 +46,7 @@ define([
             }
 
             onClickContainer(player, containerModel) {
-                player.trigger("AbstractPlayer::AddInfoCardToBattlesContainer", containerModel);
+                player.trigger(Events.Game.AbstractPlayer.AddInfoCardToBattlesContainer, containerModel);
             }
 
             edgingVisible(value){

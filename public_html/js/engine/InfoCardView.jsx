@@ -4,9 +4,10 @@ define([
         'underscore',
         'jquery',
         'pixi',
-        './Settings'
+        './Settings',
+        './EventsConfig'
     ],
-    function (Backbone, _, $, pixi, SETTING) {
+    function (Backbone, _, $, pixi, SETTING, Events) {
         class InfoCardView{
 
             constructor(container, playerOwner) {
@@ -97,8 +98,8 @@ define([
                         this.sprite.parent.removeChild(this.sprite);
                     }
                     this.trigger("InfoCardInBattleContainer", cardModel);
-                    this.playerOwner.trigger("AbstractPlayer::GraphicsVisibleAndEventsOnForContainer");
-                    this.playerOwner.trigger("AbstractPlayer::RemoveGapsInDeck");
+                    this.playerOwner.trigger(Events.Game.AbstractPlayer.GraphicsVisibleAndEventsOnForContainer);
+                    this.playerOwner.trigger(Events.Game.AbstractPlayer.RemoveGapsInDeck);
                 }.bind(this));
             }
 

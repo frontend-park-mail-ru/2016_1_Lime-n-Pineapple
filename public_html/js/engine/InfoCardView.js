@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(['backbone', 'underscore', 'jquery', 'pixi', './Settings'], function (Backbone, _, $, pixi, SETTING) {
+define(['backbone', 'underscore', 'jquery', 'pixi', './Settings', './EventsConfig'], function (Backbone, _, $, pixi, SETTING, Events) {
     var InfoCardView = function () {
         function InfoCardView(container, playerOwner) {
             _classCallCheck(this, InfoCardView);
@@ -102,8 +102,8 @@ define(['backbone', 'underscore', 'jquery', 'pixi', './Settings'], function (Bac
                         this.sprite.parent.removeChild(this.sprite);
                     }
                     this.trigger("InfoCardInBattleContainer", cardModel);
-                    this.playerOwner.trigger("AbstractPlayer::GraphicsVisibleAndEventsOnForContainer");
-                    this.playerOwner.trigger("AbstractPlayer::RemoveGapsInDeck");
+                    this.playerOwner.trigger(Events.Game.AbstractPlayer.GraphicsVisibleAndEventsOnForContainer);
+                    this.playerOwner.trigger(Events.Game.AbstractPlayer.RemoveGapsInDeck);
                 }.bind(this));
             }
         }, {

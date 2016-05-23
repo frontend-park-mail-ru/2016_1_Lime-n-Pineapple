@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(['backbone', 'underscore', 'pixi', 'jquery', './Settings'], function (Backbone, _, pixi, $, SETTINGS) {
+define(['backbone', 'underscore', 'pixi', 'jquery', './Settings', './EventsConfig'], function (Backbone, _, pixi, $, SETTINGS, Events) {
     var CardView = function () {
         function CardView(url) {
             _classCallCheck(this, CardView);
@@ -37,7 +37,7 @@ define(['backbone', 'underscore', 'pixi', 'jquery', './Settings'], function (Bac
                 this.battlesInfoCard.x = this.battlesInfoCard.width / 2;
                 this.battlesInfoCard.y = this.battlesInfoCard.height / 2;
                 this.battlesInfoCard.anchor.set(0.5);
-                $(playerOwner).trigger("AbstractPlayer::BattlesInfoCardCreated");
+                $(playerOwner).trigger(Events.Game.AbstractPlayer.BattlesInfoCardCreated);
             }
         }, {
             key: 'deleteBattlesInfoCard',
