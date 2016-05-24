@@ -1,6 +1,8 @@
+"use strict";
+
 // QUnit.config.autostart = false;
 require.config({
-    urlArgs: "_=" + (new Date()).getTime(),
+    urlArgs: "_=" + new Date().getTime(),
     baseUrl: "../js",
     paths: {
         jquery: "lib/jquery",
@@ -19,13 +21,10 @@ require.config({
     }
 });
 
-var tests = [
-    'models/score.test',
-    'models/session.test'
-], deps = [
-    'qunit'
-];
-
+var tests = ['models/score.test'
+//'models/session.test'
+],
+    deps = ['qunit'];
 
 require(tests.concat(deps), function () {
     QUnit.load();
