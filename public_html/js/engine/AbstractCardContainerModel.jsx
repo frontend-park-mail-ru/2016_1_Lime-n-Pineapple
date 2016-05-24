@@ -16,9 +16,9 @@ define([
             this.cardCollection = [];
             this.containerView = cardContainerView;
             this
-                .on("AbstractCardContainerModel::SetContainerPosition", function(container, positionX, positionY){
+                .on(Events.Game.AbstractCardContainerModel.SetContainerPosition, function(container, positionX, positionY){
                     this.setContainerPosition(container, positionX, positionY );
-                })
+                }, this)
                 .on(Events.Game.AbstractCardContainerModel.SetPositionInContainer, function(object, x, y){
                     if (x && y) {
                         this.containerView.setPositionInContainer(object, x, y);
@@ -31,11 +31,24 @@ define([
                     }
                 }, this)
 
-                .on(Events.Game.AbstractCardContainerModel.SetCardToCardCollection, function (card) {
-                    this.cardCollection.push(card);
-                })
-
-                .on("AbstractCardContainerModel::AddChildToBattle", function (childModel, x = undefined, y = undefined) {
+                .on(Events.Game.AbstractCardContainerModel.SetCardToCardCollection, function (cardModel) {
+                    this.cardCollection.push(cardModel);
+                }, this)
+                .on(Events.Game.AbstractCardContainerModel.AddChild, function (cardModel) {
+                    this.containerView.containerView.addChild(cardModel.cardView.sprite);
+                }, this)
+                .on(Events.Game.AbstractCardContainerModel.CreateText, function (name, str, x, y) {
+                    this.containerView.createTextField(name, str, x, y);
+                }, this)
+                .on(Events.Game.AbstractCardContainerModel.UpdateText, function (name, str, x, y) {
+                    this.containerView.setTextField(name, str, x, y);
+                }, this)
+                .on(Events.Game.AbstractCardContainerModel.UpdateContainersScoreAfterAddedInfoCard, function () {
+                    let score = this.cardCollection[this.cardCollection.length - 1].power + parseInt(this.containerView.textField.score.text);
+                    score.toString();
+                    this.containerView.setTextField("score", score);
+                }, this)
+                .on(Events.Game.AbstractCardContainerModel.AddChildToBattle, function (childModel, x = undefined, y = undefined) {
                     this.addChildToContainer(childModel, x, y);
                 }, this)
 
@@ -49,12 +62,15 @@ define([
 
                 .on(Events.Game.AbstractCardContainerModel.SetClickListener, function (player) {
                     this.containerView.setClickEventsListener(player, this);
-                })
+                }, this)
                 .on(Events.Game.AbstractCardContainerModel.CleanClickListener, function () {
                     this.containerView.cleanClickEventsListener();
+                }, this)
+                .on(Events.Game.AbstractCardContainerModel.RemoveGapsInContainer, function () {
+                    this.containerView.removeGapsInDeck(this.cardCollection);
                 }, this);
 
-            $(this).one("AbstractCardContainerModel::CreateGraphics", function (event, width, height, worldVisible, x, y) {
+            $(this).one(Events.Game.AbstractCardContainerModel.CreateGraphics, function (event, width, height, worldVisible, x, y) {
                 this.containerView.createHitArea(width, height);
                 if (x && y) {
                     this.containerView.createGraphicsEdging(width, height, worldVisible, x, y);
@@ -77,8 +93,6 @@ define([
                 this.containerView.addChildToContainer(childModel.cardView.sprite, x, y);
             }
             this.cardCollection.push(childModel);
-
-
         }
 
         // nice work

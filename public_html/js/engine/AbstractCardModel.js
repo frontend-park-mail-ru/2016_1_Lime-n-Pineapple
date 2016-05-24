@@ -9,20 +9,20 @@ define(['backbone', 'underscore', 'pixi', './CardView', './EventsConfig'], funct
         _.extend(this, Backbone.Events);
         this.cardView = new CardView(loaderRes);
 
-        this.on("CardModel::SetTouchEventCard", function (player) {
+        this.on(Events.Game.AbstractCardModel.SetTouchEventCard, function (player) {
             this.cardView.setTouchEventCard(this);
             this.playerOwner = player;
-        }, this).on("CardModel::CardViewPressed", function () {
+        }, this).on(Events.Game.AbstractCardModel.CardViewPressed, function () {
             this.playerOwner.trigger(Events.Game.AbstractPlayer.MustCreateInfoCard, this);
-        }, this).on("CardModel::InfoCardBackToDeck", function () {
+        }, this).on(Events.Game.AbstractCardModel.InfoCardBackToDeck, function () {
             this.playerOwner.trigger(Events.Game.AbstractPlayer.InfoCardBackToDeck, this);
-        }, this).on("AbstractCardModel::ShowInfoBattleCard", function () {
+        }, this).on(Events.Game.AbstractCardModel.ShowInfoBattleCard, function () {
             this.playerOwner.trigger(Events.Game.AbstractPlayer.ShowBattlesInfoCard, this);
         }, this).on(Events.Game.AbstractCardModel.ChangeClickListener, function () {
             this.cardView.changeClickListenerToBattleFieldListener(this);
-        }, this).on(Events.Game.CardModel.CleanClickEventCard, function () {
+        }, this).on(Events.Game.AbstractCardModel.CleanClickEventCard, function () {
             this.cardView.cleanClickEventCard();
-        }, this).on("CardModel::SetClickEventCard", function () {
+        }, this).on(Events.Game.AbstractCardModel.SetClickEventCard, function () {
             this.cardView.setClickEventCard(this);
         }, this).on(Events.Game.AbstractCardModel.CreateBattlesInfoCard, function () {
             this.cardView.createBattlesInfoCard(this.playerOwner);

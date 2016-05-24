@@ -25,16 +25,14 @@ define(['backbone', 'underscore', 'jquery', 'pixi', './Settings', './EventsConfi
                 this.calcSize(card.width * 2, card.height * 2);
                 this.zeroMustPosition();
                 this.zeroSpritePosition();
-                Backbone.trigger("AddChildToStage", this.sprite);
+                Backbone.trigger(Events.Backbone.Renderer.AddChildToStage, this.sprite);
                 this.calcStartPositionForInfoCard(card);
-                this.calcMustPosition(this.container.containerView.parent, this.container.containerView.x, this.container.containerView.y);
+                this.calcMustPosition(this.container.containerView.parent, this.container.containerView.x + this.sprite.width / 2, this.container.containerView.y);
                 this.calcDeltaAndRate();
                 this.goToBack = true;
-                console.log(this.goToBack + " OLOLO");
-                Backbone.trigger("render::renderAnimation", this.moveCard.bind(this), this.frames);
-                $(this).one("InfoCardInOwnContainer", function () {
-                    console.log("showInfoCardOwnEvent");
-                    infoCardModel.trigger("InfoCardInOwnContainer", cardModel);
+                Backbone.trigger(Events.Backbone.Renderer.RenderAnimation, this.moveCard.bind(this), this.frames);
+                $(this).one(Events.Game.InfoCardModel.InfoCardInOwnContainer, function () {
+                    infoCardModel.trigger(Events.Game.InfoCardModel.InfoCardInOwnContainer, cardModel);
                 });
             }
         }, {
@@ -56,13 +54,11 @@ define(['backbone', 'underscore', 'jquery', 'pixi', './Settings', './EventsConfi
                 this.sprite.x += this.sprite.rateX;
                 this.sprite.y += this.sprite.rateY;
                 if (Math.abs(this.sprite.x - this.sprite.mustX) < 10 && Math.abs(this.sprite.y - this.sprite.mustY) < 10) {
-                    console.log(this.goToBack + " MOVECARD");
                     if (!this.goToBack) {
                         $(this).trigger("CardOnPosition");
                         this.goToBack = true;
                     }
-                    console.log("TriggerEvent");
-                    $(this).trigger("InfoCardInOwnContainer");
+                    $(this).trigger(Events.Game.InfoCardModel.InfoCardInOwnContainer);
                     this.zeroMustPosition();
                 }
             }
@@ -90,20 +86,27 @@ define(['backbone', 'underscore', 'jquery', 'pixi', './Settings', './EventsConfi
             value: function moveToBattleField(cardModel, containerModel) {
                 this.zeroMustPosition();
                 this.calcSize(cardModel.cardView.sprite.width, cardModel.cardView.sprite.height);
-                this.calcMustPosition(containerModel.containerView.containerView, containerModel.cardCollection.length * cardModel.cardView.sprite.width + cardModel.cardView.sprite.width / 2, cardModel.cardView.sprite.y);
+                var positionX = 0;
+                if (containerModel.cardCollection.length) {
+                    positionX = containerModel.cardCollection[containerModel.cardCollection.length - 1].cardView.sprite.x;
+                    positionX += cardModel.cardView.sprite.width / 2;
+                }
+                if (positionX === 0) {
+                    positionX = containerModel.containerView.containerView.width / 2;
+                }
+                this.calcMustPosition(containerModel.containerView.containerView, positionX, cardModel.cardView.sprite.y);
                 this.calcDeltaAndRate();
                 this.goToBack = false;
                 cardModel.cardView.sprite.parent.removeChild(cardModel.cardView.sprite);
 
-                Backbone.trigger("render::renderAnimation", this.moveCard.bind(this), this.frames);
+                Backbone.trigger(Events.Backbone.Renderer.RenderAnimation, this.moveCard.bind(this), this.frames);
                 $(this).one("CardOnPosition", function () {
-                    containerModel.trigger("AbstractCardContainerModel::AddChildToBattle", cardModel);
+                    containerModel.trigger(Events.Game.AbstractCardContainerModel.AddChild, cardModel);
                     if (this.sprite.parent) {
                         this.sprite.parent.removeChild(this.sprite);
                     }
-                    this.trigger("InfoCardInBattleContainer", cardModel);
+                    this.trigger(Events.Game.InfoCardModel.InfoCardInBattleContainer, cardModel, containerModel);
                     this.playerOwner.trigger(Events.Game.AbstractPlayer.GraphicsVisibleAndEventsOnForContainer);
-                    this.playerOwner.trigger(Events.Game.AbstractPlayer.RemoveGapsInDeck);
                 }.bind(this));
             }
         }, {
@@ -136,13 +139,13 @@ define(['backbone', 'underscore', 'jquery', 'pixi', './Settings', './EventsConfi
                     this.calcMustPosition(card.sprite.parent, card.sprite.x, card.sprite.y);
                     this.calcDeltaAndRate();
                     this.goToBack = false;
-                    $(this).off("InfoCardInOwnContainer");
-                    Backbone.trigger("render::renderAnimation", this.moveCard.bind(this), this.frames);
+                    $(this).off(Events.Game.InfoCardModel.InfoCardInOwnContainer);
+                    Backbone.trigger(Events.Backbone.Renderer.RenderAnimation, this.moveCard.bind(this), this.frames);
                 }
                 $(this).one("CardOnPosition", function () {
                     if (this.sprite.parent) {
                         this.sprite.parent.removeChild(this.sprite);
-                        this.trigger("InfoCardInContainer", cardModel);
+                        this.trigger(Events.Game.InfoCardModel.InfoCardInContainer, cardModel);
                         this.goToBack = true;
                         console.log(this.goToBack);
                     }

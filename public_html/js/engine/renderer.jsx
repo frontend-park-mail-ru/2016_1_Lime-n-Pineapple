@@ -17,21 +17,21 @@ define([
 
                 console.log("[renderer], constructor");
 
-                Backbone.on("GameRender", function(){
+                Backbone.on(Events.Backbone.Renderer.GameRender, function(){
                     console.log("[renderer], GameRender event");
 
                     this.stage = new pixi.Container();
 
                     this.stage.hitArea = new pixi.Rectangle(0, 0, $(window).width(), $(window).height());
 
-                    Backbone.on("AddChildToStage", function(sprite){
+                    Backbone.on(Events.Backbone.Renderer.AddChildToStage, function(sprite){
                         this.stage.addChild(sprite);
                     }, this);
 
                     this.stage.interactive = true;
 
-                    Backbone.on("GetStage", function (object) {
-                        $(object).trigger("SendStage", [this.stage]);
+                    Backbone.on(Events.Backbone.Renderer.GetStage, function (object) {
+                        $(object).trigger(Events.Backbone.SomeObject.SendStage, [this.stage]);
                     }, this);
 
 
@@ -40,10 +40,10 @@ define([
 
                     this.stage.parent = this.renderer;
 
-                    Backbone.trigger("AllRendered", this.stage);
+                    Backbone.trigger(Events.Backbone.All.AllRendered, this.stage);
 
                     Backbone
-                        .on("render::renderAnimation", function (viewFunc, frames) {
+                        .on(Events.Backbone.Renderer.RenderAnimation, function (viewFunc, frames) {
                             this.viewFunc = viewFunc;
                             this.frames = frames;
                         }, this);
@@ -54,15 +54,15 @@ define([
                 }, this);
 
                 this
-                    .on("StopRender", function(){
+                    .on(Events.Backbone.Renderer.StopRender, function(){
                         cancelAnimationFrame(this.intervalID);
-                        Backbone.trigger("RendererStoped");
+                        Backbone.trigger(Events.Backbone.All.RendererStopped);
                     }, this)
-                    .on("ResumeRender", function(){
+                    .on(Events.Backbone.Renderer.ResumeRender, function(){
                         this.intervalID = requestAnimationFrame(function(timeStamp) {
                             self.animate();
                         });
-                        Backbone.trigger("RendererResume");
+                        Backbone.trigger(Events.Backbone.All.RendererResume);
                     }, this);
             }
 

@@ -9,9 +9,6 @@ define([
     './EventsConfig'
 ],
     function ($, _, Backbone, Settings, pixi, SETTING, Events) {
-
-
-
         class CardContainerView{
 
             constructor(interactive, buttonMode, visible = true) {
@@ -22,14 +19,13 @@ define([
                 this.containerView.interactive = interactive;
                 this.containerView.buttonMode = buttonMode;
                 this.containerView.visible = visible;
-
+                this.textField = {};
                 this.graphics = [];
-
-                this.on("RemoveGapsInContainer", function(){
+                this.on(Events.Game.CardContainerView.RemoveGapsInContainer, function(){
                     this.removeGapsInDeck();
                 }, this);
 
-                this.on("AddChild", function(sprite){
+                this.on(Events.Game.CardContainerView.AddChild, function(sprite){
                     this.containerView.addChild(sprite);
                 }, this);
 
@@ -70,7 +66,29 @@ define([
                 }
             }
 
+            createTextField(name, str, x = 0, y = 0){
+                if (!this.textField[name]) {
+                    this.textField[name] = new pixi.Text(str);
+                    this.textField[name].x = x;
+                    this.textField[name].y = y;
+                    this.textField[name].anchor.set(0.5);
+                    this.containerView.addChild(this.textField[name]);
+                }
+            }
 
+            setTextField(name, str, x, y){
+                if (this.textField[name]) {
+                    this.textField[name].text = str;
+                    if (x && y){
+                        this.textField[name].x = x;
+                        this.textField[name].y = y;
+                    }
+                }
+                else {
+                    this.createTextField(name, str, x, y);
+                }
+
+            }
 
             addChildToContainer(child, x, y){
                 this.containerView.addChild(child);
@@ -109,14 +127,14 @@ define([
             negativeClimb(cardCollection, climb){
                 let sprite;
                 sprite = cardCollection[0].cardView.sprite;
-                sprite.x = sprite.width / 2 + SETTING.indentOfTheGraphics;
+                sprite.x = sprite.width / 2 + SETTING.indentOfTheGraphics + SETTING.indentOfTheContainer;
                 sprite.y = sprite.height / 2;
                 sprite.anchor.set(0.5);
                 this.containerView.addChild(sprite);
                 for (let i = 1; i < cardCollection.length; i+=1) {
                     sprite = cardCollection[i].cardView.sprite;
                     sprite.x = (sprite.width + climb + SETTING.indentOfTheGraphics) *
-                        i + sprite.width / 2;
+                        i + sprite.width / 2 + SETTING.indentOfTheContainer;
 
                     sprite.y = sprite.height / 2;
                     sprite.anchor.set(0.5);
@@ -130,7 +148,7 @@ define([
                 for (let i = 0; i < cardCollection.length; i+=1) {
                     sprite = cardCollection[i].cardView.sprite;
                     sprite.x = (sprite.width + SETTING.indentOfTheGraphics) *
-                        i + sprite.width / 2 + climb;
+                        i + sprite.width / 2 + climb + SETTING.indentOfTheContainer;
                     sprite.y = sprite.height / 2;
                     sprite.anchor.set(0.5);
                     this.containerView.addChild(sprite);
@@ -140,12 +158,12 @@ define([
             createPlayersDeck(cardCollection){
                 let lengthOfCardCollection = SETTING.cardWidth * cardCollection.length,
                     climb = 0;
-                if (SETTING.deckWidth >= lengthOfCardCollection){
-                    climb = (SETTING.deckWidth - lengthOfCardCollection)/ 2;
+                if (SETTING.deckWidth - SETTING.indentOfTheContainer * 2 >= lengthOfCardCollection){
+                    climb = (SETTING.deckWidth - lengthOfCardCollection - SETTING.indentOfTheContainer * 2)/ 2;
                     this.positiveClimb(cardCollection, climb);
                 }
                 else {
-                    climb = SETTING.cardWidth - (SETTING.deckWidth - SETTING.cardWidth - SETTING.indentOfTheGraphics * (cardCollection.length - 3))/(cardCollection.length - 1);
+                    climb = SETTING.cardWidth - (SETTING.deckWidth - SETTING.indentOfTheContainer * 2 - SETTING.cardWidth - SETTING.indentOfTheGraphics * (cardCollection.length - 3))/(cardCollection.length - 1);
                     climb=-climb;
                     this.negativeClimb(cardCollection, climb);
 

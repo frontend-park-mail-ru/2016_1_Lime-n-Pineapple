@@ -12,9 +12,9 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './Settings', '.
             _.extend(this, Backbone.Events);
             this.cardCollection = [];
             this.containerView = cardContainerView;
-            this.on("AbstractCardContainerModel::SetContainerPosition", function (container, positionX, positionY) {
+            this.on(Events.Game.AbstractCardContainerModel.SetContainerPosition, function (container, positionX, positionY) {
                 this.setContainerPosition(container, positionX, positionY);
-            }).on(Events.Game.AbstractCardContainerModel.SetPositionInContainer, function (object, x, y) {
+            }, this).on(Events.Game.AbstractCardContainerModel.SetPositionInContainer, function (object, x, y) {
                 if (x && y) {
                     this.containerView.setPositionInContainer(object, x, y);
                 } else {
@@ -24,9 +24,19 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './Settings', '.
                     pY = object.height / 2;
                     this.containerView.setPositionInContainer(object, pX, pY);
                 }
-            }, this).on(Events.Game.AbstractCardContainerModel.SetCardToCardCollection, function (card) {
-                this.cardCollection.push(card);
-            }).on("AbstractCardContainerModel::AddChildToBattle", function (childModel) {
+            }, this).on(Events.Game.AbstractCardContainerModel.SetCardToCardCollection, function (cardModel) {
+                this.cardCollection.push(cardModel);
+            }, this).on(Events.Game.AbstractCardContainerModel.AddChild, function (cardModel) {
+                this.containerView.containerView.addChild(cardModel.cardView.sprite);
+            }, this).on(Events.Game.AbstractCardContainerModel.CreateText, function (name, str, x, y) {
+                this.containerView.createTextField(name, str, x, y);
+            }, this).on(Events.Game.AbstractCardContainerModel.UpdateText, function (name, str, x, y) {
+                this.containerView.setTextField(name, str, x, y);
+            }, this).on(Events.Game.AbstractCardContainerModel.UpdateContainersScoreAfterAddedInfoCard, function () {
+                var score = this.cardCollection[this.cardCollection.length - 1].power + parseInt(this.containerView.textField.score.text);
+                score.toString();
+                this.containerView.setTextField("score", score);
+            }, this).on(Events.Game.AbstractCardContainerModel.AddChildToBattle, function (childModel) {
                 var x = arguments.length <= 1 || arguments[1] === undefined ? undefined : arguments[1];
                 var y = arguments.length <= 2 || arguments[2] === undefined ? undefined : arguments[2];
 
@@ -37,11 +47,13 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './Settings', '.
                 this.containerView.edgingEventsSetter(this.containerView.graphics[0], isListen);
             }, this).on(Events.Game.AbstractCardContainerModel.SetClickListener, function (player) {
                 this.containerView.setClickEventsListener(player, this);
-            }).on(Events.Game.AbstractCardContainerModel.CleanClickListener, function () {
+            }, this).on(Events.Game.AbstractCardContainerModel.CleanClickListener, function () {
                 this.containerView.cleanClickEventsListener();
+            }, this).on(Events.Game.AbstractCardContainerModel.RemoveGapsInContainer, function () {
+                this.containerView.removeGapsInDeck(this.cardCollection);
             }, this);
 
-            $(this).one("AbstractCardContainerModel::CreateGraphics", function (event, width, height, worldVisible, x, y) {
+            $(this).one(Events.Game.AbstractCardContainerModel.CreateGraphics, function (event, width, height, worldVisible, x, y) {
                 this.containerView.createHitArea(width, height);
                 if (x && y) {
                     this.containerView.createGraphicsEdging(width, height, worldVisible, x, y);

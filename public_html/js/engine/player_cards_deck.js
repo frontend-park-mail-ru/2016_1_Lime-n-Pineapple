@@ -26,7 +26,7 @@ define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './AbstractCardC
                 this.deleteCardFromCardCollection(card);
             });
 
-            Backbone.on("PlayerCardsDeck::GetDeckWidth", function (getWidth) {
+            Backbone.on(Events.Game.PlayersCardsDeck.GetDeckWidth, function (getWidth) {
                 getWidth(this.containerView.containerView.width);
             }, _this);
             return _this;

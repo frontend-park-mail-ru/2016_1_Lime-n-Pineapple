@@ -13,26 +13,26 @@ define([
                 this.cardView = new CardView(loaderRes);
 
                 this
-                    .on("CardModel::SetTouchEventCard", function (player) {
+                    .on(Events.Game.AbstractCardModel.SetTouchEventCard, function (player) {
                         this.cardView.setTouchEventCard(this);
                         this.playerOwner = player;
                     }, this)
-                    .on("CardModel::CardViewPressed", function(){
+                    .on(Events.Game.AbstractCardModel.CardViewPressed, function(){
                         this.playerOwner.trigger(Events.Game.AbstractPlayer.MustCreateInfoCard, this);
                     }, this)
-                    .on("CardModel::InfoCardBackToDeck", function(){
+                    .on(Events.Game.AbstractCardModel.InfoCardBackToDeck, function(){
                         this.playerOwner.trigger(Events.Game.AbstractPlayer.InfoCardBackToDeck, this);
                     }, this)
-                    .on("AbstractCardModel::ShowInfoBattleCard", function () {
+                    .on(Events.Game.AbstractCardModel.ShowInfoBattleCard, function () {
                         this.playerOwner.trigger(Events.Game.AbstractPlayer.ShowBattlesInfoCard, this);
                     }, this)
                     .on(Events.Game.AbstractCardModel.ChangeClickListener, function () {
                         this.cardView.changeClickListenerToBattleFieldListener(this);
                     }, this)
-                    .on(Events.Game.CardModel.CleanClickEventCard, function () {
+                    .on(Events.Game.AbstractCardModel.CleanClickEventCard, function () {
                         this.cardView.cleanClickEventCard();
                     }, this)
-                    .on("CardModel::SetClickEventCard", function () {
+                    .on(Events.Game.AbstractCardModel.SetClickEventCard, function () {
                         this.cardView.setClickEventCard(this);
                     }, this)
                     .on(Events.Game.AbstractCardModel.CreateBattlesInfoCard, function () {

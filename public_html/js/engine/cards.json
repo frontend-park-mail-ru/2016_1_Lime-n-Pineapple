@@ -9,7 +9,7 @@
       "enemyMelee":false,
       "enemyDistant":false
     },
-    "power":4
+    "power":8
   },
   {
     "name":"card2",
@@ -21,7 +21,7 @@
       "enemyMelee":false,
       "enemyDistant":true
     },
-    "power":3
+    "power":8
   },
   {
     "name":"card3",
@@ -33,6 +33,6 @@
       "enemyMelee":false,
       "enemyDistant":false
     },
-    "power":2
+    "power":8
   }
 ]

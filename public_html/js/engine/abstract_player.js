@@ -11,7 +11,7 @@ define(['jquery', 'backbone', 'underscore', 'pixi', './card_collection', './Info
 
             _.extend(this, Backbone.Events);
             this.loaderRes = loaderRes;
-            this.cardCollection = new CardCollection(loaderRes, 10);
+            this.cardCollection = new CardCollection(loaderRes, 20);
             if (container.playersCardsDeck !== undefined) {
                 this.playersCardsDeck = container.playersCardsDeck;
             }
@@ -45,7 +45,7 @@ define(['jquery', 'backbone', 'underscore', 'pixi', './card_collection', './Info
                 this.cleanClickListenerForContainers();
                 this.infoCard.alreadyGoingBack = !this.infoCard.alreadyGoingBack;
                 this.infoCard.trigger(Events.Game.InfoCardModel.BackToDeck, cardModel);
-                cardModel.trigger(Events.Game.CardModel.CleanClickEventCard);
+                cardModel.trigger(Events.Game.AbstractCardModel.CleanClickEventCard);
                 this.setGraphicsVisible(false);
                 this.setGraphicsListener(true);
             }, this).on(Events.Game.AbstractPlayer.GraphicsVisibleAndEventsOnForContainer, function () {
@@ -65,20 +65,27 @@ define(['jquery', 'backbone', 'underscore', 'pixi', './card_collection', './Info
                 if (!this.infoCard.isHide) {
                     this.trigger(Events.Game.AbstractPlayer.InfoCardBackToDeck, this.touchedCards[this.touchedCards.length - 1]);
                 }
+                if (this.battleCardModel) {
+                    this.playersBattleInfoCardContainer.containerView.containerView.removeChild(this.battleCardModel.cardView.battlesInfoCard);
+                    this.battleCardModel.trigger(Events.Game.AbstractCardModel.ChangeClickListener);
+                    delete this.battleCardModel;
+                }
                 $(this).one(Events.Game.AbstractPlayer.BattlesInfoCardCreated, function () {
-                    cardModel.trigger(Events.Game.CardModel.CleanClickEventCard);
-                    $(this).one("SendStage", function (event, stage) {
+                    this.battleCardModel = cardModel;
+                    cardModel.trigger(Events.Game.AbstractCardModel.CleanClickEventCard);
+                    $(this).one(Events.Backbone.SomeObject.SendStage, function (event, stage) {
+                        stage.off('click');
                         var count = 0;
                         stage.on('click', function () {
                             count += 1;
                             if (count === 2) {
                                 this.playersBattleInfoCardContainer.containerView.containerView.removeChild(cardModel.cardView.battlesInfoCard);
                                 cardModel.trigger(Events.Game.AbstractCardModel.ChangeClickListener);
-                                stage.off('click');
+                                delete this.battleCardModel;
                             }
                         }.bind(this));
                     }.bind(this));
-                    Backbone.trigger("GetStage", this);
+                    Backbone.trigger(Events.Backbone.Renderer.GetStage, this);
                     this.playersBattleInfoCardContainer.containerView.containerView.addChild(cardModel.cardView.battlesInfoCard);
                 }.bind(this));
                 cardModel.trigger(Events.Game.AbstractCardModel.CreateBattlesInfoCard);
@@ -89,6 +96,10 @@ define(['jquery', 'backbone', 'underscore', 'pixi', './card_collection', './Info
             }, this).on(Events.Game.AbstractPlayer.InfoCardAddedToBattle, function () {
                 this.infoCard.isHide = true;
                 this.touchedCards.length = 0;
+                var score = 0;
+                score += parseInt(this.playersCardContainerDistant.containerView.textField.score.text);
+                score += parseInt(this.playersCardContainerMelee.containerView.textField.score.text);
+                this.playersContainerBoss.trigger(Events.Game.AbstractCardContainerModel.UpdateText, "score", score.toString());
             }, this);
         }
 

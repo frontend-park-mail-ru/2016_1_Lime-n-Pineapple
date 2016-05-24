@@ -47,20 +47,20 @@ define(['backbone', 'underscore', 'pixi', 'jquery', './Settings', './EventsConfi
         }, {
             key: 'onClickBattleCard',
             value: function onClickBattleCard(cardModel) {
-                cardModel.trigger("AbstractCardModel::ShowInfoBattleCard");
+                cardModel.trigger(Events.Game.AbstractCardModel.ShowInfoBattleCard);
             }
         }, {
             key: 'onClickCard',
             value: function onClickCard(cardModel) {
                 if (this.sprite.alpha === 0.1) {
-                    cardModel.trigger("CardModel::InfoCardBackToDeck");
+                    cardModel.trigger(Events.Game.AbstractCardModel.InfoCardBackToDeck);
                 } else {
                     this.sprite.alpha = 0.1;
-                    this.on("CardView::AlphaVisible", function () {
+                    this.on(Events.Game.CardView.AlphaVisible, function () {
                         this.sprite.alpha = 1;
-                        this.off("CardView::AlphaVisible");
+                        this.off(Events.Game.CardView.AlphaVisible);
                     }, this);
-                    cardModel.trigger("CardModel::CardViewPressed");
+                    cardModel.trigger(Events.Game.AbstractCardModel.CardViewPressed);
                 }
             }
         }, {
@@ -112,7 +112,7 @@ define(['backbone', 'underscore', 'pixi', 'jquery', './Settings', './EventsConfi
                 this.sprite.x = this.sprite.width * index + 3 + this.sprite.width / 2;
                 this.sprite.y = this.sprite.y + this.sprite.height / 2;
                 this.sprite.anchor.set(0.5);
-                containerView.trigger("AddChild", this.sprite);
+                containerView.trigger(Events.Game.CardContainerView.AddChild, this.sprite);
             }
         }]);
 

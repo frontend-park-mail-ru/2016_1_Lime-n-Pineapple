@@ -38,7 +38,7 @@ define(['jquery', 'backbone', 'pixi', './abstract_player', './EventsConfig'], fu
         }, {
             key: 'setTouchEventCard',
             value: function setTouchEventCard(card) {
-                card.trigger("CardModel::SetTouchEventCard", this);
+                card.trigger(Events.Game.AbstractCardModel.SetTouchEventCard, this);
             }
         }]);
 

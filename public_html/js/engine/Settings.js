@@ -11,6 +11,8 @@ define(['jquery'], function ($) {
             this.infoCardContainerPositionY = this.oneLineHeight * 2;
             this.infoBattleCardContainerPositionX = $(window).width() / 2 - this.cardWidth * 1.5;
             this.infoBattleCardContainerPositionY = 0;
+            this.indentOfTheContainer = 60;
+            this.indentOfTheScoresForField = 60;
             this.fps = 60;
             this.second = 1000;
             this.indentOfTheGraphics = 3;

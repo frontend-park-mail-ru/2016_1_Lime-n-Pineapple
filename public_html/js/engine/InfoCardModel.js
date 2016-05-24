@@ -15,24 +15,27 @@ define(['backbone', 'underscore', 'jquery', 'pixi', './InfoCardView', './EventsC
             this.infoCardView.backToDeck(cardModel);
         }, this).on(Events.Game.InfoCardModel.AddToBattlesContainer, function (cardModel, containerModel) {
             this.infoCardView.moveToBattleField(cardModel, containerModel, this.playerOwner);
-            playerOwner.trigger(Events.Game.AbstractPlayer.DeleteCardFromCardCollection, cardModel);
+            this.playerOwner.trigger(Events.Game.AbstractPlayer.DeleteCardFromCardCollection, cardModel);
+            this.playerOwner.trigger(Events.Game.AbstractPlayer.RemoveGapsInDeck);
+            containerModel.trigger(Events.Game.AbstractCardContainerModel.SetCardToCardCollection, cardModel);
+            containerModel.trigger(Events.Game.AbstractCardContainerModel.RemoveGapsInContainer);
+            containerModel.trigger(Events.Game.AbstractCardContainerModel.UpdateContainersScoreAfterAddedInfoCard);
         }, this).on(Events.Game.InfoCardModel.ShowInfoCard, function (cardModel) {
             this.isHide = false;
             this.infoCardView.showInfoCard(cardModel, this);
-        }, this).on("InfoCardInOwnContainer", function (cardModel) {
-            console.log("InfoCardInOwnContainer");
+        }, this).on(Events.Game.InfoCardModel.InfoCardInOwnContainer, function (cardModel) {
             this.playerOwner.trigger(Events.Game.AbstractPlayer.InfoCardInOwnContainer, cardModel);
         }, this);
 
-        this.infoCardView.on("InfoCardInContainer", function (cardModel) {
+        this.infoCardView.on(Events.Game.InfoCardModel.InfoCardInContainer, function (cardModel) {
             this.isHide = true;
             this.playerOwner.trigger(Events.Game.AbstractPlayer.InfoCardInContainer);
             $(cardModel).trigger(Events.Game.AbstractPlayer.PreviousInfoCardInDeck);
-            cardModel.cardView.trigger("CardView::AlphaVisible");
-            cardModel.trigger("CardModel::SetClickEventCard");
-        }, this).on("InfoCardInBattleContainer", function (cardModel) {
+            cardModel.cardView.trigger(Events.Game.CardView.AlphaVisible);
+            cardModel.trigger(Events.Game.AbstractCardModel.SetClickEventCard);
+        }, this).on(Events.Game.InfoCardModel.InfoCardInBattleContainer, function (cardModel, containerModel) {
             this.playerOwner.trigger(Events.Game.AbstractPlayer.InfoCardAddedToBattle);
-            cardModel.cardView.trigger("CardView::AlphaVisible");
+            cardModel.cardView.trigger(Events.Game.CardView.AlphaVisible);
         });
     };
 

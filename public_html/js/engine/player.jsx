@@ -27,7 +27,7 @@ define([
             }
 
             setTouchEventCard(card){
-                card.trigger("CardModel::SetTouchEventCard", this);
+                card.trigger(Events.Game.AbstractCardModel.SetTouchEventCard, this);
             }
 
 

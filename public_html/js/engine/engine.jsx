@@ -60,7 +60,7 @@ define([
 
                 this.loaderRes = loaderRes;
 
-                Backbone.on("AllRendered", function(stage){
+                Backbone.on(Events.Backbone.All.AllRendered, function(stage){
                     this.battlesContainer = {
                         "playersCardsDeck"                  :   playerCardsDeck,
                         "playersCardContainerDistant"       :   playersCardContainerDistant,
@@ -71,30 +71,35 @@ define([
                     };
                     let i = 4;
                     _.forEach(this.battlesContainer, function(value, key, iter){
-                        iter[key].trigger("AbstractCardContainerModel::SetContainerPosition", stage, SETTINGS.battleContainerPositionX, i * SETTINGS.oneLineHeight);
-                        $(iter[key]).trigger("AbstractCardContainerModel::CreateGraphics", [SETTINGS.deckWidth, SETTINGS.oneLineHeight]);
+                        iter[key].trigger(Events.Game.AbstractCardContainerModel.SetContainerPosition, stage, SETTINGS.battleContainerPositionX, i * SETTINGS.oneLineHeight);
+                        $(iter[key]).trigger(Events.Game.AbstractCardContainerModel.CreateGraphics, [SETTINGS.deckWidth, SETTINGS.oneLineHeight]);
+                        if (i !== 4 && i !== -1) {
+                            iter[key].trigger(Events.Game.AbstractCardContainerModel.CreateText, "score", "0", SETTINGS.deckWidth + SETTINGS.indentOfTheScoresForField, SETTINGS.oneLineHeight / 2);
+                        }
                         i-=1;
                     }, this);
-                    this.container.playersContainerBoss.trigger("AbstractCardContainerModel::SetContainerPosition", stage, 10, 3 * SETTINGS.oneLineHeight);
-                    $(this.container.playersContainerBoss).trigger("AbstractCardContainerModel::CreateGraphics", [SETTINGS.battleContainerPositionX - 10,
+                    this.container.playersContainerBoss.trigger(Events.Game.AbstractCardContainerModel.SetContainerPosition, stage, 10, 3 * SETTINGS.oneLineHeight);
+                    $(this.container.playersContainerBoss).trigger(Events.Game.AbstractCardContainerModel.CreateGraphics, [SETTINGS.battleContainerPositionX - 10,
                         SETTINGS.oneLineHeight, false]);
-                    this.container.playersContainerBossCard.trigger("AbstractCardContainerModel::SetContainerPosition", this.container.playersContainerBoss.containerView.containerView,
+                    this.container.playersContainerBoss.trigger(Events.Game.AbstractCardContainerModel.CreateText, "score", "0", SETTINGS.cardWidth * 1.5, SETTINGS.oneLineHeight/2)
+                    this.container.playersContainerBossCard.trigger(Events.Game.AbstractCardContainerModel.SetContainerPosition, this.container.playersContainerBoss.containerView.containerView,
                         0, 0);
-                    $(this.container.playersContainerBossCard).trigger("AbstractCardContainerModel::CreateGraphics", [SETTINGS.cardWidth,
+                    $(this.container.playersContainerBossCard).trigger(Events.Game.AbstractCardContainerModel.CreateGraphics, [SETTINGS.cardWidth,
                         SETTINGS.oneLineHeight]);
 
-                    this.container.enemyContainerBoss.trigger("AbstractCardContainerModel::SetContainerPosition", stage, 10, 0);
-                    $(this.container.enemyContainerBoss).trigger("AbstractCardContainerModel::CreateGraphics", [SETTINGS.battleContainerPositionX - 10,
+                    this.container.enemyContainerBoss.trigger(Events.Game.AbstractCardContainerModel.SetContainerPosition, stage, 10, 0);
+                    $(this.container.enemyContainerBoss).trigger(Events.Game.AbstractCardContainerModel.CreateGraphics, [SETTINGS.battleContainerPositionX - 10,
                         SETTINGS.oneLineHeight, false]);
-                    this.container.enemyContainerBossCard.trigger("AbstractCardContainerModel::SetContainerPosition", this.container.enemyContainerBoss.containerView.containerView,
+                    this.container.enemyContainerBoss.trigger(Events.Game.AbstractCardContainerModel.CreateText, "score", "0", SETTINGS.cardWidth * 1.5, SETTINGS.oneLineHeight/2)
+                    this.container.enemyContainerBossCard.trigger(Events.Game.AbstractCardContainerModel.SetContainerPosition, this.container.enemyContainerBoss.containerView.containerView,
                         0, 0);
-                    $(this.container.enemyContainerBossCard).trigger("AbstractCardContainerModel::CreateGraphics", [SETTINGS.cardWidth,
+                    $(this.container.enemyContainerBossCard).trigger(Events.Game.AbstractCardContainerModel.CreateGraphics, [SETTINGS.cardWidth,
                         SETTINGS.oneLineHeight]);
 
-                    this.container.playersInfoCardContainer.trigger("AbstractCardContainerModel::SetContainerPosition", stage,
+                    this.container.playersInfoCardContainer.trigger(Events.Game.AbstractCardContainerModel.SetContainerPosition, stage,
                         SETTINGS.infoCardContainerPositionX, 2 * SETTINGS.oneLineHeight);
 
-                    this.container.playersBattleInfoCardContainer.trigger("AbstractCardContainerModel::SetContainerPosition", stage,
+                    this.container.playersBattleInfoCardContainer.trigger(Events.Game.AbstractCardContainerModel.SetContainerPosition, stage,
                         SETTINGS.infoBattleCardContainerPositionX, SETTINGS.infoBattleCardContainerPositionY);
 
 
@@ -102,7 +107,7 @@ define([
                     this.engineWork();
                 }, this);
 
-                Backbone.trigger("GameRender");
+                Backbone.trigger(Events.Backbone.Renderer.GameRender);
             }
 
             engineWork(){
