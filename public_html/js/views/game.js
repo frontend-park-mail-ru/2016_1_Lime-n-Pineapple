@@ -1,28 +1,34 @@
-define([
-    'backbone',
-    'tmpl/game'
-], function(
-    Backbone,
-    tmpl
-){
+'use strict';
 
-    var View = Backbone.View.extend({
-
+define(['jquery', 'underscore', 'backbone', 'settings', 'pixi', './baseView', 'tmpl/game', 'engine/loader'], function ($, _, Backbone, Settings, pixi, BaseView, tmpl, Loader) {
+    var Game = BaseView.extend({
         template: tmpl,
-        initialize: function () {
-            // TODO
+
+        defaults: {
+            'renderer': "null",
+            'domID': "game_window"
         },
-        render: function () {
-            // TODO
+
+        initialize: function initialize() {
+            BaseView.prototype.initialize.call(this);
+            this.domID = this.defaults.domID;
         },
-        show: function () {
-            // TODO
+
+        show: function show() {
+            BaseView.prototype.show.call(this);
+            $("#page__site-header").addClass("topped");
         },
-        hide: function () {
-            // TODO
+
+        hide: function hide() {
+            BaseView.prototype.hide.call(this);
+            $("#page__site-header").removeClass("topped");
+        },
+
+        render: function render() {
+            BaseView.prototype.render.call(this);
+            this.loader = new Loader(this.el, this.domID);
         }
 
     });
-
-    return View;
+    return new Game();
 });

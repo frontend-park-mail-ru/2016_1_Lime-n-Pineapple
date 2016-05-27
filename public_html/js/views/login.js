@@ -1,36 +1,46 @@
+'use strict';
 define([
     'jquery',
     'backbone',
-    'tmpl/login',
-], function(
-    $,
-    Backbone,
-    tmpl
-){
+    'settings',
+    'models/session',
+    './baseView',
+    'tmpl/login'
+    ], function ($, Backbone,  Settings, Session, BaseView, tmpl) {
+        var Login = BaseView.extend({
+            template: tmpl,
+            events: {
 
-    return Backbone.View.extend({
+                'click .btn-lg-back' : function(e) {
+                Backbone.history.navigate("/", true);
+            },
+                'submit #login-form__btn-success' : '_onSubmitEvent'
+            },
 
-        template: tmpl,
-        initialize: function () {
-        },
+            initialize: function () {
+            },
 
-        show: function () {
-            console.log("i am in login.show()");
-            this.$el.show();
-        },
+            _onSubmitEvent: function (e) {
+                e.preventDefault();
+                console.log("[views::login::_onSubmitEvent()]: called");
+                var $form = $(this),
+                    login = $form.find("input[name='username']").val(),
+                    password = $form.find("input[name='password']").val();
 
-        hide: function () {
-            this.$el.hide();
-        },
-
-        render: function () {
-            this.$el.appendTo($("#view__holder"));
-            console.log("[views::scoreboard::render()]: called");
-            console.log(this.$el);
-            this.$el.html(this.template());
-            return this;
-        }
-    });
-
-    //return View;
-});
+                //console.log("Sending request to: " + url + " ...");
+                var reqObj = {
+                    "login": login,
+                    "password": password
+                };
+                console.log("Login: ", login, "Password: ", password, "Request object: ", reqObj);
+                console.log("Request parsed as JSON: ", JSON.stringify(reqObj));
+                console.log("Login: ", login, "Password: ", password, "Request object: ", reqObj);
+                console.log("Request parsed as JSON: ", JSON.stringify(reqObj));
+                if (Session.login(reqObj)) {
+                    Backbone.trigger("loginSuccess");
+                }
+            }
+        });
+        return new Login();
+    }
+);

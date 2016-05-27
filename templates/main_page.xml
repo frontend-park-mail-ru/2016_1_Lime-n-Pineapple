@@ -1,27 +1,12 @@
 <?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru">
-        <div id="menu" class="center-block" style="width: 40%"> <!-- Блок меню -->
+        <div id="view-holder__menu" class="container center-block" >
+            <div class="row menu__row">
             <ul class="list-group text-center">
-                <a class="list-group-item list-group-item-warning" href="#game">Start</a>
-                <!--<a class="list-group-item list-group-item-success" href="#main/success">Success</a>-->
-                <!--<a class="list-group-item list-group-item-danger" href="#main/error">Error</a>-->
-                <a class="list-group-item list-group-item-success" href="#scoreboard">Scoreboard</a>
-                <a class="list-group-item list-group-item-warning" href="#login">Login</a>
+                <div class=" btn-circle btn-xl" id="start" href="#game">Start</div>
+                <div class=" btn-circle btn-xl" id="scoreboard" href="#scoreboard">Scores</div>
+                <div class=" btn-circle btn-xl" id="login" href="#login">Login</div>
             </ul>
+            </div>
         </div>
-        <!--<div id="start" class="block">-->
-            <!--<div class="userplace">-->
-                <!--<label for="username">Имя пользователя: </label>-->
-                <!--<input type="text" id="username" />-->
-            <!--</div>-->
-            <!--<div class="buttonplace">-->
-                <!--<input type="button" class="btn z" value="Проверить" />-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div id="error" class="block">-->
-            <!--Ошибка такой пользователь не найден.-->
-        <!--</div>-->
-        <!--<div id="success" class="block">-->
-            <!--Пользователь найден.-->
-        <!--</div>-->
 </fest:template>

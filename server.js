@@ -1,9 +1,10 @@
 var PUBLIC_DIR = __dirname + '/public_html';
 
 var express = require('express'),
+    request = require('request'),
     errorHandler = require('errorhandler'),
     path = require('path'),
- //   favicon = require('serve-favicon'),
+//   favicon = require('serve-favicon'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser');
@@ -16,36 +17,51 @@ app.set('view engine', 'jade');
 var ip_map = new Map();
 
 
+
 app.use(function (req) {
     // Здесь нужно написать журналирование в формате
     // (журналирование - вывод в консоль)
     // [время] [номер запроса по счету]
-    var ip = toString(req.remoteAddress);
-    var current_date = new Date();
-    var value = 1;
-    if ( ip_map.has(ip) ) {
-
-        value = ip_map.get(ip);
-        value+=1;
-        ip_map.set(ip, value);
-    }
-    else {
-        ip_map.set(ip, 1);
-    }
-    console.log("LOG:"+ current_date.toDateString() +" [ app.use: (addr: " + ip + ")" + ":" + req.url + "]: " + value );
+    //var ip = req.remoteAddress.toString();
+    //var current_date = new Date();
+    //var value = 1;
+    //if (ip_map.has(ip)) {
+    //
+    //    value = ip_map.get(ip);
+    //    value += 1;
+    //    ip_map.set(ip, value);
+    //} else {
+    //    ip_map.set(ip, 1);
+    //}
+    //console.log("LOG:", current_date.toDateString(), " [ app.use: (addr: ", ip, "):", req.url, "]: ", value );
     req.next();
+
+//app.use(function (req, res, next) {
+//    // Здесь нужно написать журналирование в формате
+//    // (журналирование - вывод в консоль)
+//    // [время] [номер запроса по счету]
+//    next();
 });
-app.use(function (req,res,next) {
+app.use(function (req, res, next) {
     console.log("index.html modifier - ", req.URL);
-    if(req.method === 'get') {
+    if (req.method === 'get') {
         //1. fetch view by url hash
         console.log(req);
         //2. render on page
 
-        //3. return ready-to-show html
-
     }
     next();
+
+//app
+//    .use('/', express.static(PUBLIC_DIR))
+//    .use(errorHandler())
+//    .use('/api/*', function (req, res) {
+//        var url = 'http://private-4133d4-technopark.apiary-mock.com' + req.originalUrl;
+//        req.pipe(request(url)).pipe(res);
+//    });
+//
+//app.listen(PORT, function () {
+//    console.log("Simple static server showing %s listening at http://%s:%s", PUBLIC_DIR, HOSTNAME, PORT);
 });
 
 // uncomment after placing your favicon in /public
@@ -59,9 +75,8 @@ app.use(cookieParser());
 app.use('/', express.static(PUBLIC_DIR));
 
 
-
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);

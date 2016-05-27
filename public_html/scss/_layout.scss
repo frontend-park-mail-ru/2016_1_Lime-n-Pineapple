@@ -1,0 +1,11 @@
+@import "_colors";
+@import "_fonts";
+
+$bgImageUrl: "/static/clearmain.png";
+$numLines: 6;
+$oneLineHeight: 100vh / $numLines;
+
+
+$layout-width-xs: 563px;
+$layout-width-sm: 767px;
+$layout-width-md: 943px;

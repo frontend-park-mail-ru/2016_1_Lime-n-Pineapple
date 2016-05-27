@@ -1,0 +1,26 @@
+$font-name-Caption: "cookiesMilk";
+$font-url__Caption: "/fonts/cookiesmilk-Regular.ttf";
+$font-url__H: "/fonts/orangeJuice-20.ttf";
+$font-name-H: "orangeJuice";
+
+@font-face {
+  font-family: $font-name-Caption;
+  src: url($font-url__Caption);
+}
+
+@font-face {
+  font-family: $font-name-H;
+  src: url($font-url__H); /* Путь к файлу со шрифтом */
+}
+
+$font-family-Caption: $font-name-Caption, "Century Gothic", sans-serif;
+$font-family-H: $font-name-H, "Century Gothic", sans-serif;
+
+
+$font-size__H-Full: 13vmin;
+$font-size__h-sm: 72pt;
+$font-size__h-sm: 1.15em;
+
+$font-size__Caption-Full: 6.5vh;
+$font-size__Caption-SM: 36pt;
+$font-size__Caption-XS: 1em;
